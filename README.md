@@ -122,6 +122,151 @@ You can find the details on all topics in the [Geta12] Project Template document
 
 ---
 
+## Mapping Example Implementation
+
+In this version of the Project Template, a Mapping example is implemented.
+It serves as an example implementation for the usage of the Mapping Code.
+
+**1. Use Case**
+
+We have a Customer Relations Management System, where we collect companies (`Company_DM`) and their employees (`Person_DM`).
+They are linked by a Relationship (`PersonCompany`). Each person can be linked to one company.
+
+![MappingExample_Models](./resources/images/MappingExample_Models.png)
+
+Not all users of the application are allowed to see all the data, for them we want to prepare a Company Summary page.
+It shall look like this example:
+
+![MappingExample_CompanySummaryForm](./resources/images/MappingExample_CompanySummaryForm.png)
+
+It shows
+- the basic data of the Company (Name, IDs)
+- how many employees the company has in total (text on the bottom)
+- how many of them have a higher Education (based on the data given in the `Person_DM`), ranking is done on the Enumeration Category 'Rank'
+- of all the employees a list of the 3 with the highest Education Degree (by Enumeration Category 'Rank') who have an address in a selected country or are of a given nationality (based on the data given in `Person_DM` in `/People/Addresses*/Country` and `/People/PersonalData/Nationality`)
+
+The company summary is prepared on server side, the user cannot access more data than is provided in `CompanySummary`.
+(Using F12 does not help here. Advantage against a CDM, where the complete data is transferred to the Client.)
+
+**2. Modeling**
+
+We start with the Basic Workspace as shipped with the A12-Installer.
+
+Based on the Use Case above, we model a Document and a Form Model for the Company Summary.
+We also create an Overview Model, but this is based on `Company_DM`, so it lists all the Companies in the database, no data selection is done here.
+
+All models related to this use case are placed in the `CompanySummary` folder under `import/models`.
+
+We use the A12 built-in feature Composed Document Models (CDM), to retrieve a company with all their linked persons in one go from Data Services.
+Alternatively, one could obtain the companies and their linked employees separately and feed them into the Mapper as different Sources.
+
+By using a CDM, we only have one Source, with only one Document.
+This CDM (`CompanyWithPersons_CDM`) is modeled in the SME by adding a CDM to the workspace and selecting `Company_DM` as Root Model.
+Clicking on the Relationship `PersonCompany` in the CDM Editor's Element Picker adds the Relationship and Document Model elements to the CDM.
+We do not need a Form Model for it, since we only use it in the backend.
+
+In order to feed additional information (selected country and nationality) **in the backend** into the mapping process, we create one more Document Model
+`AdditionalMappingInput_DM`, that just contains two Fields (`Nationality`, `Country`) to hold the respective information.
+At runtime, the server creates a document and fills it with data (in this example hardcoded to `Nationality = "German"` / `Country = "Germany"` in `CompanySummaryStaticService`); the end user cannot manipulate it.
+
+Next, the Mapping Model (`CompanySummary_MA`) is created.
+We select the created `CompanySummary_DM` as the Target Model and the two created Sources (`CompanyWithPersons`, `additionalParameters`) as the Source Models.
+You are free in giving speaking names to the Sources.
+
+![MappingExample_MappingModel](./resources/images/MappingExample_MappingModel.png)
+
+Once saved, we can model the Precomputation Model (`CompanySummary_PC`).
+Consult the documentation on [GetA12] for details.
+
+The important part is shown below:
+
+![MappingExample_PreCompModel](./resources/images/MappingExample_PreCompModel.png)
+
+1) For each Person that is linked to the Company (and thus a Repetition of `PersonCompany` exists in the Composed Data Document fetched from Data Services),
+we determine whether they are to be shown in the list on `CompanySummary`.
+The decision is stored in Field `IsPersonSelected`.
+It follows quite some complex business logic, that is fully modeled in the Precomputation Model. Feel free to have a deeper look. ;-)
+Based on the field `IsPersonSelected`, the helper Fields `TransferredName` and `TransferredDegree` are filled.
+
+2) Without any filtering, we compute the total number of employees.
+The Computation Rule `NumberOfEmployees_Comp` thus simply states: `NumberOfFilledGroups(/CompanyWithPersons/PersonCompany*)`
+
+As a last step, we model the Structural Mapping Model (`CompanySummary_SMM`).
+When adding it via the Mapping Model Editor, do not forget to check `Create Field Mappings automatically`, to get some Field Mapping auto generated.
+
+![MappingExample_StructuralMappingModel](./resources/images/MappingExample_StructuralMappingModel.png)
+
+During the Structural Mapping step, a new Repetition in `/Company/SelectedEmployees` of the target document is only created if at least one Field of the connected Source Field is filled.
+That is the reason why we use the helper Fields `TransferredName` and `TransferredDegree`.
+If both of them are empty (because `IsPersonSelected` is not true), no Repetition is created in the target document.
+
+**3. Example Data**
+
+Example seed data for companies, persons and their `PersonCompany` links is included under `import/data/documents`.
+Like any other seed data, it is loaded by running the init application with the `init-data` Spring profile (see [How to Run](#how-to-run) above).
+
+You can also use the application without this seed data and add new data to the running app instead.
+
+**4. Mapping Code Generation**
+
+Since there is no dynamic solution, it is recommended to generate the code at build time to avoid inconsistencies between the models and the code.
+
+All models under `import/models` (the DMs, the CDM, the Mapping Model and its Precomputation and Structural Mapping sub-models) are converted to runtime models by the root `convertModels` Gradle task. Based on that output, `server/app/build.gradle` implements the tasks needed to generate and compile the mapping code:
+
+* `generateMappingCode`: Picks the converted models whose `header.modelType` is `mapping` and calls Kernel's `MappingModelCodegenCLI` to create the Mapping Code for each of them.
+* `extractMappingCode`: Since the previous task produces a ZIP file per mapping model, it has to be extracted.
+* `compileMappingCode`: Compiles the generated Java sources with a nested Gradle build and wires the result into the `main` source set's resources.
+
+The gradle tasks are agnostic to the original workspace folder structure.
+They generate the Mapping Code under a common prefix amended with the Mapping Model's `header.id`.
+In our case `com.mgmtp.a12.mapping.CompanySummary_MA`.
+The prefix can be adjusted in `server/app/build.gradle`.
+
+In order to keep the data, the models and the generated code in sync, these gradle tasks are executed on
+`gradle build` and `gradle :server:app:bootRun --args='--spring.profiles.active=dev-env'`.
+
+> **CAUTION**: If the models in the Seed Data bundle (models known to Data Services) and the ones used to generate the mapping code differ, the mapping will fail.
+
+**5. Calling the Mapping Code**
+
+In `server/app/src/main/java/com/mgmtp/a12/template/server/mapping/CompanySummaryStaticService.java` the generated mapping code is used to create the `CompanySummary` document.
+It uses
+- a CDD fetched from Data Services as Source `CompanyWithPersons`
+- a temporarily created document of `AdditionalMappingInput_DM` as Source `additionalParameters`
+- a freshly created document of `CompanySummary_DM` as initial Target
+
+When calling the mapping code, assure that the Source Names and model types match with the specification of the Sources in the Mapping Model.
+The Sources are handed to the mapping code as an ordered list.
+The Repetitions of repeatable Sources are filled in the order of that list.
+
+![MappingExample_CodeConnection](./resources/images/MappingExample_CodeConnection.png)
+
+**6. Further Custom Code**
+
+All other custom code,
+- to provide a Custom RPC endpoint in the server (see `server/app/src/main/java/com/mgmtp/a12/template/server/mapping/CompanySummary.java`)
+- to call this endpoint and display the resulting data in the form via a Custom Data Provider (see `client/src/modules/companySummary/dataLoader.ts`, registered in `client/src/appsetup.ts`)
+
+is not directly bound to the mapping, but provides the means for an end-to-end experience.
+
+**7. How to change the models?**
+
+Simply change the Models in the SME and rebuild/start the server.
+
+## Add Mapping Features to your Project
+
+1. Adopt the gradle build files of `import` and `server/app`
+
+You can cherry-pick the corresponding commits from this example (the `convertModels`, `generateMappingCode`, `extractMappingCode` and `compileMappingCode` tasks in `server/app/build.gradle`, plus the accompanying `import/auth/roles.yaml` and lock file changes).
+
+2. Integrate the Mapping
+
+The important code snippets are shown below:
+
+![MappingExample_ImportantCode](./resources/images/MappingExample_ImportantCode.png)
+
+---
+
 **The mgm A12 Team**
 
 [mgm technology partners GmbH](https://www.mgm-tp.com) • [Imprint](https://www.mgm-tp.com/imprint.html)
