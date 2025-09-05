@@ -65,12 +65,14 @@ import { enginesViewMap } from "./app/EnginesViewMap";
 import { CustomApplicationFrameLayout } from "./app/LayoutProvider";
 import { DEFAULT_TRANSLATIONS, supportedLocales, getDateTimeResource } from "./localization";
 import { withKeycloak } from "./uaa/withKeycloak";
+import { CompanySummaryDocumentDataLoader } from "./modules/companySummary/dataLoader";
 
 export function setup() {
     const initialConfig: A12ApplicationConfig = {
         config: {
             preComputeNewDocuments: true,
-            composeEnhancer: isProduction ? undefined : enableReduxDevTools()
+            composeEnhancer: isProduction ? undefined : enableReduxDevTools(),
+            dataHandlers: [new CompanySummaryDocumentDataLoader()]
         },
         formEngine: {
             sagas: {
