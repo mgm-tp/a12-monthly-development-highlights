@@ -1,0 +1,112 @@
+{
+  "header": {
+    "id": "ChristmasWish_OM",
+    "modelType": "overview",
+    "modelVersion": "38.1.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [
+      {
+        "locale": "en",
+        "text": "Overview"
+      },
+      {
+        "locale": "de",
+        "text": "Übersicht"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "purpose": "document-model-for-overview",
+        "modelType": "document",
+        "alias": "DM",
+        "reference": "ChristmasWish_DM"
+      }
+    ]
+  },
+  "content": {
+    "configuration": {
+      "enableFilter": true,
+      "filterConfiguration": {
+        "showFilterButton": true,
+        "showFilterBar": true,
+        "filterMode": "all_columns"
+      },
+      "showFullTextSearch": true,
+      "pagingSize": 50
+    },
+    "subHeaderBox": {
+      "majorElements": [
+        {
+          "type": "search"
+        },
+        {
+          "type": "filter"
+        }
+      ],
+      "minorElements": [
+        {
+          "destructive": false,
+          "icon": {
+            "name": "add",
+            "theme": "filled"
+          },
+          "label": [
+            {
+              "locale": "en",
+              "text": "Add"
+            },
+            {
+              "locale": "de",
+              "text": "Hinzufügen"
+            }
+          ],
+          "type": "button",
+          "event": "add",
+          "primary": false
+        }
+      ]
+    },
+    "rowActionGroup": {},
+    "columns": [
+      {
+        "id": "column-e16d1",
+        "icon": {
+          "name": "star",
+          "theme": "filled"
+        },
+        "width": 1,
+        "styles": {},
+        "elementRef": "field_7f9ee",
+        "sortable": false
+      },
+      {
+        "id": "column-1a8d1",
+        "icon": {
+          "name": "star",
+          "theme": "filled"
+        },
+        "width": 1,
+        "styles": {},
+        "elementRef": "field_aa440",
+        "sortable": false
+      }
+    ],
+    "footerBox": {
+      "majorElements": [],
+      "minorElements": []
+    }
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "header": {
+    "id": "ChristmasWish_DM",
+    "modelType": "document",
+    "modelVersion": "28.3.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": []
+  },
+  "content": {
+    "modelInfo": {
+      "name": "ChristmasWish_DM"
+    },
+    "modelConfig": {
+      "timeZone": "UTC",
+      "decimalSeparator": ".",
+      "conditionLanguage": {
+        "code": "en_US"
+      }
+    },
+    "modelRoot": {
+      "rootGroups": [
+        {
+          "type": "Group",
+          "id": "group_3122f",
+          "name": "Christmas",
+          "Group": {
+            "label": [
+              {
+                "locale": "en",
+                "text": "Christmas"
+              },
+              {
+                "locale": "de",
+                "text": "Weihnachten"
+              }
+            ],
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Group",
+                "id": "group_e875b",
+                "name": "Wish",
+                "Group": {
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Wish"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Wunsch"
+                    }
+                  ],
+                  "repeatability": 1,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "field_7f9ee",
+                      "name": "de",
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "de"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "de"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_aa440",
+                      "name": "en",
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "en"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "en"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

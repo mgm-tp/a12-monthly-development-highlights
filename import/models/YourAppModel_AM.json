@@ -124,6 +124,100 @@
             ]
           }
         ]
+      },
+      {
+        "name": "ChristmasModule",
+        "menu": {
+          "name": "Christmas",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Christmas"
+            },
+            {
+              "locale": "de",
+              "text": "Weihnachten"
+            }
+          ],
+          "initialActivity": {
+            "descriptor": {
+              "module": "Christmas"
+            }
+          }
+        },
+        "flows": [
+          {
+            "name": "ChristmasFlow",
+            "scenes": [
+              {
+                "name": "ChristmasOverview",
+                "description": "Overview of ChristmasWish Documents",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Christmas"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": false
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "layout": {
+                        "name": "MasterDetail"
+                      },
+                      "type": "REGION_CLEAR"
+                    },
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "OverviewEngine",
+                      "models": [
+                        {
+                          "modelType": "overview",
+                          "name": "ChristmasWish_OM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "ChristmasForm",
+                "description": "Form showing on ChristmasWish Document",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "Christmas"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": true
+                  }
+                ],
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "PersonFormEngine",
+                      "constraints": {
+                        "type": "MasterDetail"
+                      },
+                      "models": [
+                        {
+                          "modelType": "form",
+                          "name": "ChristmasWish_FM",
+                          "documentModel": "ChristmasWish_DM"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     "region": {
