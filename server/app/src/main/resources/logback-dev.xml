@@ -1,0 +1,13 @@
+<configuration>
+    <appender class="ch.qos.logback.core.ConsoleAppender" name="STDOUT">
+        <encoder>
+            <timestamp>
+                <timeZone>UTC</timeZone>
+            </timestamp>
+            <pattern>%date{ISO8601,UTC} [%15.15thread] [%-5level] %-40.40logger{39} : %msg%n</pattern>
+        </encoder>
+    </appender>
+    <root>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

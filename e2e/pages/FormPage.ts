@@ -1,0 +1,169 @@
+import { Locator } from "@playwright/test";
+
+import { DataType, FieldTestData, FileTestData, TestData } from "../types";
+import { TestID } from "../types/testIds";
+import { API_PATH, waitForApiReponse } from "../utils/api";
+import { Page, expect } from "../fixtures";
+import { getByLabelWithOptionalAsterisk } from "../utils/locators";
+
+import { BasePage } from "./BasePage";
+
+export class FormPage extends BasePage {
+    protected readonly form: Locator;
+    constructor(
+        protected readonly page: Page,
+        protected readonly formLocator: Locator = page.getByRole("form")
+    ) {
+        super(page);
+        this.form = formLocator;
+    }
+
+    async toBeVisible() {
+        await expect(this.form).toBeVisible();
+        await this.finishedLoading();
+    }
+
+    async toBeHidden() {
+        await expect(this.form).toBeHidden();
+    }
+
+    async assertFieldValue(testData: TestData, locator: Locator = this.form) {
+        if (testData.type === DataType.File) {
+            throw new Error(`Data type File not implemented`);
+        }
+        const { label, value, type } = testData;
+        const input = getByLabelWithOptionalAsterisk(locator, label);
+        switch (type) {
+            case DataType.Select:
+            case DataType.String:
+                await expect(input).toHaveValue(value);
+                break;
+            case DataType.Check:
+                if (value === "true") {
+                    await expect(input).toBeChecked();
+                } else {
+                    await expect(input).not.toBeChecked();
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    async assertFormValues(testData: TestData[]) {
+        for (const field of testData) {
+            await this.assertFieldValue(field);
+        }
+    }
+
+    async inputFieldValue(testData: TestData, locator: Locator = this.form) {
+        if (testData.type === DataType.File) {
+            await this.uploadFileField(testData);
+            return;
+        }
+        const { label, value, type } = testData;
+        const input = getByLabelWithOptionalAsterisk(locator, label);
+        let isChecked: boolean;
+
+        switch (type) {
+            case DataType.String:
+                await input.fill(value);
+                break;
+            case DataType.Select:
+                await input.selectOption(value);
+                break;
+            case DataType.Check:
+                isChecked = await input.isChecked();
+                if (value === "true") {
+                    if (!isChecked) {
+                        await input.check();
+                    }
+                } else if (isChecked) {
+                    await input.uncheck();
+                }
+                break;
+
+            default:
+                throw new Error(`Data type ${type} not implemented`);
+        }
+    }
+
+    async inputFieldValues(testData: TestData[], locator: Locator = this.form) {
+        for (const field of testData) {
+            await this.inputFieldValue(field, locator);
+        }
+    }
+
+    async assertInlineRepeatFieldValues(
+        sectionHeadlineLabel: string,
+        testData: FieldTestData[][],
+        locator: Locator = this.form
+    ) {
+        const section = locator.getByTestId(TestID.TYPOGRAPHY_SECTION).filter({ hasText: sectionHeadlineLabel });
+        const rows = section.getByTestId(TestID.TABLE_BODY_ROW);
+        await expect(rows).toHaveCount(testData.length);
+
+        for (let i = 0; i < testData.length; i++) {
+            for (const field of testData[i]) {
+                await this.assertFieldValue(field, rows.nth(i));
+            }
+        }
+    }
+
+    async inputInlineRepeatFieldValues(
+        sectionHeadlineLabel: string,
+        testData: FieldTestData[][],
+        locator: Locator = this.form
+    ) {
+        const section = locator.getByTestId(TestID.TYPOGRAPHY_SECTION).filter({ hasText: sectionHeadlineLabel });
+
+        for (const rowData of testData) {
+            await section.getByRole("button", { name: "Add" }).click();
+            const row = section.getByTestId(TestID.TABLE_BODY_ROW).last();
+
+            for (const field of rowData) {
+                await this.inputFieldValue(field, row);
+            }
+        }
+    }
+
+    async saveForm(shouldCloseForm = true) {
+        await this.form.getByRole("button", { name: "Save", disabled: false }).click();
+        await this.finishedLoading();
+        if (shouldCloseForm) {
+            await this.toBeHidden();
+        }
+    }
+
+    async createDocument(data: TestData[]) {
+        await this.inputFieldValues(data);
+        await this.saveForm();
+    }
+
+    async clearFieldValue(field: TestData) {
+        if (field.type === DataType.File) {
+            throw new Error(`Data type File not implemented`);
+        }
+        await getByLabelWithOptionalAsterisk(this.form, field.label).clear();
+    }
+
+    async updateDocument(fieldValues: TestData[]) {
+        for (const field of fieldValues) {
+            await this.clearFieldValue(field);
+            await this.inputFieldValue(field);
+        }
+
+        await this.saveForm();
+    }
+
+    async uploadFileField(testData: FileTestData) {
+        const { locator: fieldControlLocator, filePath } = testData;
+        await this.form
+            .locator(`${fieldControlLocator} [data-role=${TestID.FILE_UPLOAD_INPUT}]`)
+            .setInputFiles(filePath);
+        await waitForApiReponse({ page: this.page, apiPath: API_PATH.ATTACHMENT, expectedStatusCode: 200 });
+        await expect(
+            this.form.locator(`${fieldControlLocator} [data-role=${TestID.FILE_UPLOAD_CONTENT_INNER}] img`)
+        ).toBeVisible();
+    }
+}

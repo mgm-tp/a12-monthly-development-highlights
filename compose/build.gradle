@@ -1,0 +1,37 @@
+plugins {
+    alias(gradlePluginLibs.plugins.docker.compose)
+}
+
+// for further configuration see https://github.com/avast/gradle-docker-compose-plugin 
+dockerCompose {
+    removeVolumes = false
+    projectName = "${rootProject.name}"
+    captureContainersOutput = true
+    environment.put 'VERSION', "${version}"
+    environment.put 'PROJECT_NAME', "${rootProject.name}"
+    environment.put 'FRONTEND_IMAGE', "${project.calculateFullTag(rootProject.clientName)}"
+    environment.put 'SERVER_IMAGE', "${project.calculateFullTag(rootProject.serverName)}"
+    environment.put 'SERVER_INIT_IMAGE', "${project.calculateFullTag(rootProject.serverInitName)}"
+    environment.put 'DOCKER_REGISTRY_FOR_READ', "${dockerRegistryForRead}"
+    environment.put 'DOCKER_REGISTRY_FOR_PUBLISH', "${dockerRegistryForPublish}"
+
+    postgres {
+        projectName = "${rootProject.name}"
+        startedServices = ['postgres']
+    }
+
+    keycloak {
+        projectName = "${rootProject.name}"
+        startedServices = ['postgres', 'keycloak']
+    }
+
+    noclient {
+        projectName = "${rootProject.name}"
+        startedServices = ['keycloak', 'server', 'postgres']
+    }
+
+    serverInit {
+        projectName = "${rootProject.name}"
+        composeAdditionalArgs = ["--profile", "server-init"]
+    }
+}

@@ -1,0 +1,132 @@
+import com.bmuschko.gradle.docker.tasks.image.*
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
+subprojects {
+    dependencyLocking {
+        lockAllConfigurations()
+    }
+
+    ext.artifactsVar = {
+        archives bootJar
+    }
+
+    ext.publishingVar = {
+        publications {
+            serverBootJar(MavenPublication) {
+                groupId = rootProject.group
+                artifactId = serviceName
+                version = project.version
+
+                artifact bootJar
+            }
+        }
+    }
+
+    ext.rewriteVar = {
+        configFile = file("${project.rootDir}/quality/rewrite/recipes.yaml")
+        activeRecipe 'com.mgmtp.a12.template.server.Checkstyle'
+    }
+
+    if (!skipCheckstyle.toBoolean()) {
+        apply plugin: 'checkstyle'
+
+        def configDir = "${project.rootDir}/quality/checkstyle"
+
+        checkstyle {
+            toolVersion "${checkstyleVersion}"
+            configFile file("$configDir/checkstyle.xml")
+            configProperties = ['importControlFile': "${configDir}/import-control.xml"]
+            ignoreFailures false
+        }
+
+        tasks.withType(Checkstyle).configureEach {
+            if (name == "checkstyleGeneratedTypings") {
+                enabled = false
+            }
+            
+            reports {
+                xml.required = true
+                html.required = true
+            }
+        }
+    }
+
+    // build server image using spring layer index approach
+    tasks.register('createDockerfile', Dockerfile) {
+        group 'docker'
+        dependsOn build
+
+        destFile = layout.buildDirectory.file("Dockerfile")
+
+        def baseImage = "${dockerRegistryForRead}/${dockerSeverBaseImage}"
+
+        // NOTE: Apple Silicon users may experience bad performance
+        def currentArchitecture = DefaultNativePlatform.currentArchitecture
+        if (currentArchitecture.isArm() || (currentArchitecture.getName().toLowerCase() in ['aarch64', 'arm64'])) {
+            baseImage = "--platform=linux/amd64 $baseImage"
+        }
+
+        from "$baseImage as builder"
+        workingDir "extracted"
+        arg "JAR_FILE=libs/${project.name}-${project.version}.jar"
+        copyFile "\${JAR_FILE}", "application.jar"
+        runCommand "java -Djarmode=layertools -jar application.jar extract"
+
+        from baseImage
+        label(imageLabels)
+        runCommand "set -eux; " +
+            "groupadd -r -g 1001 a12; " +
+            "useradd -r -m -d /home/a12 -u 1001 -g 1001 a12; " +
+            "mkdir -p /var/lib/a12/application/logs; " +
+            "chown -R a12:a12 /var/lib/a12;"
+        user "a12"
+        workingDir "/var/lib/a12/application"
+        copyFile "--from=builder extracted/dependencies/", "./"
+        copyFile "--from=builder extracted/spring-boot-loader/", "./"
+        copyFile "--from=builder extracted/snapshot-dependencies/", "./"
+        copyFile "--from=builder extracted/application/", "./"
+        entryPoint "java", "org.springframework.boot.loader.launch.JarLauncher", "\$JAVA_OPTS"
+    }
+
+    tasks.register('buildImages', DockerBuildImage) {
+        group 'docker'
+        dependsOn createDockerfile
+
+        images.add(calculateFullTag(serviceName))
+        inputDir.set(file(layout.buildDirectory))
+        if (dockerUseCredentials.toBoolean()) {
+            dockerRegistryCredentialsForRead
+        }
+    }
+
+    tasks.register('pushImages', DockerPushImage) {
+        group 'docker'
+        dependsOn buildImages, ':import:publish'
+        images.add(calculateFullTag(serviceName))
+    }
+
+
+    tasks.register('removeTagFull', DockerRemoveImage) {
+        group 'clean'
+        targetImageId calculateFullTag(serviceName)
+    }
+
+    tasks.register('cleanImages') {
+        group 'clean'
+        dependsOn removeTagFull
+    }
+}
+
+tasks.register('checkstyleFix') {
+    description 'Fixes issues highlighted by Checkstyle.'
+    dependsOn subprojects.collect { "${it.name}:rewriteRun" }
+
+    // The following logic to force `rewriteRun` from subprojects to be executed in a sequence. Otherwise, parallel processing will cause errors.
+    subprojects.eachWithIndex { project, index ->
+        if (index > 0) {
+            subprojects[index - 1].tasks.named('rewriteRun').configure {
+                finalizedBy subprojects[index].tasks.named('rewriteRun')
+            }
+        }
+    }
+}

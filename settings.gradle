@@ -1,0 +1,70 @@
+rootProject.name = 'your-project-name'
+
+include 'client'
+include 'compose'
+include 'server'
+include 'server:app'
+include 'server:init'
+include 'import'
+include 'e2e'
+
+dependencyResolutionManagement {
+    def springBootVersion = '3.5.5'
+    versionCatalogs {
+        gradlePluginLibs {
+            version('spring-boot', springBootVersion)
+            version('test-logger', '3.2.0')
+            version('docker-compose', '0.17.6')
+            version('docker-remote-api', '9.3.1')
+            version('versions-update', '0.42.0')
+            version('node-gradle', '7.0.1')
+            version('sonarqube-scanner','6.0.1.5171')
+            version('rewrite', '7.10.0')
+
+            plugin('spring-boot', 'org.springframework.boot').versionRef('spring-boot')
+            plugin('test-logger', 'com.adarshr.test-logger').versionRef('test-logger')
+            plugin('docker-compose', 'com.avast.gradle.docker-compose').versionRef('docker-compose')
+            plugin('docker-remote-api', 'com.bmuschko.docker-remote-api').versionRef('docker-remote-api')
+            plugin('versions-update', 'com.github.ben-manes.versions').versionRef('versions-update')
+            plugin('node-gradle', 'com.github.node-gradle.node').versionRef('node-gradle')
+            plugin('sonarqube', 'org.sonarqube').versionRef('sonarqube-scanner')
+            plugin('rewrite', 'org.openrewrite.rewrite').versionRef('rewrite')
+        }
+
+        a12Libs {
+            version('base', '29.1.0')
+            version('kernel', '30.3.0')
+            version('uaa', '9.1.0')
+            version('dataservices', '38.1.0')
+
+            library('uaa-authorization-a12-extension', 'com.mgmtp.a12.uaa', 'uaa-authorization-a12-extension').versionRef('uaa')
+            library('uaa-authorization-introspector', 'com.mgmtp.a12.uaa', 'uaa-authorization-introspector').versionRef('uaa')
+            library('dataservices-server-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-app').versionRef('dataservices')
+            library('dataservices-server-init-app', 'com.mgmtp.a12.dataservices', 'dataservices-server-init-app').versionRef('dataservices')
+            library("dataservices-data-seed", "com.mgmtp.a12.dataservices", "dataservices-data-seed").versionRef("dataservices")
+
+            library('base-bom', 'com.mgmtp.a12.base', 'base-bundle').versionRef('base')
+            library('kernel-bom', 'com.mgmtp.a12.kernel', 'kernel-bom').versionRef('kernel')
+            library('uaa-bom', 'com.mgmtp.a12.uaa', 'uaa-bom').versionRef('uaa')
+            library('dataservices-bom', 'com.mgmtp.a12.dataservices', 'dataservices-parent').versionRef('dataservices')
+        }
+
+        libs {
+            version('spring-boot', springBootVersion)
+            version('rewrite-static-analysis', '2.20.0')
+            version('logstash','7.4')
+            version('logback-classic','1.5.6')
+
+            library('rewrite-static-analysis', 'org.openrewrite.recipe', 'rewrite-static-analysis').versionRef('rewrite-static-analysis')
+            library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
+            library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
+            library('logstash', 'net.logstash.logback', 'logstash-logback-encoder').versionRef('logstash')
+            library('logback-classic', 'ch.qos.logback', 'logback-classic').versionRef('logback-classic')
+        }
+
+        testCatalogLibs {
+            version('spring-boot', springBootVersion)
+            library('spring-boot-starter-test', 'org.springframework.boot', 'spring-boot-starter-test').versionRef('spring-boot')
+        }
+    }
+}

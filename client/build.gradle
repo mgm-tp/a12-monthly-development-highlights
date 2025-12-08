@@ -1,0 +1,150 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.tasks.image.DockerRemoveImage
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import org.gradle.nativeplatform.platform.internal.DefaultNativePlatform
+
+plugins {
+    alias(gradlePluginLibs.plugins.node.gradle)
+}
+
+sonar {
+    properties {
+        property 'sonar.sources', 'src'
+        property 'sonar.exclusions', 'src/localization/resources/**'
+    }
+}
+
+ext {
+    imageLabels = ["name"       : "${calculateShortTag(clientName)}".toString(),
+                   "vendor"     : "mgm technology partners GmbH",
+                   "version"    : project.version,
+                   "release"    : rootProject.a12ReleaseVersion,
+                   "summary"    : "A Nginx-based server for serving A12 Client",
+                   "description": "The A12 Client is built around the established React/Redux ecosystem, integrates the A12 UI components like engines and widgets, and interact with the A12 Data Services in the backend via HTTP/REST endpoints."]
+}
+
+node {
+//    CONFIG: Uncommenting this line enables the use of npm ci for reproducible builds.
+//    npmInstallCommand = System.env.BUILD_NUMBER ? "ci" : "install"
+}
+
+tasks.register('compile', NpmTask) {
+    group 'build'
+    dependsOn npmInstall
+
+    if(skipESLintPrettier.toBoolean()) {
+        args = ['run-script', 'skip:eslint-prettier-compile']
+    } else {
+        args = ['run-script', 'compile']
+    }
+}
+
+tasks.register('webpack', NpmTask) {
+    group 'build'
+    dependsOn compile
+
+    args = ['run-script', 'webpack']
+}
+
+tasks.register('start', NpmTask) {
+    dependsOn "stop"
+    args = ['run-script', 'start']
+}
+
+tasks.register('stop', NodeTask) {
+    description 'Stops the service that runs on port defined in webpack-dev-server setup.'
+
+    script = file('scripts/kill-port.js')
+}
+
+tasks.register('universalizePackageLock', NodeTask) {
+    description 'Removes "resolved" and "integrity" keys and values from the lockfile.'
+
+    script = file('scripts/universalize-package-lock.js')
+}
+
+tasks.register('update', NpmTask) {
+    args = ['update']
+}
+
+tasks.register('prettierFix', NpmTask) {
+    description 'Fixes issues highlighted by prettier.'
+    args = ['run-script','prettier:fix']
+}
+
+tasks.register('eslintFix', NpmTask) {
+    description 'Fixes issues highlighted by eslint.'
+    args = ['run-script','eslint:fix']
+}
+
+assemble.dependsOn compile
+
+tasks.register('copyNginxConf', Sync) {
+    group 'docker'
+
+    from 'nginx.conf.template'
+    from 'nginx.conf.k8s'
+    into 'build'
+}
+
+tasks.register('createDockerfile', Dockerfile) {
+    group 'docker'
+    dependsOn webpack, copyNginxConf
+
+    destFile = layout.buildDirectory.file("Dockerfile")
+    def baseImage = "${dockerRegistryForRead}/${dockerClientBaseImage}"
+
+    // NOTE: Apple Silicon users may experience bad performance
+    def currentArchitecture = DefaultNativePlatform.currentArchitecture
+    if (currentArchitecture.isArm() || (currentArchitecture.getName().toLowerCase() in ['aarch64','arm64'])) {
+        baseImage = "--platform=linux/amd64 $baseImage"
+    }
+
+    from "$baseImage"
+    copyFile 'nginx.conf.k8s', '/etc/nginx/nginx.conf'
+    copyFile 'nginx.conf.template', '/etc/nginx/nginx.conf.template'
+    copyFile 'webpack', '/var/lib/a12/application/nginx/html'
+
+    runCommand "set -eux; " +
+        "touch /var/run/nginx.pid; " +
+        "addgroup -S -g 1001 a12; " +
+        "adduser -S --home /home/a12 --uid 1001 --ingroup a12 a12; " +
+        "mkdir -p /var/lib/a12; " +
+        "chown -R a12:a12 /var/lib/a12; " +
+        "chown -R a12:a12 /etc/nginx; " +
+        "chown -R a12:a12 /var/cache/nginx;" +
+        "chown -R a12:a12 /var/run/nginx.pid;"
+    user "a12"
+    workingDir "/var/lib/a12/application"
+    label(imageLabels)
+    defaultCommand "/bin/sh\" , \"-c\" , \"([ -z \${NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL} ] || envsubst '\${NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf) && cat /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"
+}
+
+tasks.register('buildImages', DockerBuildImage) {
+    group 'docker'
+    dependsOn createDockerfile
+
+    images.add(calculateFullTag(clientName))
+    inputDir.set(file(layout.buildDirectory)) 
+    if (dockerUseCredentials.toBoolean()) {
+        dockerRegistryCredentialsForRead
+    }
+}
+
+tasks.register('pushImages', DockerPushImage) {
+    group 'docker'
+    dependsOn buildImages
+
+    images.add(calculateFullTag(clientName))
+}
+
+tasks.register('removeTagFull', DockerRemoveImage) {
+    group 'clean'
+    targetImageId calculateFullTag(clientName)
+}
+
+tasks.register('cleanImages') {
+    group 'clean'
+    dependsOn removeTagFull
+}

@@ -1,0 +1,29 @@
+{
+    "name": "@com.mgmtp.your-project-name/e2e",
+    "description": "End to end test for Your-Project-Name",
+    "author": "mgm technology partners",
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "e2e:install": "playwright install chromium",
+        "e2e:test": "playwright test --project=base",
+        "e2e:test-extended": "playwright test --project=base --project=extended",
+        "e2e:test-ui": "playwright test --ui",
+        "e2e:report": "playwright show-report",
+        "eslint": "eslint .",
+        "prettier": "prettier --check \"./*.js\" \"**/*.{ts,tsx}\"",
+        "prettier:fix": "prettier --write \"./*.js\" \"**/*.{ts,tsx}\""
+    },
+    "devDependencies": {
+        "@eslint/compat": "^1.2.1",
+        "@playwright/test": "^1.55.0",
+        "@types/node": "^24.3.0",
+        "@typescript-eslint/eslint-plugin": "^8.11.0",
+        "@typescript-eslint/parser": "^8.11.0",
+        "cross-env": "^10.1.0",
+        "eslint": "^9.13.0",
+        "moment-timezone": "^0.6.0",
+        "prettier": "^3.0.2",
+        "typescript": "5.3.3"
+    }
+}

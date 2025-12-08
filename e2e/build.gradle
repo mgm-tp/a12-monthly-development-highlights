@@ -1,0 +1,18 @@
+plugins {
+    alias(gradlePluginLibs.plugins.node.gradle)
+}
+
+tasks.register("e2eInstall", NpmTask) {
+    dependsOn npmInstall
+    description "Install Playwright and its dependencies"
+    args = ["run-script", "e2e:install"]
+}
+
+tasks.register("e2eTests", NpmTask) {
+    dependsOn e2eInstall
+    description "Perform e2e test against a running template app"
+    String testEnvUrl = project.envName == "local" ? "http://localhost:8081": "https://client-a12-internal-project-template-${project.envName}.pidev.mgm-tp.com"
+    String e2eRun = project.variant != "default" ? "e2e:test-${project.variant}" : "e2e:test"
+    args = ["run-script", e2eRun]
+    environment.put('BASE_URL', testEnvUrl)
+}
