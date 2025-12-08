@@ -31,8 +31,8 @@
       "joinedModelsInfo": "Person_DM-document-meta-data+Add"
     },
     "modelConfig": {
-      "decimalSeparator": ".",
       "timeZone": "UTC",
+      "decimalSeparator": ".",
       "conditionLanguage": {
         "code": "en_US"
       }
@@ -246,6 +246,26 @@
                         "requirednessConfig": {
                           "mode": "absoluteOrRelativeToNextRepAncestor"
                         }
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_27a0f",
+                      "name": "ChristmasWish",
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Christmas Wish"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Weihnachtswunsch"
+                          }
+                        ]
                       }
                     },
                     {

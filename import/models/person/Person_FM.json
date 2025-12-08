@@ -260,6 +260,11 @@
                           }
                         },
                         "elementRef": "F6"
+                      },
+                      {
+                        "type": "Control",
+                        "id": "control_42aff",
+                        "elementRef": "field_27a0f"
                       }
                     ]
                   }
@@ -408,6 +413,13 @@
             }
           },
           "elementRef": "group_05909"
+        },
+        {
+          "exposition": "AUTOCOMPLETE",
+          "externalEnumeration": {
+            "src": "christmas-wishes"
+          },
+          "elementRef": "field_27a0f"
         }
       ]
     },

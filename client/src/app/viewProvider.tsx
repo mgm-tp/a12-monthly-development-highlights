@@ -10,6 +10,8 @@ import { withFormElementContexts } from "@com.mgmtp.a12.formengine/formengine-co
 
 import { store } from "..";
 
+import PersonFormEngineView from "../components/PersonFormEngineView";
+
 type ViewMap = Record<string, ComponentType<View> | undefined>;
 
 /**
@@ -42,6 +44,9 @@ function createEnginesViewMap(): ViewMap {
         },
         FormEngine(props) {
             return <CRUDViews.FormEngineView {...props} />;
+        },
+        PersonFormEngine(props) {
+            return <PersonFormEngineView {...props} />;
         },
         OverviewEngine(props) {
             return <CRUDViews.OverviewEngineView {...props} timeMode="24h" />;
