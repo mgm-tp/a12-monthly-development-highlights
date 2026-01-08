@@ -38,6 +38,7 @@ import { uaaIntegration } from "./uaa/integration";
 import { enableReduxDevTools } from "./config/devtools";
 import { setLocaleKeycloakOnLoginMiddleware } from "./middlewares";
 import { LoadModelGraphSaga } from "./sagas/loadModelGraph";
+import { CustomDeepLinkCoder } from "./deeplink/customDeepLinkCoder";
 
 let config: ApplicationSetup;
 
@@ -76,7 +77,10 @@ export function setup(): {
             LoadModelGraphSaga,
             ...cdmSagas({ attachmentLoader: platformAttachmentLoader }),
             setRolesForUserAfterTokenRefresh,
-            ...DeepLinkingFactories.createSagas({ applyTriggers: [ModelActions.addModulesApplicationModels] })
+            ...DeepLinkingFactories.createSagas({
+                applyTriggers: [ModelActions.addModulesApplicationModels],
+                deepLinkCoder: new CustomDeepLinkCoder()
+            })
         ],
         preComputeNewDocuments: true,
         composeEnhancer: isProduction ? undefined : enableReduxDevTools(),
