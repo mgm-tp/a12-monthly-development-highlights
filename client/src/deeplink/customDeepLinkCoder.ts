@@ -16,7 +16,7 @@ import { store } from "../index";
 type EncodePayload = {
     initialActivityId: string | undefined;
     descriptor: Activity.Descriptor;
-    slices?: Activity.DataHolder["slices"];
+    slices: Activity.DataHolder["slices"];
 };
 
 function processActionsFromDescriptor(activityDescriptor: Activity.Descriptor): Action<ActivityActions.PushPayload>[] {
@@ -28,14 +28,14 @@ function processActionsFromDescriptor(activityDescriptor: Activity.Descriptor): 
         const { slices, ...restDescriptor } = initialActivityDescriptor;
         initialAction = ActivityActions.create({
             activityDescriptor: restDescriptor,
-            slices: slices ? JSON.parse(atob(slices)) : undefined
+            [SLICES_STRING]: slices ? JSON.parse(atob(slices)) : undefined
         });
         actions.push(initialAction);
     }
     const mainAction = ActivityActions.create({
         activityDescriptor: adjustedDescriptor,
         initiatingActivityId: initialAction ? initialAction.payload.activity.id : undefined,
-        slices: slices ? JSON.parse(atob(slices)) : undefined
+        [SLICES_STRING]: slices ? JSON.parse(atob(slices)) : undefined
     });
     actions.push(mainAction);
     return actions;
@@ -49,7 +49,7 @@ export class CustomDeepLinkCoder implements DeepLinkingFactories.DeepLinkCoder {
     encode(activity: Activity): string {
         return [activity]
             .map<EncodePayload>((a) => {
-                const slices = Activity.findDefaultDataHolder(a)?.slices;
+                const slices = Activity.findDefaultDataHolder(a)?.slices ?? {};
                 return {
                     initialActivityId: a.initiatingActivityId,
                     descriptor: a.descriptor,
@@ -78,29 +78,37 @@ function encode({ initialActivityId, descriptor, slices }: EncodePayload): strin
         .filter((propName) => descriptor[propName] !== undefined)
         .map((propName) => `${encodeURIComponent(propName)}:${encodeURIComponent(descriptor[propName] ?? "")}`)
         .join(",");
-    if (slices && Object.keys(slices).length > 0) {
+    if (isValidSlices(slices)) {
         const encodedSlices = btoa(JSON.stringify(slices));
-        encodedDescriptor += `,slices:${encodeURIComponent(encodedSlices)}`;
+        encodedDescriptor += `,${SLICES_STRING}:${encodeURIComponent(encodedSlices)}`;
     }
     if (initialActivityId) {
         const state = store.getState();
         const initialActivity = ActivitySelectors.activityById(initialActivityId)(state);
         if (initialActivity) {
-            const initialSlices = Activity.findDefaultDataHolder(initialActivity)?.slices;
+            const initialSlices = Activity.findDefaultDataHolder(initialActivity)?.slices ?? {};
             let priorScene;
-            if (initialSlices && Object.keys(initialSlices).length > 0) {
+            if (isValidSlices(initialSlices)) {
                 const encodedSlices = btoa(JSON.stringify(initialSlices));
                 priorScene = btoa(JSON.stringify({ ...initialActivity.descriptor, slices: encodedSlices }));
             } else {
                 priorScene = btoa(JSON.stringify(initialActivity.descriptor));
             }
-            encodedDescriptor += `,priorScene:${encodeURIComponent(priorScene)}`;
+            encodedDescriptor += `,${PRIOR_SCENE_STRING}:${encodeURIComponent(priorScene)}`;
         }
     }
     return encodedDescriptor;
 }
 
 const activityLinkPattern = /([^:,]*):([^,]*)/g;
-function decodeActivityLocation(activityLink: string): Activity.Descriptor {
+export function decodeActivityLocation(activityLink: string): Activity.Descriptor {
     return JSON.parse(`{${decodeURIComponent(activityLink.replace(activityLinkPattern, '"$1":"$2"'))}}`);
 }
+
+function isValidSlices(slices: Activity.DataHolder["slices"]): boolean {
+    delete slices["thumbnails"];
+    return !!slices.uiState && Object.keys(slices.uiState).length > 0;
+}
+
+export const PRIOR_SCENE_STRING = "priorScene";
+export const SLICES_STRING = "slices";

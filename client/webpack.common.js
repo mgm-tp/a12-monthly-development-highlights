@@ -61,7 +61,8 @@ module.exports = {
     output: {
         path: Path.join(__dirname, "build/webpack"),
         filename: "[name].bundle.[contenthash:8].js",
-        chunkFilename: "[name].chunk.[chunkhash:8].js"
+        chunkFilename: "[name].chunk.[chunkhash:8].js",
+        publicPath: "/"
     },
     plugins: [
         // Typescript type checking
