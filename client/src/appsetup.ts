@@ -76,7 +76,7 @@ export function setup(): {
             LoadModelGraphSaga,
             ...cdmSagas({ attachmentLoader: platformAttachmentLoader }),
             setRolesForUserAfterTokenRefresh,
-            DeepLinkingFactories.createWelcomePageSaga({ applyTriggers: [ModelActions.addModulesApplicationModels] })
+            ...DeepLinkingFactories.createSagas({ applyTriggers: [ModelActions.addModulesApplicationModels] })
         ],
         preComputeNewDocuments: true,
         composeEnhancer: isProduction ? undefined : enableReduxDevTools(),
@@ -103,7 +103,13 @@ export function setup(): {
     const clientConfiguration: UaaClientConfiguration = {
         serverURL: "/api",
         automaticallyLogin: true,
-        store: config.store
+        store: config.store,
+        overrideClientConfigures: {
+            oidc: {
+                redirect_uri: `${window.location.href}`,
+                automaticallyLogin: true
+            }
+        }
     };
     /*
      * Listen to the window.onbeforeunload event to trigger a dialog

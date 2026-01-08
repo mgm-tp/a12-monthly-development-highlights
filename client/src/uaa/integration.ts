@@ -34,7 +34,7 @@ export async function uaaIntegration(clientConfiguration: UaaClientConfiguration
             uaaOidcClient.login();
         } finally {
             // Remove keycloak params from the url
-            const baseUrl = `${appURL.origin}${appURL.pathname}`;
+            const baseUrl = `${appURL.origin}${appURL.pathname}${appURL.hash}`;
             window.history.pushState("name", "", baseUrl);
         }
     } else {
