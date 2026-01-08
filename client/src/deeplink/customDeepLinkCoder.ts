@@ -16,22 +16,26 @@ import { store } from "../index";
 type EncodePayload = {
     initialActivityId: string | undefined;
     descriptor: Activity.Descriptor;
+    slices?: Activity.DataHolder["slices"];
 };
 
 function processActionsFromDescriptor(activityDescriptor: Activity.Descriptor): Action<ActivityActions.PushPayload>[] {
-    const { priorScene, ...adjustedDescriptor } = activityDescriptor;
+    const { priorScene, slices, ...adjustedDescriptor } = activityDescriptor;
     const actions: Action<ActivityActions.PushPayload>[] = [];
     let initialAction;
     if (priorScene) {
         const initialActivityDescriptor = JSON.parse(atob(priorScene));
+        const { slices, ...restDescriptor } = initialActivityDescriptor;
         initialAction = ActivityActions.create({
-            activityDescriptor: initialActivityDescriptor
+            activityDescriptor: restDescriptor,
+            slices: slices ? JSON.parse(atob(slices)) : undefined
         });
         actions.push(initialAction);
     }
     const mainAction = ActivityActions.create({
         activityDescriptor: adjustedDescriptor,
-        initiatingActivityId: initialAction ? initialAction.payload.activity.id : undefined
+        initiatingActivityId: initialAction ? initialAction.payload.activity.id : undefined,
+        slices: slices ? JSON.parse(atob(slices)) : undefined
     });
     actions.push(mainAction);
     return actions;
@@ -42,12 +46,14 @@ function processActionsFromDescriptor(activityDescriptor: Activity.Descriptor): 
  * Deep link coder that encodes only activity descriptor in the deep link.
  */
 export class CustomDeepLinkCoder implements DeepLinkingFactories.DeepLinkCoder {
-    encode(activity: Activity, sourceActivities: Activity[]): string {
-        return [...sourceActivities, activity]
+    encode(activity: Activity): string {
+        return [activity]
             .map<EncodePayload>((a) => {
+                const slices = Activity.findDefaultDataHolder(a)?.slices;
                 return {
                     initialActivityId: a.initiatingActivityId,
-                    descriptor: a.descriptor
+                    descriptor: a.descriptor,
+                    slices
                 };
             })
             .map(encode)
@@ -66,17 +72,28 @@ export class CustomDeepLinkCoder implements DeepLinkingFactories.DeepLinkCoder {
     }
 }
 
-function encode({ initialActivityId, descriptor }: EncodePayload): string {
+function encode({ initialActivityId, descriptor, slices }: EncodePayload): string {
     // need to access properties and their values in a generic way
     let encodedDescriptor = Object.keys(descriptor)
         .filter((propName) => descriptor[propName] !== undefined)
         .map((propName) => `${encodeURIComponent(propName)}:${encodeURIComponent(descriptor[propName] ?? "")}`)
         .join(",");
+    if (slices && Object.keys(slices).length > 0) {
+        const encodedSlices = btoa(JSON.stringify(slices));
+        encodedDescriptor += `,slices:${encodeURIComponent(encodedSlices)}`;
+    }
     if (initialActivityId) {
         const state = store.getState();
         const initialActivity = ActivitySelectors.activityById(initialActivityId)(state);
         if (initialActivity) {
-            const priorScene = btoa(JSON.stringify(initialActivity.descriptor));
+            const initialSlices = Activity.findDefaultDataHolder(initialActivity)?.slices;
+            let priorScene;
+            if (initialSlices && Object.keys(initialSlices).length > 0) {
+                const encodedSlices = btoa(JSON.stringify(initialSlices));
+                priorScene = btoa(JSON.stringify({ ...initialActivity.descriptor, slices: encodedSlices }));
+            } else {
+                priorScene = btoa(JSON.stringify(initialActivity.descriptor));
+            }
             encodedDescriptor += `,priorScene:${encodeURIComponent(priorScene)}`;
         }
     }
