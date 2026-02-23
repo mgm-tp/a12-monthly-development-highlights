@@ -54,12 +54,23 @@ dependencyResolutionManagement {
             version('rewrite-static-analysis', '2.20.0')
             version('logstash','7.4')
             version('logback-classic','1.5.6')
+            version('lombok', '1.18.32')
+
+            version('junit', '6.0.1')
+            version('mockito', '5.20.0')
 
             library('rewrite-static-analysis', 'org.openrewrite.recipe', 'rewrite-static-analysis').versionRef('rewrite-static-analysis')
             library('spring-boot-configuration-processor', 'org.springframework.boot', 'spring-boot-configuration-processor').versionRef('spring-boot')
             library('spring-boot-devtools', 'org.springframework.boot', 'spring-boot-devtools').versionRef('spring-boot')
             library('logstash', 'net.logstash.logback', 'logstash-logback-encoder').versionRef('logstash')
             library('logback-classic', 'ch.qos.logback', 'logback-classic').versionRef('logback-classic')
+            library('lombok', 'org.projectlombok', 'lombok').versionRef('lombok')
+
+            library('junit-api', 'org.junit.jupiter', 'junit-jupiter-api').versionRef('junit')
+            library('junit-engine', 'org.junit.jupiter', 'junit-jupiter-engine').versionRef('junit')
+            library('junit-platform-launcher', 'org.junit.platform', 'junit-platform-launcher').versionRef('junit')
+            library('mockito', 'org.mockito', 'mockito-core').versionRef('mockito')
+            library('mockito-junit', 'org.mockito', 'mockito-junit-jupiter').versionRef('mockito')
         }
 
         testCatalogLibs {

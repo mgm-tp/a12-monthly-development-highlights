@@ -32,6 +32,10 @@ sourceSets {
             compileClasspath += sourceSets.generatedTypings.output
             runtimeClasspath += sourceSets.generatedTypings.output
         }
+        test {
+            compileClasspath += sourceSets.generatedTypings.output
+            runtimeClasspath += sourceSets.generatedTypings.output
+        }
     }
 }
 
@@ -42,6 +46,10 @@ dependencies {
     // Spring
     annotationProcessor libs.spring.boot.configuration.processor
     developmentOnly(libs.spring.boot.devtools)
+
+    // Lombok
+    implementation libs.lombok
+    annotationProcessor libs.lombok
 
     // A12 Dataservices
     implementation a12Libs.dataservices.server.app
@@ -66,6 +74,13 @@ dependencies {
     generatedTypingsImplementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-document-v2', version: a12Libs.versions.kernel.get()
     implementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-util', version: a12Libs.versions.kernel.get()
     implementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-facade', version: a12Libs.versions.kernel.get()
+
+    // Test
+    testImplementation libs.junit.api
+    testRuntimeOnly libs.junit.engine
+    testRuntimeOnly libs.junit.platform.launcher
+    testImplementation libs.mockito
+    testImplementation libs.mockito.junit
 }
 
 
@@ -99,6 +114,10 @@ springBoot {
             version = project.version
         }
     }
+}
+
+test {
+    useJUnitPlatform()
 }
 
 artifacts artifactsVar
