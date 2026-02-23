@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "Person_OM",
+    "id": "PersonChangelog_OM",
     "modelType": "overview",
     "modelVersion": "38.1.0",
     "locales": [
@@ -57,27 +57,7 @@
           "type": "filter"
         }
       ],
-      "minorElements": [
-        {
-          "type": "button",
-          "label": [
-            {
-              "locale": "en",
-              "text": "Add"
-            },
-            {
-              "locale": "de",
-              "text": "hinzufügen"
-            }
-          ],
-          "event": "add",
-          "icon": {
-            "name": "add"
-          },
-          "destructive": false,
-          "primary": false
-        }
-      ]
+      "minorElements": []
     },
     "footerBox": {
       "majorElements": [],

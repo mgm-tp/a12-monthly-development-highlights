@@ -1,0 +1,1371 @@
+{
+  "header": {
+    "id": "PersonChangelog_FM",
+    "modelType": "form",
+    "modelVersion": "37.3.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [
+      {
+        "locale": "en",
+        "text": "Person"
+      },
+      {
+        "locale": "de",
+        "text": "Person"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "savedAt",
+        "value": "2021-04-12T21:57:32.546"
+      },
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "alias": "Person_DM",
+        "modelType": "document",
+        "purpose": "data binding",
+        "reference": "Person_DM"
+      }
+    ]
+  },
+  "content": {
+    "subHeaderBox": {
+      "id": "subHeaderBox1",
+      "majorButtons": {
+        "button": [
+          {
+            "type": "NAVIGATION",
+            "id": "button-31878",
+            "name": "Details",
+            "buttonStyling": {
+              "label": {
+                "type": "Multilingual",
+                "multilingualText": {
+                  "text": [
+                    {
+                      "locale": "en",
+                      "text": "Details"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Details"
+                    }
+                  ]
+                }
+              },
+              "priority": "SECONDARY"
+            },
+            "target": "screen1",
+            "scope": "HIDDEN_IN_READONLY_MODE"
+          }
+        ]
+      }
+    },
+    "footerBox": {
+      "id": "footerBox1",
+      "minorButtons": {
+        "button": [
+          {
+            "type": "EVENT",
+            "id": "button-5415b",
+            "name": "Cancel",
+            "buttonStyling": {
+              "label": {
+                "type": "Multilingual",
+                "multilingualText": {
+                  "text": [
+                    {
+                      "locale": "en",
+                      "text": "Cancel"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Abbrechen"
+                    }
+                  ]
+                }
+              },
+              "priority": "SECONDARY",
+              "destructive": true
+            },
+            "event": "event_cancel",
+            "scope": "HIDDEN_IN_READONLY_MODE"
+          }
+        ]
+      }
+    },
+    "screens": [
+      {
+        "id": "screen1",
+        "name": "Screen1",
+        "screenElements": [
+          {
+            "type": "Section",
+            "id": "section_ed3c2",
+            "name": "FirstName",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "First Name"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Vorname"
+                  }
+                ]
+              }
+            },
+            "collapsible": true,
+            "initiallyCollapsed": true,
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid_3c637",
+                "name": "CurrentValue",
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row_b31a1",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_08d14",
+                        "label": {
+                          "type": "Multilingual",
+                          "multilingualText": {
+                            "text": [
+                              {
+                                "locale": "en",
+                                "text": "Current Value"
+                              },
+                              {
+                                "locale": "de",
+                                "text": "Aktueller Wert"
+                              }
+                            ]
+                          }
+                        },
+                        "readonly": true,
+                        "elementRef": "F3"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "InlineRepeat",
+                "id": "inlinerepeat_15bd8",
+                "name": "FirstName_Changelog_Repeat",
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_be5f0",
+                    "elementRef": "include_52bb2_field_aae15"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_10c1c",
+                    "elementRef": "include_52bb2_field_0fbd9"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_7eb0e",
+                    "elementRef": "include_52bb2_include_56750_field_81105"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_1b4f0",
+                    "elementRef": "include_52bb2_include_56750_field_6f40c"
+                  }
+                ],
+                "groupRef": "include_52bb2",
+                "enableAdd": false,
+                "enableRemove": false
+              }
+            ]
+          },
+          {
+            "type": "Section",
+            "id": "section_9b72e",
+            "name": "LastName",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Last Name"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Nachname"
+                  }
+                ]
+              }
+            },
+            "collapsible": true,
+            "initiallyCollapsed": true,
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid_b1cea",
+                "name": "CurrentValue",
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row_ca920",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_62c14",
+                        "label": {
+                          "type": "Multilingual",
+                          "multilingualText": {
+                            "text": [
+                              {
+                                "locale": "en",
+                                "text": "Current Value"
+                              },
+                              {
+                                "locale": "de",
+                                "text": "Aktueller Wert"
+                              }
+                            ]
+                          }
+                        },
+                        "readonly": true,
+                        "elementRef": "F4"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "InlineRepeat",
+                "id": "inlinerepeat_691a9",
+                "name": "LastName_Changelog_Repeat",
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_e0039",
+                    "elementRef": "include_9969f_field_aae15"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_9abe1",
+                    "elementRef": "include_9969f_field_0fbd9"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_9826f",
+                    "elementRef": "include_9969f_include_56750_field_81105"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_99b9c",
+                    "elementRef": "include_9969f_include_56750_field_6f40c"
+                  }
+                ],
+                "groupRef": "include_9969f",
+                "enableAdd": false,
+                "enableRemove": false
+              }
+            ]
+          },
+          {
+            "type": "Section",
+            "id": "section_a98c5",
+            "name": "Gender",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Gender"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Geschlecht"
+                  }
+                ]
+              }
+            },
+            "collapsible": true,
+            "initiallyCollapsed": true,
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid_918e5",
+                "name": "CurrentValue",
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row_d0f60",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_d2d26",
+                        "label": {
+                          "type": "Multilingual",
+                          "multilingualText": {
+                            "text": [
+                              {
+                                "locale": "en",
+                                "text": "Current Value"
+                              },
+                              {
+                                "locale": "de",
+                                "text": "Aktueller Wert"
+                              }
+                            ]
+                          }
+                        },
+                        "readonly": true,
+                        "elementRef": "F6"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "InlineRepeat",
+                "id": "inlinerepeat_e2914",
+                "name": "Gender_Changelog_Repeat",
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_5d9e2",
+                    "elementRef": "include_43b8d_field_aae15"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_1fcda",
+                    "elementRef": "include_43b8d_field_0fbd9"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_ab1c6",
+                    "elementRef": "include_43b8d_include_56750_field_81105"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_9abd3",
+                    "elementRef": "include_43b8d_include_56750_field_6f40c"
+                  }
+                ],
+                "groupRef": "include_43b8d",
+                "enableAdd": false,
+                "enableRemove": false
+              }
+            ]
+          },
+          {
+            "type": "Section",
+            "id": "section_08d07",
+            "name": "Nationality",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Nationality"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Nationalität"
+                  }
+                ]
+              }
+            },
+            "collapsible": true,
+            "initiallyCollapsed": true,
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid_423e0",
+                "name": "CurrentValue",
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row_dc44c",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_a0a98",
+                        "label": {
+                          "type": "Multilingual",
+                          "multilingualText": {
+                            "text": [
+                              {
+                                "locale": "en",
+                                "text": "Current Value"
+                              },
+                              {
+                                "locale": "de",
+                                "text": "Aktueller Wert"
+                              }
+                            ]
+                          }
+                        },
+                        "readonly": true,
+                        "elementRef": "F9"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "InlineRepeat",
+                "id": "inlinerepeat_0b86a",
+                "name": "Nationality_Changelog_Repeat",
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_e5957",
+                    "elementRef": "include_fe02a_field_aae15"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_98c87",
+                    "elementRef": "include_fe02a_field_0fbd9"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_2f223",
+                    "elementRef": "include_fe02a_include_56750_field_81105"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_2feeb",
+                    "elementRef": "include_fe02a_include_56750_field_6f40c"
+                  }
+                ],
+                "groupRef": "include_fe02a",
+                "enableAdd": false,
+                "enableRemove": false
+              }
+            ]
+          },
+          {
+            "type": "Section",
+            "id": "section_201aa",
+            "name": "EmailAddress",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Email Address"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Email Adresse"
+                  }
+                ]
+              }
+            },
+            "collapsible": true,
+            "initiallyCollapsed": true,
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid_2d176",
+                "name": "CurrentValue",
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row_865be",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_624c6",
+                        "label": {
+                          "type": "Multilingual",
+                          "multilingualText": {
+                            "text": [
+                              {
+                                "locale": "en",
+                                "text": "Current Value"
+                              },
+                              {
+                                "locale": "de",
+                                "text": "Aktueller Wert"
+                              }
+                            ]
+                          }
+                        },
+                        "readonly": true,
+                        "elementRef": "field_8d972"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "InlineRepeat",
+                "id": "inlinerepeat_ab101",
+                "name": "EmailAddress_Changelog_Repeat",
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_bfa7d",
+                    "elementRef": "include_595ad_field_aae15"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_a55d6",
+                    "elementRef": "include_595ad_field_0fbd9"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_0e2e0",
+                    "elementRef": "include_595ad_include_56750_field_81105"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_b4321",
+                    "elementRef": "include_595ad_include_56750_field_6f40c"
+                  }
+                ],
+                "groupRef": "include_595ad",
+                "enableAdd": false,
+                "enableRemove": false
+              }
+            ]
+          },
+          {
+            "type": "Section",
+            "id": "section_9c710",
+            "name": "Photo",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Photo"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Foto"
+                  }
+                ]
+              }
+            },
+            "collapsible": true,
+            "initiallyCollapsed": true,
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "controlgrid_50abd",
+                "name": "Current Value",
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "row_dc5d1",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "control_e9847",
+                        "label": {
+                          "type": "Multilingual",
+                          "multilingualText": {
+                            "text": [
+                              {
+                                "locale": "en",
+                                "text": "Current Photo"
+                              },
+                              {
+                                "locale": "de",
+                                "text": "Aktuelles Foto"
+                              }
+                            ]
+                          }
+                        },
+                        "readonly": true,
+                        "elementRef": "group_05909"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "InlineRepeat",
+                "id": "inlinerepeat_e946b",
+                "name": "Photo_Changelog_Repeat",
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_0d309",
+                    "label": {
+                      "type": "Multilingual",
+                      "multilingualText": {
+                        "text": [
+                          {
+                            "locale": "en",
+                            "text": "Old Photo"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Altes Foto"
+                          }
+                        ]
+                      }
+                    },
+                    "width": 1,
+                    "elementRef": "include_5697d_group_8fdb5"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_0b9d8",
+                    "label": {
+                      "type": "Multilingual",
+                      "multilingualText": {
+                        "text": [
+                          {
+                            "locale": "en",
+                            "text": "New Photo"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Neues Foto"
+                          }
+                        ]
+                      }
+                    },
+                    "width": 1,
+                    "elementRef": "include_5697d_group_afef0"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_103fa",
+                    "elementRef": "include_5697d_include_9cdfc_field_81105"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_4706f",
+                    "elementRef": "include_5697d_include_9cdfc_field_6f40c"
+                  }
+                ],
+                "groupRef": "include_5697d",
+                "enableAdd": false,
+                "enableRemove": false
+              }
+            ]
+          },
+          {
+            "type": "Section",
+            "id": "section_e090f",
+            "name": "Addresses",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Addresses"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Adressen"
+                  }
+                ]
+              }
+            },
+            "collapsible": true,
+            "initiallyCollapsed": true,
+            "screenElements": [
+              {
+                "type": "DetachedRepeat",
+                "id": "detachedrepeat_aa842",
+                "name": "Addresses_Repeat",
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_e508e",
+                    "elementRef": "F12"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_93364",
+                    "elementRef": "F13"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_2793e",
+                    "elementRef": "F14"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_41e7a",
+                    "elementRef": "F15"
+                  }
+                ],
+                "groupRef": "G10",
+                "enableAdd": false,
+                "enableRemove": false,
+                "detailScreen": {
+                  "id": "screen_89720",
+                  "name": "Details",
+                  "screenElements": [
+                    {
+                      "type": "ControlGrid",
+                      "id": "controlgrid_1e43d",
+                      "name": "Addresses_Controls",
+                      "readonly": true,
+                      "layout": {
+                        "lg": "3-3-3-3"
+                      },
+                      "row": [
+                        {
+                          "type": "Row",
+                          "id": "row_efa49",
+                          "cell": [
+                            {
+                              "type": "Control",
+                              "id": "control_76dee",
+                              "label": {
+                                "type": "Multilingual",
+                                "multilingualText": {
+                                  "text": [
+                                    {
+                                      "locale": "en",
+                                      "text": "Selected Street"
+                                    },
+                                    {
+                                      "locale": "de",
+                                      "text": "Ausgewählte Straße"
+                                    }
+                                  ]
+                                }
+                              },
+                              "elementRef": "F12"
+                            },
+                            {
+                              "type": "Control",
+                              "id": "control_b0d84",
+                              "label": {
+                                "type": "Multilingual",
+                                "multilingualText": {
+                                  "text": [
+                                    {
+                                      "locale": "en",
+                                      "text": "Selected City"
+                                    },
+                                    {
+                                      "locale": "de",
+                                      "text": "Ausgewählte Stadt"
+                                    }
+                                  ]
+                                }
+                              },
+                              "elementRef": "F13"
+                            },
+                            {
+                              "type": "Control",
+                              "id": "control_74bae",
+                              "label": {
+                                "type": "Multilingual",
+                                "multilingualText": {
+                                  "text": [
+                                    {
+                                      "locale": "en",
+                                      "text": "Selected Country"
+                                    },
+                                    {
+                                      "locale": "de",
+                                      "text": "Ausgewähltes Land"
+                                    }
+                                  ]
+                                }
+                              },
+                              "elementRef": "F14"
+                            },
+                            {
+                              "type": "Control",
+                              "id": "control_24b28",
+                              "label": {
+                                "type": "Multilingual",
+                                "multilingualText": {
+                                  "text": [
+                                    {
+                                      "locale": "en",
+                                      "text": "Selected Post Code"
+                                    },
+                                    {
+                                      "locale": "de",
+                                      "text": "Ausgewählte PLZ"
+                                    }
+                                  ]
+                                }
+                              },
+                              "elementRef": "F15"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "InlineRepeat",
+                      "id": "inlinerepeat_3676d",
+                      "name": "Street_Changelog_Repeat",
+                      "title": {
+                        "type": "Multilingual",
+                        "multilingualText": {
+                          "text": [
+                            {
+                              "locale": "en",
+                              "text": "Street Changelog"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Straße  Changelog"
+                            }
+                          ]
+                        }
+                      },
+                      "readonly": true,
+                      "repeatOverviewColumn": [
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_d84f8",
+                          "elementRef": "include_b0678_field_aae15"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_a3a57",
+                          "elementRef": "include_b0678_field_0fbd9"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_76b57",
+                          "elementRef": "include_b0678_include_56750_field_81105"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_dd68e",
+                          "elementRef": "include_b0678_include_56750_field_6f40c"
+                        }
+                      ],
+                      "groupRef": "include_b0678",
+                      "enableAdd": false,
+                      "enableRemove": false
+                    },
+                    {
+                      "type": "InlineRepeat",
+                      "id": "inlinerepeat_7f842",
+                      "name": "City_Changelog_Repeat",
+                      "title": {
+                        "type": "Multilingual",
+                        "multilingualText": {
+                          "text": [
+                            {
+                              "locale": "en",
+                              "text": "City Changelog"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Stadt Changelog"
+                            }
+                          ]
+                        }
+                      },
+                      "readonly": true,
+                      "repeatOverviewColumn": [
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_3f35f",
+                          "elementRef": "include_aee1e_field_aae15"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_9b33a",
+                          "elementRef": "include_aee1e_field_0fbd9"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_a19d8",
+                          "elementRef": "include_aee1e_include_56750_field_81105"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_95bea",
+                          "elementRef": "include_aee1e_include_56750_field_6f40c"
+                        }
+                      ],
+                      "groupRef": "include_aee1e",
+                      "enableAdd": false,
+                      "enableRemove": false
+                    },
+                    {
+                      "type": "InlineRepeat",
+                      "id": "inlinerepeat_7fdf3",
+                      "name": "Country_Changelog_Repeat",
+                      "title": {
+                        "type": "Multilingual",
+                        "multilingualText": {
+                          "text": [
+                            {
+                              "locale": "en",
+                              "text": "Country Changelog"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Land Changelog"
+                            }
+                          ]
+                        }
+                      },
+                      "readonly": true,
+                      "repeatOverviewColumn": [
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_d042e",
+                          "elementRef": "include_68fc5_field_aae15"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_681d8",
+                          "elementRef": "include_68fc5_field_0fbd9"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_f2373",
+                          "elementRef": "include_68fc5_include_56750_field_81105"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_16894",
+                          "elementRef": "include_68fc5_include_56750_field_6f40c"
+                        }
+                      ],
+                      "groupRef": "include_68fc5",
+                      "enableAdd": false,
+                      "enableRemove": false
+                    },
+                    {
+                      "type": "InlineRepeat",
+                      "id": "inlinerepeat_4e9dd",
+                      "name": "PostCode_Changelog_Repeat",
+                      "title": {
+                        "type": "Multilingual",
+                        "multilingualText": {
+                          "text": [
+                            {
+                              "locale": "en",
+                              "text": "Post code Changelog"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "PLZ Changelog"
+                            }
+                          ]
+                        }
+                      },
+                      "readonly": true,
+                      "repeatOverviewColumn": [
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_6d056",
+                          "elementRef": "include_5ff21_field_aae15"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_f07d7",
+                          "elementRef": "include_5ff21_field_0fbd9"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_07d82",
+                          "elementRef": "include_5ff21_include_56750_field_81105"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_df51d",
+                          "elementRef": "include_5ff21_include_56750_field_6f40c"
+                        }
+                      ],
+                      "groupRef": "include_5ff21",
+                      "enableAdd": false,
+                      "enableRemove": false
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "InlineRepeat",
+                "id": "inlinerepeat_7be6a",
+                "name": "Addresses_Changelog_Repeat",
+                "title": {
+                  "type": "Multilingual",
+                  "multilingualText": {
+                    "text": [
+                      {
+                        "locale": "en",
+                        "text": "Repetition Changelog"
+                      },
+                      {
+                        "locale": "de",
+                        "text": "Wiederholungschangelog"
+                      }
+                    ]
+                  }
+                },
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_c5abe",
+                    "elementRef": "include_40518_field_56421"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_2974b",
+                    "elementRef": "include_40518_field_8ef34"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_05924",
+                    "elementRef": "include_40518_include_e5867_field_81105"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_3da79",
+                    "elementRef": "include_40518_include_e5867_field_6f40c"
+                  }
+                ],
+                "groupRef": "include_40518",
+                "enableAdd": false,
+                "enableRemove": false
+              }
+            ]
+          },
+          {
+            "type": "Section",
+            "id": "section_6846a",
+            "name": "Phones",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Phones"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Telefonnummern"
+                  }
+                ]
+              }
+            },
+            "collapsible": true,
+            "initiallyCollapsed": true,
+            "screenElements": [
+              {
+                "type": "DetachedRepeat",
+                "id": "detachedrepeat_bd075",
+                "name": "Phones_Repeat",
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_0bcb8",
+                    "width": 1,
+                    "elementRef": "F17"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_ba134",
+                    "width": 1,
+                    "elementRef": "F18"
+                  }
+                ],
+                "groupRef": "G16",
+                "enableAdd": false,
+                "enableRemove": false,
+                "detailScreen": {
+                  "id": "screen_9ced6",
+                  "name": "Details",
+                  "screenElements": [
+                    {
+                      "type": "ControlGrid",
+                      "id": "controlgrid_ddcc6",
+                      "name": "Phones_Controls",
+                      "readonly": true,
+                      "layout": {
+                        "lg": "6-6"
+                      },
+                      "row": [
+                        {
+                          "type": "Row",
+                          "id": "row_b3df1",
+                          "cell": [
+                            {
+                              "type": "Control",
+                              "id": "control_65cfb",
+                              "label": {
+                                "type": "Multilingual",
+                                "multilingualText": {
+                                  "text": [
+                                    {
+                                      "locale": "en",
+                                      "text": "Selected Phone Number"
+                                    },
+                                    {
+                                      "locale": "de",
+                                      "text": "Ausgewählte Telefonnummer"
+                                    }
+                                  ]
+                                }
+                              },
+                              "elementRef": "F17"
+                            },
+                            {
+                              "type": "Control",
+                              "id": "control_0d14d",
+                              "label": {
+                                "type": "Multilingual",
+                                "multilingualText": {
+                                  "text": [
+                                    {
+                                      "locale": "en",
+                                      "text": "Selected Type"
+                                    },
+                                    {
+                                      "locale": "de",
+                                      "text": "Ausgewählter Typ"
+                                    }
+                                  ]
+                                }
+                              },
+                              "elementRef": "F18"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "InlineRepeat",
+                      "id": "inlinerepeat_02904",
+                      "name": "PhoneNumber_Changelog_Repeat",
+                      "title": {
+                        "type": "Multilingual",
+                        "multilingualText": {
+                          "text": [
+                            {
+                              "locale": "en",
+                              "text": "Phone Number Changelog"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Telefonnummer Changelog"
+                            }
+                          ]
+                        }
+                      },
+                      "readonly": true,
+                      "repeatOverviewColumn": [
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_a75e4",
+                          "elementRef": "include_db06d_field_aae15"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_2aeb1",
+                          "elementRef": "include_db06d_field_0fbd9"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_0d80b",
+                          "elementRef": "include_db06d_include_56750_field_81105"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_5f17a",
+                          "elementRef": "include_db06d_include_56750_field_6f40c"
+                        }
+                      ],
+                      "groupRef": "include_db06d",
+                      "enableAdd": false,
+                      "enableRemove": false
+                    },
+                    {
+                      "type": "InlineRepeat",
+                      "id": "inlinerepeat_7149f",
+                      "name": "Type_Changelog_Repeat",
+                      "title": {
+                        "type": "Multilingual",
+                        "multilingualText": {
+                          "text": [
+                            {
+                              "locale": "en",
+                              "text": "Type Changelog"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "Typ Changelog"
+                            }
+                          ]
+                        }
+                      },
+                      "readonly": true,
+                      "repeatOverviewColumn": [
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_20da3",
+                          "elementRef": "include_77323_field_aae15"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_38f24",
+                          "elementRef": "include_77323_field_0fbd9"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_5d4da",
+                          "elementRef": "include_77323_include_56750_field_81105"
+                        },
+                        {
+                          "type": "FieldBasedRepeatOverviewColumn",
+                          "id": "fieldbasedrepeatoverviewcolumn_28cc8",
+                          "elementRef": "include_77323_include_56750_field_6f40c"
+                        }
+                      ],
+                      "groupRef": "include_77323",
+                      "enableAdd": false,
+                      "enableRemove": false
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "InlineRepeat",
+                "id": "inlinerepeat_aa248",
+                "name": "Phones_Changelog_Repeat",
+                "title": {
+                  "type": "Multilingual",
+                  "multilingualText": {
+                    "text": [
+                      {
+                        "locale": "en",
+                        "text": "Repetition Changelog"
+                      },
+                      {
+                        "locale": "de",
+                        "text": "Wiederholungschangelog"
+                      }
+                    ]
+                  }
+                },
+                "readonly": true,
+                "repeatOverviewColumn": [
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_f9d83",
+                    "elementRef": "include_8da07_field_56421"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_e079e",
+                    "elementRef": "include_8da07_field_8ef34"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_54be5",
+                    "elementRef": "include_8da07_include_e5867_field_81105"
+                  },
+                  {
+                    "type": "FieldBasedRepeatOverviewColumn",
+                    "id": "fieldbasedrepeatoverviewcolumn_c8a44",
+                    "elementRef": "include_8da07_include_e5867_field_6f40c"
+                  }
+                ],
+                "groupRef": "include_8da07",
+                "enableAdd": false,
+                "enableRemove": false
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fieldConfiguration": {
+      "field": [
+        {
+          "elementRef": "group_05909",
+          "attachmentConfig": {
+            "defaultAction": "download"
+          }
+        },
+        {
+          "elementRef": "include_5697d_group_8fdb5",
+          "attachmentConfig": {
+            "defaultAction": "download"
+          }
+        },
+        {
+          "elementRef": "include_5697d_group_afef0",
+          "attachmentConfig": {
+            "defaultAction": "download"
+          }
+        }
+      ]
+    },
+    "groupConfiguration": {},
+    "defaults": {
+      "buttonLabels": {
+        "ADD": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "Add"
+            },
+            {
+              "locale": "de",
+              "text": "Hinzufügen"
+            }
+          ]
+        },
+        "CANCEL": {
+          "text": [
+            {
+              "locale": "en",
+              "text": "Cancel"
+            },
+            {
+              "locale": "de",
+              "text": "Abbrechen"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

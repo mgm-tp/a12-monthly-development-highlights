@@ -124,6 +124,97 @@
             ]
           }
         ]
+      },
+      {
+        "name": "PersonChangelogModule",
+        "menu": {
+          "name": "Changelog",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Changelog"
+            },
+            {
+              "locale": "de",
+              "text": "Changelog"
+            }
+          ],
+          "initialActivity": {
+            "descriptor": {
+              "module": "PersonChangelog"
+            }
+          }
+        },
+        "flows": [
+          {
+            "name": "PersonChangelogFlow",
+            "scenes": [
+              {
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "layout": {
+                        "name": "MasterDetail"
+                      },
+                      "type": "REGION_CLEAR"
+                    },
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "OverviewEngine",
+                      "models": [
+                        {
+                          "modelType": "overview",
+                          "name": "PersonChangelog_OM"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "name": "PersonChangelogOverview",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "PersonChangelog"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": false
+                  }
+                ],
+                "description": "Overview of Person Documents"
+              },
+              {
+                "sceneChange": {
+                  "onEnter": [
+                    {
+                      "type": "VIEW_ADD",
+                      "name": "FormEngine",
+                      "models": [
+                        {
+                          "modelType": "form",
+                          "name": "PersonChangelog_FM",
+                          "documentModel": "Person_DM"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                "name": "PersonChangelogForm",
+                "description": "Form showing on Person (with changelog) Document",
+                "matchConditions": [
+                  {
+                    "key": "module",
+                    "mustEqual": "PersonChangelog"
+                  },
+                  {
+                    "key": "instance",
+                    "isSet": true
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ],
     "region": {

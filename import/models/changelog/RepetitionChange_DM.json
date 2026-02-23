@@ -1,0 +1,138 @@
+{
+  "header": {
+    "id": "RepetitionChange_DM",
+    "modelType": "document",
+    "modelVersion": "28.3.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "alias": "ChangeMetadata_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "ChangeMetadata_DM"
+      }
+    ]
+  },
+  "content": {
+    "modelInfo": {
+      "name": "RepetitionChange_DM"
+    },
+    "modelConfig": {
+      "timeZone": "UTC",
+      "decimalSeparator": ".",
+      "conditionLanguage": {
+        "code": "en_US"
+      }
+    },
+    "modelRoot": {
+      "rootGroups": [
+        {
+          "type": "Group",
+          "id": "group_be734",
+          "name": "RepetitionChange",
+          "Group": {
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Field",
+                "id": "field_56421",
+                "name": "ChangeType",
+                "Field": {
+                  "fieldType": {
+                    "type": "EnumerationType",
+                    "EnumerationType": {
+                      "values": [
+                        {
+                          "value": "ADDED",
+                          "label": [
+                            {
+                              "locale": "en",
+                              "text": "added"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "hinzugefügt"
+                            }
+                          ]
+                        },
+                        {
+                          "value": "DELETED",
+                          "label": [
+                            {
+                              "locale": "en",
+                              "text": "deleted"
+                            },
+                            {
+                              "locale": "de",
+                              "text": "entfernt"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Change Type"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Änderungstyp"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Field",
+                "id": "field_8ef34",
+                "name": "RepetitionDetails",
+                "Field": {
+                  "fieldType": {
+                    "type": "StringType",
+                    "StringType": {
+                      "lineBreaksPermitted": true
+                    }
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Repetition Details"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Wiederholungsdetails"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "include_e5867",
+                "name": "ChangeMetadata",
+                "Group": {
+                  "repeatability": 1,
+                  "modelAlias": "ChangeMetadata_DM"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
