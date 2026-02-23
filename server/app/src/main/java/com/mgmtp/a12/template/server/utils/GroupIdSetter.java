@@ -22,13 +22,10 @@ public class GroupIdSetter {
     public DocumentV2 addIdToGroups(DocumentV2 document) {
         Set<String> groupPathsWithId = getGroupPathsWithId(document.getDocumentModelId());
 
-        // change document?
+        DocumentVisitorForGroupIdSetter visitor = new DocumentVisitorForGroupIdSetter(groupPathsWithId);
+        document.traverse(visitor);
 
-        // traverse document
-
-        // apply update actions
-
-        return document;
+        return document.withBatchUpdates(visitor.getUpdateActions());
     }
 
     private Set<String> getGroupPathsWithId(String documentModelId) {

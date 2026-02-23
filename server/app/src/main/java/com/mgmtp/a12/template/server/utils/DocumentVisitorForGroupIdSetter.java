@@ -2,12 +2,17 @@ package com.mgmtp.a12.template.server.utils;
 
 import com.mgmtp.a12.kernel.md.document.apiV2.DocumentPointer;
 import com.mgmtp.a12.kernel.md.document.apiV2.UpdateAction;
+import com.mgmtp.a12.kernel.md.document.apiV2.immutable.FieldInstanceV2;
 import com.mgmtp.a12.kernel.md.document.apiV2.immutable.GroupInstanceV2;
 import com.mgmtp.a12.kernel.md.document.apiV2.immutable.utils.IDocumentV2Visitor;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
+
+import static com.mgmtp.a12.template.server.utils.Constants.ID_POINTER;
 
 class DocumentVisitorForGroupIdSetter implements IDocumentV2Visitor {
 
@@ -23,12 +28,14 @@ class DocumentVisitorForGroupIdSetter implements IDocumentV2Visitor {
     @Override
     public DescendType visitGroup(DocumentPointer pointerRelativeToBase, GroupInstanceV2 group) {
 
-        // identify if the group is present in the given paths
-        // mention descendant and ancestor of (see DocumentPointer#isDescendantOf and #isAncestorOf)
-
-        // implement id if not present
-
-        // create update action
+        if (groupPathsWithId.contains(pointerRelativeToBase.fullName())) {
+            String id = (String) group.fieldValue(ID_POINTER);
+            if (StringUtils.isNotBlank(id)) {
+                String uuid = UUID.randomUUID().toString();
+                DocumentPointer idPointer = pointerRelativeToBase.withConcatenated(ID_POINTER);
+                updateActions.add(UpdateAction.putField(idPointer, FieldInstanceV2.ofValue(uuid)));
+            }
+        }
 
         return IDocumentV2Visitor.super.visitGroup(pointerRelativeToBase, group);
     }
