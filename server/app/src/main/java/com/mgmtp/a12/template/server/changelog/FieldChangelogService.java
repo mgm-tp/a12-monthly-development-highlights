@@ -32,14 +32,33 @@ class FieldChangelogService extends CommonChangelogService {
             DocumentPointer fieldPointer = fieldInstanceEntry.getKey();
             FieldInstanceV2 referenceField = referenceFieldInstances.remove(fieldPointer);
 
-            // compare and create changelog entry using GroupInstanceV2
-            // use FieldChange pointer
+            Optional<GroupInstanceV2> changelogEntry = createFieldChangelogEntry(
+                    fieldInstanceEntry.getValue(),
+                    referenceField
+            );
 
-            // call addChangelogEntryToDocument
+            if (changelogEntry.isPresent()) {
+                result = addChangelogEntryToDocument(
+                        result,
+                        FieldChange._viewOf(changelogEntry.get()),
+                        FieldChange._pointer().changeMetadata(),
+                        fieldPointer
+                );
+            }
 
         }
         for (Map.Entry<DocumentPointer, FieldInstanceV2> entry : referenceFieldInstances.entrySet()) {
-            // implement deleted cases
+            GroupInstanceV2 changelogEntry = GroupInstanceV2.empty();
+            changelogEntry = changelogEntry.withField(
+                    FieldChange._pointer().oldValue()._unwrap(),
+                    entry.getValue()
+            );
+            result = addChangelogEntryToDocument(
+                    result,
+                    FieldChange._viewOf(changelogEntry),
+                    FieldChange._pointer().changeMetadata(),
+                    entry.getKey()
+            );
         }
 
         result = processRepeatableFields(

@@ -30,7 +30,7 @@ class DocumentVisitorForGroupIdSetter implements IDocumentV2Visitor {
 
         if (groupPathsWithId.contains(pointerRelativeToBase.fullName())) {
             String id = (String) group.fieldValue(ID_POINTER);
-            if (StringUtils.isNotBlank(id)) {
+            if (StringUtils.isBlank(id)) {
                 String uuid = UUID.randomUUID().toString();
                 DocumentPointer idPointer = pointerRelativeToBase.withConcatenated(ID_POINTER);
                 updateActions.add(UpdateAction.putField(idPointer, FieldInstanceV2.ofValue(uuid)));
