@@ -1,0 +1,2812 @@
+{
+  "header": {
+    "id": "Person_DM",
+    "modelType": "document",
+    "modelVersion": "28.3.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "savedAt",
+        "value": "2020-02-15T17:30:50.763+01:00"
+      },
+      {
+        "name": "roles",
+        "value": "user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "alias": "ChangeMetadata_DM",
+        "modelType": "document",
+        "purpose": "transitiveInclude",
+        "reference": "ChangeMetadata_DM"
+      },
+      {
+        "alias": "FieldChange_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "FieldChange_DM"
+      },
+      {
+        "alias": "AttachmentChange_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "AttachmentChange_DM"
+      },
+      {
+        "alias": "RepetitionChange_DM",
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "RepetitionChange_DM"
+      }
+    ]
+  },
+  "content": {
+    "modelInfo": {
+      "name": "Person_DM",
+      "immutable": false,
+      "joinedModelsInfo": "Person_DM-document-meta-data+Add"
+    },
+    "modelConfig": {
+      "timeZone": "UTC",
+      "decimalSeparator": ".",
+      "conditionLanguage": {
+        "code": "en_US"
+      }
+    },
+    "modelRoot": {
+      "rootGroups": [
+        {
+          "type": "Group",
+          "id": "G11",
+          "name": "Person",
+          "Group": {
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Group",
+                "id": "G2",
+                "name": "PersonalData",
+                "Group": {
+                  "repeatability": 1,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "F3",
+                      "name": "FirstName",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "First Name"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Vorname"
+                          }
+                        ],
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_52bb2",
+                      "name": "FirstName_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_52bb2_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_52bb2_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_52bb2_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_52bb2_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_52bb2_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F4",
+                      "name": "LastName",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "de",
+                            "text": "Nachname"
+                          },
+                          {
+                            "locale": "en",
+                            "text": "Last Name"
+                          }
+                        ],
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_9969f",
+                      "name": "LastName_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_9969f_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_9969f_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_9969f_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_9969f_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_9969f_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F6",
+                      "name": "Gender",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "EnumerationType",
+                          "EnumerationType": {
+                            "values": [
+                              {
+                                "value": "MALE",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Male"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Männlich"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "FEMALE",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Female"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Weiblich"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "de",
+                            "text": "Geschlecht"
+                          },
+                          {
+                            "locale": "en",
+                            "text": "Gender"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_43b8d",
+                      "name": "Gender_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_43b8d_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_43b8d_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_43b8d_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_43b8d_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_43b8d_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F7",
+                      "name": "DateOfBirth",
+                      "Field": {
+                        "fieldType": {
+                          "type": "DateType",
+                          "DateType": {
+                            "format": "yyyy-MM-dd"
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Date of Birth"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Geburtstag"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F8",
+                      "name": "PlaceOfBirth",
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Place of Birth"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Geburtsort"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F9",
+                      "name": "Nationality",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Nationality"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Nationalität"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_fe02a",
+                      "name": "Nationality_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_fe02a_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_fe02a_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_fe02a_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_fe02a_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_fe02a_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_8d972",
+                      "name": "EmailAddress",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType",
+                          "StringType": {
+                            "errorMessage": [
+                              {
+                                "locale": "en",
+                                "text": "Please enter a valid email address."
+                              },
+                              {
+                                "locale": "de",
+                                "text": "Bitte geben Sie eine valide E-Mail-Adresse an."
+                              }
+                            ],
+                            "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Email Address"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "E-Mail-Adresse"
+                          }
+                        ],
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_595ad",
+                      "name": "EmailAddress_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_595ad_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_595ad_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_595ad_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_595ad_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_595ad_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "group_05909",
+                      "name": "Photo",
+                      "Group": {
+                        "repeatability": 1,
+                        "usageType": "attachment",
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "field_a9ed3",
+                            "name": "original_filename",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_e1d6a",
+                            "name": "internal_filename",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_9fcd3",
+                            "name": "content",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType",
+                                "StringType": {
+                                  "lineBreaksPermitted": true,
+                                  "noValueValidation": true
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_145b4",
+                            "name": "attachment_id",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_58899",
+                            "name": "size",
+                            "Field": {
+                              "fieldType": {
+                                "type": "NumberType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_72463",
+                            "name": "mime_type",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_932de",
+                            "name": "thumbnail",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_867ef",
+                            "name": "category",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_6346c",
+                            "name": "description",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Rule",
+                            "id": "rule_6ed58",
+                            "name": "AttachmentInternalFilenameRequired",
+                            "Rule": {
+                              "errorEntityRelPath": "../internal_filename",
+                              "errorCode": "Errorrule_6ed58",
+                              "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(internal_filename)",
+                              "severity": "ERROR",
+                              "errorMessage": [
+                                {
+                                  "locale": "de",
+                                  "text": "Internal Error: Field $internal_filename$ of customType attachment is not filled."
+                                },
+                                {
+                                  "locale": "en",
+                                  "text": "Internal Error: Field $internal_filename$ of customType attachment is not filled."
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Rule",
+                            "id": "rule_b4062",
+                            "name": "AttachmentMimeTypeRequired",
+                            "Rule": {
+                              "errorEntityRelPath": "../mime_type",
+                              "errorCode": "Errorrule_b4062",
+                              "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(mime_type)",
+                              "severity": "ERROR",
+                              "errorMessage": [
+                                {
+                                  "locale": "de",
+                                  "text": "Internal Error: Field $mime_type$ of customType attachment is not filled."
+                                },
+                                {
+                                  "locale": "en",
+                                  "text": "Internal Error: Field $mime_type$ of customType attachment is not filled."
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Rule",
+                            "id": "rule_3a21c",
+                            "name": "AttachmentIdOrContentFilled",
+                            "Rule": {
+                              "errorEntityRelPath": "../content",
+                              "errorCode": "Errorrule_3a21c",
+                              "errorCondition": "GroupFilled(RuleGroup) and NotExactlyOneFieldFilled(attachment_id, content)",
+                              "severity": "ERROR",
+                              "errorMessage": [
+                                {
+                                  "locale": "de",
+                                  "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
+                                },
+                                {
+                                  "locale": "en",
+                                  "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Rule",
+                            "id": "rule_37050",
+                            "name": "SizeOfContentFilled",
+                            "Rule": {
+                              "errorEntityRelPath": "../content",
+                              "errorCode": "Errorrule_37050",
+                              "errorCondition": "FieldFilled(content) and FieldNotFilled(size)",
+                              "severity": "ERROR",
+                              "errorMessage": [
+                                {
+                                  "locale": "en",
+                                  "text": "Internal Error: If the content is filled, the size must be also filled."
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Internal Error: If the content is filled, the size must be also filled."
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_5697d",
+                      "name": "Photo_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Group",
+                            "id": "include_5697d_group_8fdb5",
+                            "name": "OldAttachment",
+                            "Group": {
+                              "repeatability": 1,
+                              "usageType": "attachment",
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_a3dae",
+                                  "name": "original_filename",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_39979",
+                                  "name": "internal_filename",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_bcccb",
+                                  "name": "content",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType",
+                                      "StringType": {
+                                        "lineBreaksPermitted": true,
+                                        "noValueValidation": true
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_9ed0f",
+                                  "name": "attachment_id",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_81410",
+                                  "name": "size",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "NumberType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_842e7",
+                                  "name": "mime_type",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_764ed",
+                                  "name": "category",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_6d339",
+                                  "name": "description",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_5697d_rule_9619c",
+                                  "name": "AttachmentInternalFilenameRequired",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../internal_filename",
+                                    "errorCode": "Error rule_9619c",
+                                    "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(internal_filename)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: Field internal_filename of customType attachment is not filled."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: Field internal_filename of customType attachment is not filled."
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_5697d_rule_6daeb",
+                                  "name": "AttachmentMimeTypeRequired",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../mime_type",
+                                    "errorCode": "Error rule_6daeb",
+                                    "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(mime_type)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: Field mime_type of customType attachment is not filled."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: Field mime_type of customType attachment is not filled."
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_5697d_rule_9847f",
+                                  "name": "AttachmentIdOrContentFilled",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../content",
+                                    "errorCode": "Error rule_9847f",
+                                    "errorCondition": "GroupFilled(RuleGroup) and NotExactlyOneFieldFilled(attachment_id, content)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_5697d_rule_ed6c6",
+                                  "name": "SizeOfContentFilled",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../content",
+                                    "errorCode": "Error rule_ed6c6",
+                                    "errorCondition": "FieldFilled(content) and FieldNotFilled(size)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: If the content is filled, the size must be also filled."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: If the content is filled, the size must be also filled."
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_5697d_group_afef0",
+                            "name": "NewAttachment",
+                            "Group": {
+                              "repeatability": 1,
+                              "usageType": "attachment",
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_80bcf",
+                                  "name": "original_filename",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_49146",
+                                  "name": "internal_filename",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_dd3be",
+                                  "name": "content",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType",
+                                      "StringType": {
+                                        "lineBreaksPermitted": true,
+                                        "noValueValidation": true
+                                      }
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_45efd",
+                                  "name": "attachment_id",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_dfa33",
+                                  "name": "size",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "NumberType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_9a425",
+                                  "name": "mime_type",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_b0daa",
+                                  "name": "category",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_field_d38ec",
+                                  "name": "description",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    }
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_5697d_rule_683ae",
+                                  "name": "AttachmentInternalFilenameRequired",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../internal_filename",
+                                    "errorCode": "Error rule_683ae",
+                                    "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(internal_filename)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: Field internal_filename of customType attachment is not filled."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: Field internal_filename of customType attachment is not filled."
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_5697d_rule_048eb",
+                                  "name": "AttachmentMimeTypeRequired",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../mime_type",
+                                    "errorCode": "Error rule_048eb",
+                                    "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(mime_type)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: Field mime_type of customType attachment is not filled."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: Field mime_type of customType attachment is not filled."
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_5697d_rule_306a4",
+                                  "name": "AttachmentIdOrContentFilled",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../content",
+                                    "errorCode": "Error rule_306a4",
+                                    "errorCondition": "GroupFilled(RuleGroup) and NotExactlyOneFieldFilled(attachment_id, content)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Rule",
+                                  "id": "include_5697d_rule_df872",
+                                  "name": "SizeOfContentFilled",
+                                  "Rule": {
+                                    "errorEntityRelPath": "../content",
+                                    "errorCode": "Error rule_df872",
+                                    "errorCondition": "FieldFilled(content) and FieldNotFilled(size)",
+                                    "severity": "ERROR",
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Internal Error: If the content is filled, the size must be also filled."
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Internal Error: If the content is filled, the size must be also filled."
+                                      }
+                                    ]
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_5697d_include_9cdfc",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_include_9cdfc_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5697d_include_9cdfc_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "AttachmentChange_DM"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "G10",
+                "name": "Addresses",
+                "annotations": [
+                  {
+                    "name": "WITH_ID"
+                  },
+                  {
+                    "name": "WITH_CHANGELOG"
+                  }
+                ],
+                "Group": {
+                  "repeatability": 5,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "field_5092c",
+                      "name": "Id",
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F12",
+                      "name": "Street",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Street"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Straße"
+                          }
+                        ],
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_b0678",
+                      "name": "Street_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_b0678_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_b0678_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_b0678_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_b0678_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_b0678_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F13",
+                      "name": "City",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "de",
+                            "text": "Stadt"
+                          },
+                          {
+                            "locale": "en",
+                            "text": "City"
+                          }
+                        ],
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_aee1e",
+                      "name": "City_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_aee1e_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_aee1e_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_aee1e_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_aee1e_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_aee1e_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F14",
+                      "name": "Country",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Country"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Land"
+                          }
+                        ],
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_68fc5",
+                      "name": "Country_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_68fc5_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_68fc5_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_68fc5_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_68fc5_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_68fc5_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F15",
+                      "name": "PostCode",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType",
+                          "StringType": {
+                            "maxLength": 5
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Post Code"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Postleitzahl"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_5ff21",
+                      "name": "PostCode_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_5ff21_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_5ff21_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_5ff21_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_5ff21_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_5ff21_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "include_40518",
+                "name": "Addresses_Changelog",
+                "Group": {
+                  "repeatability": 100,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "include_40518_field_56421",
+                      "name": "ChangeType",
+                      "Field": {
+                        "fieldType": {
+                          "type": "EnumerationType",
+                          "EnumerationType": {
+                            "values": [
+                              {
+                                "value": "ADDED",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "added"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "hinzugefügt"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "DELETED",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "deleted"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "entfernt"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Change Type"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Änderungstyp"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "include_40518_field_8ef34",
+                      "name": "RepetitionDetails",
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType",
+                          "StringType": {
+                            "lineBreaksPermitted": true
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Repetition Details"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Wiederholungsdetails"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_40518_include_e5867",
+                      "name": "ChangeMetadata",
+                      "Group": {
+                        "repeatability": 1,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_40518_include_e5867_field_81105",
+                            "name": "ChangedBy",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Changed by"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Geändert von"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_40518_include_e5867_field_6f40c",
+                            "name": "ChangedAt",
+                            "Field": {
+                              "fieldType": {
+                                "type": "DateTimeType",
+                                "DateTimeType": {
+                                  "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                }
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Changed at"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Geändert am"
+                                }
+                              ]
+                            }
+                          }
+                        ],
+                        "modelAlias": "ChangeMetadata_DM"
+                      }
+                    }
+                  ],
+                  "modelAlias": "RepetitionChange_DM"
+                }
+              },
+              {
+                "type": "Group",
+                "id": "G16",
+                "name": "Phones",
+                "annotations": [
+                  {
+                    "name": "WITH_ID"
+                  },
+                  {
+                    "name": "WITH_CHANGELOG"
+                  }
+                ],
+                "Group": {
+                  "repeatability": 5,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "field_b142d",
+                      "name": "Id",
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F17",
+                      "name": "PhoneNumber",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Phone Number"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Telefonnummer"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_db06d",
+                      "name": "PhoneNumber_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_db06d_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_db06d_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_db06d_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_db06d_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_db06d_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "F18",
+                      "name": "Type",
+                      "annotations": [
+                        {
+                          "name": "WITH_CHANGELOG"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "EnumerationType",
+                          "EnumerationType": {
+                            "values": [
+                              {
+                                "value": "MOBILE",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Mobile"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Mobil"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "WORK",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Work"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Arbeit"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "FAX",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Fax"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Fax"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "PAGER",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Pager"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Pager"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Type"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Art"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_77323",
+                      "name": "Type_Changelog",
+                      "Group": {
+                        "repeatability": 100,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_77323_field_aae15",
+                            "name": "OldValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Old Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Alter Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_77323_field_0fbd9",
+                            "name": "NewValue",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "New Value"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Neuer Wert"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Group",
+                            "id": "include_77323_include_56750",
+                            "name": "ChangeMetadata",
+                            "Group": {
+                              "repeatability": 1,
+                              "elements": [
+                                {
+                                  "type": "Field",
+                                  "id": "include_77323_include_56750_field_81105",
+                                  "name": "ChangedBy",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "StringType"
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed by"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert von"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "include_77323_include_56750_field_6f40c",
+                                  "name": "ChangedAt",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "DateTimeType",
+                                      "DateTimeType": {
+                                        "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                      }
+                                    },
+                                    "label": [
+                                      {
+                                        "locale": "en",
+                                        "text": "Changed at"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "Geändert am"
+                                      }
+                                    ]
+                                  }
+                                }
+                              ],
+                              "modelAlias": "ChangeMetadata_DM"
+                            }
+                          }
+                        ],
+                        "modelAlias": "FieldChange_DM"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "include_8da07",
+                "name": "Phones_Changelog",
+                "Group": {
+                  "repeatability": 100,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "include_8da07_field_56421",
+                      "name": "ChangeType",
+                      "Field": {
+                        "fieldType": {
+                          "type": "EnumerationType",
+                          "EnumerationType": {
+                            "values": [
+                              {
+                                "value": "ADDED",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "added"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "hinzugefügt"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "DELETED",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "deleted"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "entfernt"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Change Type"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Änderungstyp"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "include_8da07_field_8ef34",
+                      "name": "RepetitionDetails",
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType",
+                          "StringType": {
+                            "lineBreaksPermitted": true
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Repetition Details"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Wiederholungsdetails"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "include_8da07_include_e5867",
+                      "name": "ChangeMetadata",
+                      "Group": {
+                        "repeatability": 1,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "include_8da07_include_e5867_field_81105",
+                            "name": "ChangedBy",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Changed by"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Geändert von"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "include_8da07_include_e5867_field_6f40c",
+                            "name": "ChangedAt",
+                            "Field": {
+                              "fieldType": {
+                                "type": "DateTimeType",
+                                "DateTimeType": {
+                                  "format": "yyyy-MM-dd'T'HH:mm:ss"
+                                }
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "Changed at"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "Geändert am"
+                                }
+                              ]
+                            }
+                          }
+                        ],
+                        "modelAlias": "ChangeMetadata_DM"
+                      }
+                    }
+                  ],
+                  "modelAlias": "RepetitionChange_DM"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "Group",
+          "id": "abc6a6767a60488754aace2accb73824_group_8f4b1",
+          "name": "__meta",
+          "Group": {
+            "label": [
+              {
+                "locale": "en",
+                "text": "Meta"
+              },
+              {
+                "locale": "de",
+                "text": "Meta"
+              }
+            ],
+            "repeatability": 1,
+            "usageType": "metadata",
+            "elements": [
+              {
+                "type": "Field",
+                "id": "abc6a6767a60488754aace2accb73824_field_1169c",
+                "name": "docRef",
+                "Field": {
+                  "fieldType": {
+                    "type": "StringType"
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Document Reference"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Dokumentreferenz"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Field",
+                "id": "abc6a6767a60488754aace2accb73824_field_cfb40",
+                "name": "modelReference",
+                "Field": {
+                  "fieldType": {
+                    "type": "StringType"
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Document Model Reference"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Document Model-Referenz"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Field",
+                "id": "abc6a6767a60488754aace2accb73824_field_17e3b",
+                "name": "modelVersion",
+                "Field": {
+                  "fieldType": {
+                    "type": "StringType"
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Model Version"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Model-Version"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Field",
+                "id": "abc6a6767a60488754aace2accb73824_field_cdaf9",
+                "name": "creator",
+                "Field": {
+                  "fieldType": {
+                    "type": "StringType"
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Creator"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Erstellt von"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Field",
+                "id": "abc6a6767a60488754aace2accb73824_field_65672",
+                "name": "createdAt",
+                "Field": {
+                  "fieldType": {
+                    "type": "DateTimeType",
+                    "DateTimeType": {
+                      "format": "yyyy-MM-dd'T'HH:mm:ss"
+                    }
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Created At"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Erstellt am"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Field",
+                "id": "abc6a6767a60488754aace2accb73824_field_1fa32",
+                "name": "modifier",
+                "Field": {
+                  "fieldType": {
+                    "type": "StringType"
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Modifier"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Bearbeitet von"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Field",
+                "id": "abc6a6767a60488754aace2accb73824_field_5cd66",
+                "name": "modifiedAt",
+                "Field": {
+                  "fieldType": {
+                    "type": "DateTimeType",
+                    "DateTimeType": {
+                      "format": "yyyy-MM-dd'T'HH:mm:ss"
+                    }
+                  },
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Modified At"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Bearbeitet am"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "abc6a6767a60488754aace2accb73824_group_4c9a1",
+                "name": "extensions",
+                "Group": {
+                  "label": [
+                    {
+                      "locale": "en",
+                      "text": "Extensions"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Erweiterungen"
+                    }
+                  ],
+                  "repeatability": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

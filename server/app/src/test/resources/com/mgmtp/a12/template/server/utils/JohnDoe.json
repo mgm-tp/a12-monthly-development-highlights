@@ -1,0 +1,46 @@
+{
+  "Person": {
+    "PersonalData": {
+      "FirstName": "John",
+      "LastName": "Doe",
+      "Gender": "MALE",
+      "PlaceOfBirth": "Germany",
+      "Nationality": "German",
+      "EmailAddress": "John.Doe@email.com",
+      "DateOfBirth": "1992-01-31"
+    },
+    "Addresses": [
+      {
+        "Street": "Taunusstr. 23",
+        "City": "Munich",
+        "Country": "Germany",
+        "PostCode": "80807"
+      },
+      {
+        "Street": "Machtlfinger Str. 15",
+        "City": "Munich",
+        "Country": "Germany",
+        "PostCode": "81379"
+      }
+    ],
+    "Phones": [
+      {
+        "PhoneNumber": "+49 89 / 358 680-0",
+        "Type": "WORK"
+      },
+      {
+        "PhoneNumber": "+49 89 / 358 680-288",
+        "Type": "FAX"
+      },
+      {
+        "PhoneNumber": "+49 89 / 358 680-288",
+        "Type": "PAGER"
+      },
+      {
+        "PhoneNumber": "+49 89 / 358 680-0",
+        "Type": "MOBILE"
+      }
+    ]
+  }
+}
+}
