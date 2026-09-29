@@ -1,0 +1,72 @@
+{
+  "document": {
+    "People": {
+      "FirstName": "Ronnie",
+      "LastName": "Kuhn",
+      "PersonalData": {
+        "Gender": "MALE",
+        "DateOfBirth": "2000-02-29",
+        "PlaceOfBirth": "Lockmanborough",
+        "Nationality": "Brunei Darussalam",
+        "Photo": {
+          "attachment_id": "d1676060-d8b4-4b10-8c6b-37cb7957212f",
+          "original_filename": "stockimages_people_7.jpg",
+          "internal_filename": "stockimages_people_7.jpg",
+          "mime_type": "image/jpeg"
+        }
+      },
+      "Addresses": [
+        {
+          "Street": "7864 Vandervort Terrace",
+          "City": "North Jesusaport",
+          "Country": "Jordan",
+          "PostalCode": "66402"
+        },
+        {
+          "Street": "45223 Benjamin River",
+          "City": "Homburg",
+          "Country": "Germany",
+          "PostalCode": "20003"
+        }
+      ],
+      "Phones": [
+        {
+          "AreaCode": "SE",
+          "PhoneNumber": "1-694-095-5051 x81099",
+          "Type": "MOBILE"
+        },
+        {
+          "AreaCode": "DE"
+        },
+        {
+          "AreaCode": "PL",
+          "PhoneNumber": "+49-656-5271931",
+          "Type": "WORK"
+        }
+      ],
+      "Education": [
+        {
+          "SchoolName": "Cornell University",
+          "Degree": "Secondary",
+          "Major": "Drama",
+          "Time": "2000/2000"
+        }
+      ],
+      "Memberships": [
+        {
+          "Area": "5",
+          "Name": "Raynor",
+          "StartDate": "2024-01",
+          "EndDate": "2024-01"
+        },
+        {
+          "Area": "3",
+          "StartDate": "1980-01",
+          "EndDate": "2000-01"
+        }
+      ]
+    }
+  },
+  "documentModelName": "Person_DM",
+  "locale": "en"
+}

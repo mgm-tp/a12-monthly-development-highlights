@@ -1,0 +1,78 @@
+{
+  "document": {
+    "People": {
+      "FirstName": "Sophia",
+      "LastName": "Strogies",
+      "PersonalData": {
+        "DateOfBirth": "2024-02-29",
+        "PlaceOfBirth": "Schroederchester",
+        "Nationality": "Brazil",
+        "Photo": {
+          "attachment_id": "f53183e2-c7bc-4cd4-abc3-690dfe820323",
+          "original_filename": "stockimages_people_5.jpg",
+          "internal_filename": "stockimages_people_5.jpg",
+          "mime_type": "image/jpeg"
+        }
+      },
+      "Addresses": [
+        {
+          "Street": "873 Josiah Ports",
+          "City": "Groß Mehmet",
+          "Country": "Cambodia",
+          "PostalCode": "36419"
+        },
+        {
+          "Street": "75312 Gerlach Run",
+          "City": "Bremen",
+          "Country": "Germany",
+          "PostalCode": "44002"
+        },
+        {
+          "Street": "021 Rudy Park",
+          "City": "Binsfurt",
+          "Country": "Ireland"
+        }
+      ],
+      "Phones": [
+        {
+          "PhoneNumber": "216-887-1779",
+          "Type": "MOBILE"
+        },
+        {
+          "AreaCode": "IE",
+          "PhoneNumber": "1-191-342-0137",
+          "Type": "WORK"
+        }
+      ],
+      "Education": [
+        {
+          "SchoolName": "New York University",
+          "Degree": "Secondary",
+          "Time": "2024/2024"
+        },
+        {
+          "SchoolName": "Stanford University",
+          "Degree": "Bachelor",
+          "Major": "Drama",
+          "Time": "2000/2000"
+        },
+        {
+          "SchoolName": "Johns Hopkins University",
+          "Degree": "Master",
+          "Major": "Dance",
+          "Time": "2000/2024"
+        }
+      ],
+      "Memberships": [
+        {
+          "Area": "4",
+          "Name": "Jacobs",
+          "StartDate": "2000-01",
+          "EndDate": "1980-01"
+        }
+      ]
+    }
+  },
+  "documentModelName": "Person_DM",
+  "locale": "en"
+}

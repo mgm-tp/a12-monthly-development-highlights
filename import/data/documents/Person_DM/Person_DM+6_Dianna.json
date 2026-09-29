@@ -1,0 +1,99 @@
+{
+  "document": {
+    "People": {
+      "FirstName": "Dianna",
+      "LastName": "Von",
+      "PersonalData": {
+        "Gender": "FEMALE",
+        "DateOfBirth": "2024-01-01",
+        "PlaceOfBirth": "Carmenfurt",
+        "Nationality": "Japan",
+        "Photo": {
+          "attachment_id": "f53183e2-c7bc-4cd4-abc3-690dfe820323",
+          "original_filename": "stockimages_people_5.jpg",
+          "internal_filename": "stockimages_people_5.jpg",
+          "mime_type": "image/jpeg"
+        }
+      },
+      "Addresses": [
+        {
+          "Street": "737 Auer Haven",
+          "City": "Schøn Joanna",
+          "Country": "Japan",
+          "PostalCode": "55002"
+        },
+        {
+          "Street": "90531 Fiona Crossroad",
+          "City": "Mainz",
+          "Country": "Germany",
+          "PostalCode": "64834"
+        },
+        {
+          "Street": "4769 Dorotha Spur",
+          "City": "Würzburg",
+          "Country": "Ukraine",
+          "PostalCode": "97002"
+        }
+      ],
+      "Phones": [
+        {
+          "AreaCode": "GR",
+          "PhoneNumber": "123.178.5419",
+          "Type": "WORK"
+        },
+        {
+          "AreaCode": "BG",
+          "PhoneNumber": "1-705-814-3640",
+          "Type": "MOBILE"
+        },
+        {
+          "AreaCode": "ES",
+          "PhoneNumber": "025.908.5478",
+          "Type": "MOBILE"
+        }
+      ],
+      "Education": [
+        {
+          "SchoolName": "Johns Hopkins University",
+          "Degree": "HighSchool",
+          "Major": "Psychology",
+          "Time": "2000/2024"
+        },
+        {
+          "SchoolName": "National University of Singapore",
+          "Degree": "Master",
+          "Major": "Physics",
+          "Time": "2024/2024"
+        },
+        {
+          "SchoolName": "KU Leuven",
+          "Degree": "Bachelor",
+          "Major": "Law",
+          "Time": "2000/2000"
+        }
+      ],
+      "Memberships": [
+        {
+          "Area": "1",
+          "Name": "Kreissig",
+          "StartDate": "2024-01",
+          "EndDate": "2000-01"
+        },
+        {
+          "Area": "2",
+          "Name": "Jungbluth",
+          "StartDate": "2024-01",
+          "EndDate": "1980-01"
+        },
+        {
+          "Area": "4",
+          "Name": "Ruecker",
+          "StartDate": "2024-01",
+          "EndDate": "2000-01"
+        }
+      ]
+    }
+  },
+  "documentModelName": "Person_DM",
+  "locale": "en"
+}

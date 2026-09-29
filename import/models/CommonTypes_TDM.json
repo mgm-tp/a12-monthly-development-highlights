@@ -1,0 +1,160 @@
+{
+  "header": {
+    "id": "CommonTypes_TDM",
+    "modelType": "document",
+    "modelVersion": "29.4.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "tdonly",
+        "value": "true"
+      },
+      {
+        "name": "roles",
+        "value": "admin"
+      }
+    ],
+    "modelReferences": []
+  },
+  "content": {
+    "modelInfo": {
+      "name": "CommonTypes_TDM"
+    },
+    "modelConfig": {
+      "timeZone": "UTC",
+      "decimalSeparator": ".",
+      "conditionLanguage": {
+        "code": "en_US"
+      }
+    },
+    "typeDefinitions": [
+      {
+        "id": "typedef_fd9fe90a-0829-469b-b467-a2aeb6b8b7ae",
+        "name": "Degree",
+        "fieldType": {
+          "type": "EnumerationType",
+          "EnumerationType": {
+            "values": [
+              {
+                "value": "None",
+                "label": [
+                  {
+                    "locale": "en",
+                    "text": "No Degree"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Ohne Abschluss"
+                  }
+                ]
+              },
+              {
+                "value": "Secondary",
+                "label": [
+                  {
+                    "locale": "en",
+                    "text": "Secondary school"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Hauptschulabschluss"
+                  }
+                ]
+              },
+              {
+                "value": "HighSchool",
+                "label": [
+                  {
+                    "locale": "en",
+                    "text": "High school diploma"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Abitur"
+                  }
+                ]
+              },
+              {
+                "value": "Bachelor",
+                "label": [
+                  {
+                    "locale": "en",
+                    "text": "Bachelor"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Bachelor"
+                  }
+                ]
+              },
+              {
+                "value": "Master",
+                "label": [
+                  {
+                    "locale": "en",
+                    "text": "Master"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Master"
+                  }
+                ]
+              },
+              {
+                "value": "PhD",
+                "label": [
+                  {
+                    "locale": "en",
+                    "text": "PhD"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "PhD"
+                  }
+                ]
+              },
+              {
+                "value": "Meister",
+                "label": [
+                  {
+                    "locale": "en",
+                    "text": "Master craftsman"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Meister"
+                  }
+                ]
+              }
+            ],
+            "categories": [
+              {
+                "name": "Rank",
+                "values": [
+                  "0",
+                  "1",
+                  "2",
+                  "3",
+                  "4",
+                  "5",
+                  "4"
+                ],
+                "description": ""
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "modelRoot": {
+      "rootGroups": []
+    }
+  }
+}

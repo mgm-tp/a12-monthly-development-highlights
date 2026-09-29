@@ -1,0 +1,43 @@
+{
+  "document": {
+    "People": {
+      "FirstName": "Adam",
+      "LastName": "Leannon",
+      "PersonalData": {
+        "Gender": "MALE",
+        "PlaceOfBirth": "Murrayfurt",
+        "Nationality": "German",
+        "Photo": {
+          "attachment_id": "7c1747fc-0832-480d-94c5-03485dadd305",
+          "original_filename": "stockimages_people_21.jpg",
+          "internal_filename": "stockimages_people_21.jpg",
+          "mime_type": "image/jpeg"
+        }
+      },
+      "Addresses": [
+        {
+          "Street": "2790 Swift Glens",
+          "City": "Port Josephmouth",
+          "Country": "Kiribati",
+          "PostalCode": "18001"
+        }
+      ],
+      "Education": [
+        {
+          "SchoolName": "Massachusetts Institute of Technology",
+          "Degree": "Master",
+          "Major": "Philosophy",
+          "Time": "2024/2024"
+        },
+        {
+          "SchoolName": "Princeton University",
+          "Degree": "PhD",
+          "Major": "Computer Science",
+          "Time": "2000/2024"
+        }
+      ]
+    }
+  },
+  "documentModelName": "Person_DM",
+  "locale": "en"
+}

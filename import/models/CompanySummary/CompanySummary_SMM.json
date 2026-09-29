@@ -1,0 +1,92 @@
+{
+  "header": {
+    "id": "CompanySummary_SMM",
+    "modelType": "structuralmapping",
+    "modelVersion": "1.0.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ],
+    "modelReferences": []
+  },
+  "content": {
+    "GroupsToClearOnFirstFill": [],
+    "MappingBlocks": [
+      {
+        "ResolutionStrategies": [
+          {
+            "sourceGroupFullName": "/CompanyWithPersons/PersonCompany",
+            "targetGroupFullName": "/Company/SelectedEmployees",
+            "type": "Fold"
+          },
+          {
+            "sourceGroupFullName": "/CompanyWithPersons/Company/Addresses",
+            "targetGroupFullName": "/Company/CompanyDetails/Contacts",
+            "type": "Fold"
+          },
+          {
+            "sourceGroupFullName": "/CompanyWithPersons/Company/Phones",
+            "targetGroupFullName": "/Company/CompanyDetails/Contacts",
+            "type": "Fold"
+          }
+        ],
+        "FieldMappings": [
+          {
+            "sourceFieldFullName": "/CompanyWithPersons/PersonCompany/Name_Transfer",
+            "targetFieldFullName": "/Company/SelectedEmployees/PersonName"
+          },
+          {
+            "sourceFieldFullName": "/CompanyWithPersons/PersonCompany/Degree_Transfer",
+            "targetFieldFullName": "/Company/SelectedEmployees/HighestDegree"
+          },
+          {
+            "sourceFieldFullName": "/CompanyWithPersons/Company/Addresses/Info_Transfer",
+            "targetFieldFullName": "/Company/CompanyDetails/Contacts/Info"
+          },
+          {
+            "sourceFieldFullName": "/CompanyWithPersons/Company/Addresses/AddressType",
+            "targetFieldFullName": "/Company/CompanyDetails/Contacts/Type"
+          },
+          {
+            "sourceFieldFullName": "/CompanyWithPersons/Company/Phones/Type_Transfer",
+            "targetFieldFullName": "/Company/CompanyDetails/Contacts/Type"
+          },
+          {
+            "sourceFieldFullName": "/CompanyWithPersons/Company/Phones/PhoneNumber",
+            "targetFieldFullName": "/Company/CompanyDetails/Contacts/Info"
+          },
+          {
+            "sourceFieldFullName": "/CompanyWithPersons/Company/CompanyDetails/CompanyName",
+            "targetFieldFullName": "/Company/CompanyDetails/CompanyName"
+          },
+          {
+            "sourceFieldFullName": "/CompanyWithPersons/Company/CompanyDetails/VATID",
+            "targetFieldFullName": "/Company/CompanyDetails/VATID"
+          },
+          {
+            "sourceFieldFullName": "/EmployeeStatisticsHelper/NumberOfEmployees",
+            "targetFieldFullName": "/Company/EmployeeStatistics/NumberOfEmployees"
+          },
+          {
+            "sourceFieldFullName": "/EmployeeStatisticsHelper/NumberOfEmployeesWithAtLeastDegreeRank3",
+            "targetFieldFullName": "/Company/EmployeeStatistics/NumberOfEmployeesWithAtLeastDegreeRank3"
+          },
+          {
+            "sourceFieldFullName": "/CompanyWithPersons/Company/CompanyDetails/CompanyID",
+            "targetFieldFullName": "/Company/CompanyDetails/CompanyID"
+          }
+        ]
+      }
+    ]
+  }
+}

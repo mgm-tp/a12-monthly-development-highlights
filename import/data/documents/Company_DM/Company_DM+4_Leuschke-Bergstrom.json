@@ -1,0 +1,56 @@
+{
+  "document": {
+    "Company": {
+      "CompanyDetails": {
+        "CompanyName": "Leuschke-Bergstrom",
+        "CompanyID": "15986-5517",
+        "VATID": "Size only same hand live music space or before long here.",
+        "CompanyLogo": {
+          "attachment_id": "01380d1f-f60c-457e-b758-c374d28209df",
+          "original_filename": "stockimages_crafts_19.gif",
+          "internal_filename": "stockimages_crafts_19.gif",
+          "mime_type": "image/gif"
+        }
+      },
+      "Addresses": [
+        {
+          "AddressType": "Other",
+          "Street": "9411 Macejkovic Land",
+          "City": "Lake Lasandra",
+          "Country": "Sweden",
+          "PostalCode": "49628"
+        },
+        {
+          "AddressType": "Postal",
+          "Street": "8333 Sipes Drive",
+          "City": "Port Alfredia",
+          "Country": "Honduras",
+          "PostalCode": "68002"
+        },
+        {
+          "AddressType": "Other",
+          "Street": "906 Lanny Canyon",
+          "City": "Essen (Oldenburg)",
+          "Country": "Kiribati",
+          "PostalCode": "54636"
+        }
+      ],
+      "Phones": [
+        {
+          "PhoneNumber": "+49-175-9472065",
+          "Description": "of"
+        },
+        {
+          "PhoneNumber": "(00916) 2085238",
+          "Description": "Government number later be spell country man colour was."
+        },
+        {
+          "PhoneNumber": "(334) 920-5359",
+          "Description": "Can hand until no cold more cold."
+        }
+      ]
+    }
+  },
+  "documentModelName": "Company_DM",
+  "locale": "en"
+}

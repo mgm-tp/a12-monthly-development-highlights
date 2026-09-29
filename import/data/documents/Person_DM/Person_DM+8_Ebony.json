@@ -1,0 +1,99 @@
+{
+  "document": {
+    "People": {
+      "FirstName": "Ebony",
+      "LastName": "Bartoletti",
+      "PersonalData": {
+        "Gender": "FEMALE",
+        "DateOfBirth": "2000-01-01",
+        "PlaceOfBirth": "North Sheryll",
+        "Nationality": "German",
+        "Photo": {
+          "attachment_id": "f53183e2-c7bc-4cd4-abc3-690dfe820323",
+          "original_filename": "stockimages_people_5.jpg",
+          "internal_filename": "stockimages_people_5.jpg",
+          "mime_type": "image/jpeg"
+        }
+      },
+      "Addresses": [
+        {
+          "Street": "06746 Sterling Meadow",
+          "City": "Leipzig",
+          "Country": "Haiti",
+          "PostalCode": "04002"
+        },
+        {
+          "Street": "355 Wilkinson Stravenue",
+          "City": "Berlin",
+          "Country": "Indonesia",
+          "PostalCode": "10005"
+        },
+        {
+          "Street": "0055 Manual Manors",
+          "City": "Hagen b. Bremerhaven",
+          "Country": "Rwanda",
+          "PostalCode": "27625"
+        }
+      ],
+      "Phones": [
+        {
+          "AreaCode": "DE",
+          "PhoneNumber": "1-051-647-5430",
+          "Type": "WORK"
+        },
+        {
+          "AreaCode": "RO",
+          "PhoneNumber": "+49-179-5158026",
+          "Type": "MOBILE"
+        },
+        {
+          "AreaCode": "HU",
+          "PhoneNumber": "121-928-1903 x7710",
+          "Type": "WORK"
+        }
+      ],
+      "Education": [
+        {
+          "SchoolName": "Peking University",
+          "Degree": "Bachelor",
+          "Major": "Computer Science",
+          "Time": "2000/2000"
+        },
+        {
+          "SchoolName": "Massachusetts Institute of Technology",
+          "Degree": "Master",
+          "Major": "Dance",
+          "Time": "2000/2024"
+        },
+        {
+          "SchoolName": "Technical University of Munich",
+          "Degree": "PhD",
+          "Major": "Business Administration",
+          "Time": "2024/2024"
+        }
+      ],
+      "Memberships": [
+        {
+          "Area": "5",
+          "Name": "O'Reilly",
+          "StartDate": "2024-01",
+          "EndDate": "1980-01"
+        },
+        {
+          "Area": "5",
+          "Name": "Heathcote",
+          "StartDate": "2024-01",
+          "EndDate": "2000-01"
+        },
+        {
+          "Area": "2",
+          "Name": "Tromp",
+          "StartDate": "2000-01",
+          "EndDate": "1980-01"
+        }
+      ]
+    }
+  },
+  "documentModelName": "Person_DM",
+  "locale": "en"
+}

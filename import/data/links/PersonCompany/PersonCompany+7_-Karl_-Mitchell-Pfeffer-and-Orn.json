@@ -1,0 +1,17 @@
+{
+  "entities": [
+    {
+      "modelName": "Person_DM",
+      "docRef": "Person_DM/9cbed47a-03a8-491f-aeea-a29fe65cbcfc",
+      "role": "Person",
+      "roleOrder": ""
+    },
+    {
+      "modelName": "Company_DM",
+      "docRef": "Company_DM/25b20482-41ac-4208-b74d-615d564257e8",
+      "role": "Company",
+      "roleOrder": ""
+    }
+  ],
+  "relationshipModel": "PersonCompany"
+}

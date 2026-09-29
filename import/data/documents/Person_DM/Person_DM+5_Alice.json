@@ -1,0 +1,86 @@
+{
+  "document": {
+    "People": {
+      "FirstName": "Alice",
+      "LastName": "Lind",
+      "PersonalData": {
+        "Gender": "FEMALE",
+        "DateOfBirth": "2024-01-12",
+        "PlaceOfBirth": "New Alyssa",
+        "Nationality": "German",
+        "Photo": {
+          "attachment_id": "1192848b-0e50-4bd4-afae-517c248f3c92",
+          "original_filename": "stockimages_people_23.jpg",
+          "internal_filename": "stockimages_people_23.jpg",
+          "mime_type": "image/jpeg"
+        }
+      },
+      "Addresses": [
+        {
+          "Street": "3488 Rigoberto Alley",
+          "City": "East Casandra",
+          "Country": "Congo, Democratic Republic of the",
+          "PostalCode": "27502"
+        },
+        {
+          "Street": "578 Jean Shores",
+          "City": "Mannheim",
+          "Country": "Comoros",
+          "PostalCode": "68001"
+        },
+        {
+          "Street": "61480 Wilma Motorway",
+          "City": "Bremerhaven",
+          "Country": "Burundi",
+          "PostalCode": "39002"
+        }
+      ],
+      "Phones": [
+        {
+          "AreaCode": "DE",
+          "PhoneNumber": "+49-1502-1867989",
+          "Type": "WORK"
+        }
+      ],
+      "Education": [
+        {
+          "SchoolName": "New York University",
+          "Degree": "Meister",
+          "Major": "Computer Science",
+          "Time": "2000/2001"
+        },
+        {
+          "SchoolName": "University of Melbourne",
+          "Degree": "Master",
+          "Major": "Computer Science",
+          "Time": "2000/2000"
+        },
+        {
+          "SchoolName": "Technical University of Munich",
+          "Degree": "PhD",
+          "Major": "Law",
+          "Time": "1999/2000"
+        }
+      ],
+      "Memberships": [
+        {
+          "Name": "Reichert",
+          "StartDate": "2024-01"
+        },
+        {
+          "Area": "2",
+          "Name": "Harber",
+          "StartDate": "1980-01"
+        },
+        {
+          "Area": "3",
+          "Name": "Towne",
+          "StartDate": "2000-01",
+          "EndDate": "2024-01"
+        }
+      ]
+    }
+  },
+  "documentModelName": "Person_DM",
+  "locale": "en"
+}

@@ -1,0 +1,56 @@
+{
+  "document": {
+    "Company": {
+      "CompanyDetails": {
+        "CompanyName": "Moore LLC",
+        "CompanyID": "19332",
+        "VATID": "Perhaps try king tree follow school wait saw from.",
+        "CompanyLogo": {
+          "attachment_id": "16779fa1-718c-4537-b6d0-400cffc1295c",
+          "original_filename": "stockimages_crafts_14.gif",
+          "internal_filename": "stockimages_crafts_14.gif",
+          "mime_type": "image/gif"
+        }
+      },
+      "Addresses": [
+        {
+          "AddressType": "RegAddress",
+          "Street": "399 Crooks Pike",
+          "City": "Fürth",
+          "Country": "Sweden",
+          "PostalCode": "64655"
+        },
+        {
+          "AddressType": "Billing",
+          "Street": "0514 Terry Point",
+          "City": "North Rory",
+          "Country": "Kuwait",
+          "PostalCode": "23400"
+        },
+        {
+          "AddressType": "Postal",
+          "Street": "907 Robel Haven",
+          "City": "Lübeck",
+          "Country": "Korea, Republic of",
+          "PostalCode": "06001"
+        }
+      ],
+      "Phones": [
+        {
+          "PhoneNumber": "+49-1516-2550162",
+          "Description": "Way home second weight known hold children feet last less."
+        },
+        {
+          "PhoneNumber": "+49-1575-5615325",
+          "Description": "Beauty yes toward play blue vowel order."
+        },
+        {
+          "PhoneNumber": "092-102-0031",
+          "Description": "Cut rock moon began provide than girl."
+        }
+      ]
+    }
+  },
+  "documentModelName": "Company_DM",
+  "locale": "en"
+}

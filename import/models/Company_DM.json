@@ -1,6 +1,6 @@
 {
   "header": {
-    "id": "Person_Dc",
+    "id": "Company_DM",
     "modelType": "document",
     "modelVersion": "29.4.0",
     "locales": [
@@ -11,28 +11,32 @@
         "code": "de"
       }
     ],
-    "labels": [],
-    "annotations": [
+    "labels": [
       {
-        "name": "savedAt",
-        "value": "2020-02-15T17:30:50.763+01:00"
+        "locale": "en",
+        "text": "Company"
       },
       {
+        "locale": "de",
+        "text": "Unternehmen"
+      }
+    ],
+    "annotations": [
+      {
         "name": "roles",
-        "value": "user"
+        "value": "admin,user"
       }
     ],
     "modelReferences": []
   },
   "content": {
     "modelInfo": {
-      "name": "Person_Dc",
-      "immutable": false,
-      "joinedModelsInfo": "Person_Dc-document-meta-data+Add"
+      "name": "Company_DM",
+      "immutable": false
     },
     "modelConfig": {
-      "decimalSeparator": ".",
       "timeZone": "UTC",
+      "decimalSeparator": ".",
       "conditionLanguage": {
         "code": "en_US"
       }
@@ -41,22 +45,28 @@
       "rootGroups": [
         {
           "type": "Group",
-          "id": "G11",
-          "name": "Person",
+          "id": "group_10849",
+          "name": "Company",
           "Group": {
             "repeatability": 1,
             "elements": [
               {
                 "type": "Group",
-                "id": "G2",
-                "name": "PersonalData",
+                "id": "group_1b51c",
+                "name": "CompanyDetails",
                 "Group": {
                   "repeatability": 1,
                   "elements": [
                     {
                       "type": "Field",
-                      "id": "F3",
-                      "name": "FirstName",
+                      "id": "field_67684",
+                      "name": "CompanyName",
+                      "annotations": [
+                        {
+                          "name": "enable_approximate_match_search",
+                          "value": "true"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -64,11 +74,11 @@
                         "label": [
                           {
                             "locale": "en",
-                            "text": "First Name"
+                            "text": "Company Name"
                           },
                           {
                             "locale": "de",
-                            "text": "Vorname"
+                            "text": "Firmenname"
                           }
                         ],
                         "requirednessConfig": {
@@ -78,104 +88,14 @@
                     },
                     {
                       "type": "Field",
-                      "id": "F4",
-                      "name": "LastName",
-                      "Field": {
-                        "fieldType": {
-                          "type": "StringType"
-                        },
-                        "label": [
-                          {
-                            "locale": "de",
-                            "text": "Nachname"
-                          },
-                          {
-                            "locale": "en",
-                            "text": "Last Name"
-                          }
-                        ],
-                        "requirednessConfig": {
-                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                      "id": "field_16af2",
+                      "name": "CompanyID",
+                      "annotations": [
+                        {
+                          "name": "enable_approximate_match_search",
+                          "value": "true"
                         }
-                      }
-                    },
-                    {
-                      "type": "Field",
-                      "id": "F6",
-                      "name": "Gender",
-                      "Field": {
-                        "fieldType": {
-                          "type": "EnumerationType",
-                          "EnumerationType": {
-                            "values": [
-                              {
-                                "value": "MALE",
-                                "label": [
-                                  {
-                                    "locale": "en",
-                                    "text": "Male"
-                                  },
-                                  {
-                                    "locale": "de",
-                                    "text": "Männlich"
-                                  }
-                                ]
-                              },
-                              {
-                                "value": "FEMALE",
-                                "label": [
-                                  {
-                                    "locale": "en",
-                                    "text": "Female"
-                                  },
-                                  {
-                                    "locale": "de",
-                                    "text": "Weiblich"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        },
-                        "label": [
-                          {
-                            "locale": "de",
-                            "text": "Geschlecht"
-                          },
-                          {
-                            "locale": "en",
-                            "text": "Gender"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "Field",
-                      "id": "F7",
-                      "name": "DateOfBirth",
-                      "Field": {
-                        "fieldType": {
-                          "type": "DateType",
-                          "DateType": {
-                            "format": "yyyy-MM-dd"
-                          }
-                        },
-                        "label": [
-                          {
-                            "locale": "en",
-                            "text": "Date of Birth"
-                          },
-                          {
-                            "locale": "de",
-                            "text": "Geburtstag"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "Field",
-                      "id": "F8",
-                      "name": "PlaceOfBirth",
+                      ],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -183,83 +103,59 @@
                         "label": [
                           {
                             "locale": "en",
-                            "text": "Place of Birth"
+                            "text": "Company ID"
                           },
                           {
                             "locale": "de",
-                            "text": "Geburtsort"
+                            "text": "Firmen ID"
                           }
                         ]
                       }
                     },
                     {
                       "type": "Field",
-                      "id": "F9",
-                      "name": "Nationality",
-                      "Field": {
-                        "fieldType": {
-                          "type": "StringType"
-                        },
-                        "label": [
-                          {
-                            "locale": "en",
-                            "text": "Nationality"
-                          },
-                          {
-                            "locale": "de",
-                            "text": "Nationalität"
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "Field",
-                      "id": "field_8d972",
-                      "name": "EmailAddress",
-                      "Field": {
-                        "fieldType": {
-                          "type": "StringType",
-                          "StringType": {
-                            "errorMessage": [
-                              {
-                                "locale": "en",
-                                "text": "Please enter a valid email address."
-                              },
-                              {
-                                "locale": "de",
-                                "text": "Bitte geben Sie eine valide E-Mail-Adresse an."
-                              }
-                            ],
-                            "pattern": "^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$"
-                          }
-                        },
-                        "label": [
-                          {
-                            "locale": "en",
-                            "text": "Email Address"
-                          },
-                          {
-                            "locale": "de",
-                            "text": "E-Mail-Adresse"
-                          }
-                        ],
-                        "requirednessConfig": {
-                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                      "id": "field_11e24",
+                      "name": "VATID",
+                      "annotations": [
+                        {
+                          "name": "enable_approximate_match_search",
+                          "value": "true"
                         }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Tax ID"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Steuer ID"
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "Group",
-                      "id": "group_05909",
-                      "name": "Photo",
+                      "id": "group_8e00a",
+                      "name": "CompanyLogo",
                       "Group": {
                         "repeatability": 1,
                         "usageType": "attachment",
                         "elements": [
                           {
                             "type": "Field",
-                            "id": "field_a9ed3",
+                            "id": "field_fc775",
                             "name": "original_filename",
+                            "annotations": [
+                              {
+                                "name": "enable_approximate_match_search",
+                                "value": "true"
+                              }
+                            ],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -268,8 +164,14 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_e1d6a",
+                            "id": "field_e4455",
                             "name": "internal_filename",
+                            "annotations": [
+                              {
+                                "name": "enable_approximate_match_search",
+                                "value": "true"
+                              }
+                            ],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -278,8 +180,14 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_9fcd3",
+                            "id": "field_5dbec",
                             "name": "content",
+                            "annotations": [
+                              {
+                                "name": "enable_approximate_match_search",
+                                "value": "true"
+                              }
+                            ],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType",
@@ -292,8 +200,14 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_145b4",
+                            "id": "field_fa9c5",
                             "name": "attachment_id",
+                            "annotations": [
+                              {
+                                "name": "enable_approximate_match_search",
+                                "value": "true"
+                              }
+                            ],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -302,7 +216,7 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_58899",
+                            "id": "field_f4adf",
                             "name": "size",
                             "Field": {
                               "fieldType": {
@@ -312,8 +226,14 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_72463",
+                            "id": "field_6be2b",
                             "name": "mime_type",
+                            "annotations": [
+                              {
+                                "name": "enable_approximate_match_search",
+                                "value": "true"
+                              }
+                            ],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -322,18 +242,14 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_932de",
-                            "name": "thumbnail",
-                            "Field": {
-                              "fieldType": {
-                                "type": "StringType"
-                              }
-                            }
-                          },
-                          {
-                            "type": "Field",
-                            "id": "field_867ef",
+                            "id": "field_50b0a",
                             "name": "category",
+                            "annotations": [
+                              {
+                                "name": "enable_approximate_match_search",
+                                "value": "true"
+                              }
+                            ],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -342,8 +258,14 @@
                           },
                           {
                             "type": "Field",
-                            "id": "field_6346c",
+                            "id": "field_afb93",
                             "name": "description",
+                            "annotations": [
+                              {
+                                "name": "enable_approximate_match_search",
+                                "value": "true"
+                              }
+                            ],
                             "Field": {
                               "fieldType": {
                                 "type": "StringType"
@@ -352,20 +274,20 @@
                           },
                           {
                             "type": "Rule",
-                            "id": "rule_6ed58",
+                            "id": "rule_b3f12",
                             "name": "AttachmentInternalFilenameRequired",
                             "Rule": {
                               "errorEntityRelPath": "../internal_filename",
-                              "errorCode": "Errorrule_6ed58",
+                              "errorCode": "Errorrule_b3f12",
                               "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(internal_filename)",
                               "severity": "ERROR",
                               "errorMessage": [
                                 {
-                                  "locale": "de",
+                                  "locale": "en",
                                   "text": "Internal Error: Field $internal_filename$ of customType attachment is not filled."
                                 },
                                 {
-                                  "locale": "en",
+                                  "locale": "de",
                                   "text": "Internal Error: Field $internal_filename$ of customType attachment is not filled."
                                 }
                               ]
@@ -373,20 +295,20 @@
                           },
                           {
                             "type": "Rule",
-                            "id": "rule_b4062",
+                            "id": "rule_ba736",
                             "name": "AttachmentMimeTypeRequired",
                             "Rule": {
                               "errorEntityRelPath": "../mime_type",
-                              "errorCode": "Errorrule_b4062",
+                              "errorCode": "Errorrule_ba736",
                               "errorCondition": "GroupFilled(RuleGroup) and FieldNotFilled(mime_type)",
                               "severity": "ERROR",
                               "errorMessage": [
                                 {
-                                  "locale": "de",
+                                  "locale": "en",
                                   "text": "Internal Error: Field $mime_type$ of customType attachment is not filled."
                                 },
                                 {
-                                  "locale": "en",
+                                  "locale": "de",
                                   "text": "Internal Error: Field $mime_type$ of customType attachment is not filled."
                                 }
                               ]
@@ -394,20 +316,20 @@
                           },
                           {
                             "type": "Rule",
-                            "id": "rule_3a21c",
+                            "id": "rule_79495",
                             "name": "AttachmentIdOrContentFilled",
                             "Rule": {
                               "errorEntityRelPath": "../content",
-                              "errorCode": "Errorrule_3a21c",
+                              "errorCode": "Errorrule_79495",
                               "errorCondition": "GroupFilled(RuleGroup) and NotExactlyOneFieldFilled(attachment_id, content)",
                               "severity": "ERROR",
                               "errorMessage": [
                                 {
-                                  "locale": "de",
+                                  "locale": "en",
                                   "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
                                 },
                                 {
-                                  "locale": "en",
+                                  "locale": "de",
                                   "text": "Internal Error: Either attachment_id or content must be filled in a customType attachment, but not both."
                                 }
                               ]
@@ -415,11 +337,11 @@
                           },
                           {
                             "type": "Rule",
-                            "id": "rule_37050",
+                            "id": "rule_52ca3",
                             "name": "SizeOfContentFilled",
                             "Rule": {
                               "errorEntityRelPath": "../content",
-                              "errorCode": "Errorrule_37050",
+                              "errorCode": "Errorrule_52ca3",
                               "errorCondition": "FieldFilled(content) and FieldNotFilled(size)",
                               "severity": "ERROR",
                               "errorMessage": [
@@ -442,15 +364,116 @@
               },
               {
                 "type": "Group",
-                "id": "G10",
+                "id": "group_1ec00",
                 "name": "Addresses",
                 "Group": {
-                  "repeatability": 5,
+                  "repeatability": 10,
                   "elements": [
                     {
                       "type": "Field",
-                      "id": "F12",
+                      "id": "field_94860",
+                      "name": "AddressType",
+                      "annotations": [
+                        {
+                          "name": "enable_approximate_match_search",
+                          "value": "true"
+                        }
+                      ],
+                      "Field": {
+                        "fieldType": {
+                          "type": "EnumerationType",
+                          "EnumerationType": {
+                            "values": [
+                              {
+                                "value": "RegAddress",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Registered address"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Registrierte Adresse"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "Postal",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Postal address"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Postalische Adresse"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "Billing",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Billing address"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Rechnungsadresse"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "Site",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Site address"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Seitenadresse"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "Other",
+                                "label": [
+                                  {
+                                    "locale": "en",
+                                    "text": "Other"
+                                  },
+                                  {
+                                    "locale": "de",
+                                    "text": "Andere"
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "Address Type"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Adresstyp"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_0a1e7",
                       "name": "Street",
+                      "annotations": [
+                        {
+                          "name": "enable_approximate_match_search",
+                          "value": "true"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -464,39 +487,45 @@
                             "locale": "de",
                             "text": "Straße"
                           }
-                        ],
-                        "requirednessConfig": {
-                          "mode": "absoluteOrRelativeToNextRepAncestor"
-                        }
+                        ]
                       }
                     },
                     {
                       "type": "Field",
-                      "id": "F13",
+                      "id": "field_3fcb8",
                       "name": "City",
+                      "annotations": [
+                        {
+                          "name": "enable_approximate_match_search",
+                          "value": "true"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
                         },
                         "label": [
                           {
-                            "locale": "de",
-                            "text": "Stadt"
-                          },
-                          {
                             "locale": "en",
                             "text": "City"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "Stadt"
                           }
-                        ],
-                        "requirednessConfig": {
-                          "mode": "absoluteOrRelativeToNextRepAncestor"
-                        }
+                        ]
                       }
                     },
                     {
                       "type": "Field",
-                      "id": "F14",
+                      "id": "field_2f4c1",
                       "name": "Country",
+                      "annotations": [
+                        {
+                          "name": "enable_approximate_match_search",
+                          "value": "true"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -510,27 +539,27 @@
                             "locale": "de",
                             "text": "Land"
                           }
-                        ],
-                        "requirednessConfig": {
-                          "mode": "absoluteOrRelativeToNextRepAncestor"
-                        }
+                        ]
                       }
                     },
                     {
                       "type": "Field",
-                      "id": "F15",
-                      "name": "PostCode",
+                      "id": "field_c7f7b",
+                      "name": "PostalCode",
+                      "annotations": [
+                        {
+                          "name": "enable_approximate_match_search",
+                          "value": "true"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
-                          "type": "StringType",
-                          "StringType": {
-                            "maxLength": 5
-                          }
+                          "type": "StringType"
                         },
                         "label": [
                           {
                             "locale": "en",
-                            "text": "Post Code"
+                            "text": "Postal Code"
                           },
                           {
                             "locale": "de",
@@ -544,15 +573,21 @@
               },
               {
                 "type": "Group",
-                "id": "G16",
+                "id": "group_a62d8",
                 "name": "Phones",
                 "Group": {
-                  "repeatability": 5,
+                  "repeatability": 10,
                   "elements": [
                     {
                       "type": "Field",
-                      "id": "F17",
+                      "id": "field_67444",
                       "name": "PhoneNumber",
+                      "annotations": [
+                        {
+                          "name": "enable_approximate_match_search",
+                          "value": "true"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
                           "type": "StringType"
@@ -566,55 +601,34 @@
                             "locale": "de",
                             "text": "Telefonnummer"
                           }
-                        ]
+                        ],
+                        "requirednessConfig": {
+                          "mode": "absoluteOrRelativeToNextRepAncestor"
+                        }
                       }
                     },
                     {
                       "type": "Field",
-                      "id": "F18",
-                      "name": "Type",
+                      "id": "field_c68aa",
+                      "name": "Description",
+                      "annotations": [
+                        {
+                          "name": "enable_approximate_match_search",
+                          "value": "true"
+                        }
+                      ],
                       "Field": {
                         "fieldType": {
-                          "type": "EnumerationType",
-                          "EnumerationType": {
-                            "values": [
-                              {
-                                "value": "MOBILE",
-                                "label": [
-                                  {
-                                    "locale": "en",
-                                    "text": "Mobile"
-                                  },
-                                  {
-                                    "locale": "de",
-                                    "text": "Mobil"
-                                  }
-                                ]
-                              },
-                              {
-                                "value": "WORK",
-                                "label": [
-                                  {
-                                    "locale": "en",
-                                    "text": "Work"
-                                  },
-                                  {
-                                    "locale": "de",
-                                    "text": "Arbeit"
-                                  }
-                                ]
-                              }
-                            ]
-                          }
+                          "type": "StringType"
                         },
                         "label": [
                           {
                             "locale": "en",
-                            "text": "Type"
+                            "text": "Description"
                           },
                           {
                             "locale": "de",
-                            "text": "Art"
+                            "text": "Beschreibung"
                           }
                         ]
                       }

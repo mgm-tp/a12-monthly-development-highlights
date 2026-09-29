@@ -1,0 +1,843 @@
+{
+  "header": {
+    "id": "CompanySummary_PC",
+    "modelType": "document",
+    "modelVersion": "29.4.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "additive-document",
+        "value": "true"
+      },
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ],
+    "modelReferences": []
+  },
+  "content": {
+    "modelInfo": {
+      "name": "CompanySummary_PC"
+    },
+    "modelConfig": {
+      "timeZone": "UTC",
+      "decimalSeparator": ".",
+      "conditionLanguage": {
+        "code": "en_US"
+      }
+    },
+    "modelRoot": {
+      "rootGroups": [
+        {
+          "type": "Group",
+          "id": "group_fe35c",
+          "name": "EmployeeStatisticsHelper",
+          "Group": {
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Field",
+                "id": "field_d7f23",
+                "name": "NumberOfEmployees",
+                "Field": {
+                  "fieldType": {
+                    "type": "NumberType"
+                  }
+                }
+              },
+              {
+                "type": "Computation",
+                "id": "computation_83cfb",
+                "name": "NumberOfEmployees_Comp",
+                "Computation": {
+                  "computedFieldRelPath": "../NumberOfEmployees",
+                  "computationAlternatives": [
+                    {
+                      "operation": "NumberOfFilledGroups(/CompanyWithPersons/PersonCompany*)"
+                    }
+                  ],
+                  "errorMessage": [
+                    {
+                      "locale": "en",
+                      "text": "error text for computation of NumberOfEmployees_Comp"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "error text for computation of NumberOfEmployees_Comp"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Field",
+                "id": "field_85985",
+                "name": "NumberOfEmployeesWithAtLeastDegreeRank3",
+                "Field": {
+                  "fieldType": {
+                    "type": "NumberType"
+                  }
+                }
+              },
+              {
+                "type": "Computation",
+                "id": "computation_35386",
+                "name": "NumberOfEmployeesWithAtLeastDegreeRank3_Comp",
+                "Computation": {
+                  "computedFieldRelPath": "../NumberOfEmployeesWithAtLeastDegreeRank3",
+                  "computationAlternatives": [
+                    {
+                      "operation": "NumberOfFilledFields(/CompanyWithPersons/PersonCompany*/People/FirstName Having MaxValue(/CompanyWithPersons/PersonCompany/People/Education*/DegreeRank) >=3)"
+                    }
+                  ],
+                  "errorMessage": [
+                    {
+                      "locale": "en",
+                      "text": "error text for computation of NumberOfEmployeesWithAtLeastDegreeRank3_Comp"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "error text for computation of NumberOfEmployeesWithAtLeastDegreeRank3_Comp"
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "group_077cf",
+                "name": "EducationRanking",
+                "Group": {
+                  "repeatability": 1,
+                  "elements": [
+                    {
+                      "type": "Field",
+                      "id": "field_a4585",
+                      "name": "HighestRank",
+                      "Field": {
+                        "fieldType": {
+                          "type": "NumberType"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Computation",
+                      "id": "computation_9cb70",
+                      "name": "HighestRank_Comp",
+                      "Computation": {
+                        "computedFieldRelPath": "../HighestRank",
+                        "computationAlternatives": [
+                          {
+                            "operation": "MaxValue(/CompanyWithPersons/PersonCompany*/SelectionHelperFields/HighestDegreeRank)"
+                          }
+                        ],
+                        "errorMessage": [
+                          {
+                            "locale": "en",
+                            "text": "error text for computation of HighestRank_Comp"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "error text for computation of HighestRank_Comp"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_c4c4e",
+                      "name": "SecondRank",
+                      "Field": {
+                        "fieldType": {
+                          "type": "NumberType"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Computation",
+                      "id": "computation_03106",
+                      "name": "SecondRank_Comp",
+                      "Computation": {
+                        "computedFieldRelPath": "../SecondRank",
+                        "computationAlternatives": [
+                          {
+                            "operation": "MaxValue(/CompanyWithPersons/PersonCompany*/SelectionHelperFields/HighestDegreeRank\r\nHaving\r\n[/CompanyWithPersons/PersonCompany/SelectionHelperFields/HighestDegreeRank] < [HighestRank])",
+                            "precondition": "FieldFilled(HighestRank)"
+                          }
+                        ],
+                        "errorMessage": [
+                          {
+                            "locale": "en",
+                            "text": "error text for computation of SecondRank_Comp"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "error text for computation of SecondRank_Comp"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_72b16",
+                      "name": "ThirdRank",
+                      "Field": {
+                        "fieldType": {
+                          "type": "NumberType"
+                        }
+                      }
+                    },
+                    {
+                      "type": "Computation",
+                      "id": "computation_ef516",
+                      "name": "ThirdRank_Comp",
+                      "Computation": {
+                        "computedFieldRelPath": "../ThirdRank",
+                        "computationAlternatives": [
+                          {
+                            "operation": "MaxValue(/CompanyWithPersons/PersonCompany*/SelectionHelperFields/HighestDegreeRank\r\nHaving\r\n[/CompanyWithPersons/PersonCompany/SelectionHelperFields/HighestDegreeRank] < [SecondRank])",
+                            "precondition": "FieldFilled(SecondRank)"
+                          }
+                        ],
+                        "errorMessage": [
+                          {
+                            "locale": "en",
+                            "text": "error text for computation of ThirdRank_Comp"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "error text for computation of ThirdRank_Comp"
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "Group",
+          "id": "group_99548",
+          "name": "CompanyWithPersons",
+          "Group": {
+            "repeatability": 1,
+            "elements": [
+              {
+                "type": "Group",
+                "id": "group_e91a3",
+                "name": "Company",
+                "Group": {
+                  "repeatability": 1,
+                  "elements": [
+                    {
+                      "type": "Group",
+                      "id": "group_4d79b",
+                      "name": "Addresses",
+                      "Group": {
+                        "repeatability": 10,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "field_b5482",
+                            "name": "Info_Transfer",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Computation",
+                            "id": "computation_38b07",
+                            "name": "Info_Transfer_Comp",
+                            "Computation": {
+                              "computedFieldRelPath": "../Info_Transfer",
+                              "computationAlternatives": [
+                                {
+                                  "operation": "[Street] + \", \" + [PostalCode] + \" \" + [City] + \", \" + [Country]",
+                                  "precondition": "FieldFilled(Country)"
+                                },
+                                {
+                                  "operation": "[Street] + \", \" + [PostalCode] + \" \" + [City]",
+                                  "precondition": "FieldNotFilled(Country) AND FieldFilled(City)"
+                                },
+                                {
+                                  "operation": "[Street] + \" (\" + [PostalCode] + \")\"",
+                                  "precondition": "FieldNotFilled(Country) AND FieldNotFilled(City)"
+                                }
+                              ],
+                              "errorMessage": [
+                                {
+                                  "locale": "en",
+                                  "text": "error text for computation of Info_Transfer_Comp"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "error text for computation of Info_Transfer_Comp"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "group_b98dd",
+                      "name": "Phones",
+                      "Group": {
+                        "repeatability": 10,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "field_1beb4",
+                            "name": "Type_Transfer",
+                            "Field": {
+                              "fieldType": {
+                                "type": "StringType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Computation",
+                            "id": "computation_20dbf",
+                            "name": "Type_Transfer_Comp",
+                            "Computation": {
+                              "computedFieldRelPath": "../Type_Transfer",
+                              "computationAlternatives": [
+                                {
+                                  "operation": "\"Phone\""
+                                }
+                              ],
+                              "errorMessage": [
+                                {
+                                  "locale": "en",
+                                  "text": "error text for computation of Type_Transfer_Comp"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "error text for computation of Type_Transfer_Comp"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "Group",
+                "id": "group_1f72b",
+                "name": "PersonCompany",
+                "annotations": [
+                  {
+                    "name": "cdm.relationship",
+                    "value": "PersonCompany"
+                  },
+                  {
+                    "name": "cdm.sourceRole",
+                    "value": "Company"
+                  },
+                  {
+                    "name": "cdm.targetRole",
+                    "value": "Person"
+                  },
+                  {
+                    "name": "cdm.targetDocumentModel",
+                    "value": "Person_DM"
+                  }
+                ],
+                "Group": {
+                  "repeatability": 999999999,
+                  "elements": [
+                    {
+                      "type": "Computation",
+                      "id": "computation_b1746",
+                      "name": "Degree_Transfer_Comp",
+                      "Computation": {
+                        "computedFieldRelPath": "../Degree_Transfer",
+                        "computationAlternatives": [
+                          {
+                            "operation": "FirstFilledValue(People/Education*/Degree\r\n  Having \r\n    MaxValue(People/Education*/DegreeRank) == [People/Education/DegreeRank]\r\n )",
+                            "precondition": "FieldFilled(IsPersonSelected)\r\nand\r\nAtLeastOneFieldFilled(People/Education*/Degree\r\n  Having \r\n    MaxValue(People/Education*/DegreeRank) == [People/Education/DegreeRank]\r\n )"
+                          }
+                        ],
+                        "errorMessage": [
+                          {
+                            "locale": "en",
+                            "text": "error text for computation of Degree_Transfer_Comp"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "error text for computation of Degree_Transfer_Comp"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Computation",
+                      "id": "computation_586aa",
+                      "name": "Name_Transfer_Comp",
+                      "Computation": {
+                        "computedFieldRelPath": "../Name_Transfer",
+                        "commonPrecondition": "FieldFilled(IsPersonSelected)",
+                        "computationAlternatives": [
+                          {
+                            "operation": "[People/LastName] + \", \" + [People/FirstName]",
+                            "precondition": "FieldFilled(People/FirstName) and FieldFilled(People/LastName)"
+                          },
+                          {
+                            "operation": "[People/LastName]",
+                            "precondition": "FieldNotFilled(People/FirstName) and FieldFilled(People/LastName)"
+                          },
+                          {
+                            "operation": "\"<No Last Name Given>\"",
+                            "precondition": "FieldNotFilled(People/LastName)"
+                          }
+                        ],
+                        "errorMessage": [
+                          {
+                            "locale": "en",
+                            "text": "error text for computation of Name_Transfer_Comp"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "error text for computation of Name_Transfer_Comp"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Computation",
+                      "id": "computation_49898",
+                      "name": "IsPersonSelected_Comp",
+                      "Computation": {
+                        "computedFieldRelPath": "../IsPersonSelected",
+                        "computationAlternatives": [
+                          {
+                            "operation": "True",
+                            "precondition": "AtLeastOneFieldFilled(SelectionHelperFields/IsInEducationFirstRank,SelectionHelperFields/IsInEducationSecondRank,SelectionHelperFields/IsInEducationThirdRank)\r\nAnd\r\n(\r\n  (\r\n    FieldFilled(/additionalParameters/AdditionalMappingInput/Country) and \r\n    AtLeastOneFieldFilled(People/Addresses*/Country) and\r\n    AtLeastOneFieldValueIncludedInValueList(People/Addresses*/Country IN /additionalParameters/AdditionalMappingInput/Country)\r\n  )\r\n  Or\r\n  (\r\n    FieldFilled(/additionalParameters/AdditionalMappingInput/Nationality)  and\r\n    FieldFilled(People/PersonalData/Nationality) and\r\n    [People/PersonalData/Nationality] == [/additionalParameters/AdditionalMappingInput/Nationality]\r\n  )\r\n)"
+                          }
+                        ],
+                        "errorMessage": [
+                          {
+                            "locale": "en",
+                            "text": "error text for computation of IsPersonSelected_Comp"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "error text for computation of IsPersonSelected_Comp"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "group_8cdcc",
+                      "name": "People",
+                      "Group": {
+                        "repeatability": 1,
+                        "elements": [
+                          {
+                            "type": "Group",
+                            "id": "group_10731",
+                            "name": "Education",
+                            "Group": {
+                              "repeatability": 5,
+                              "elements": [
+                                {
+                                  "type": "Computation",
+                                  "id": "computation_ec13b",
+                                  "name": "DegreeRank_Comp",
+                                  "Computation": {
+                                    "computedFieldRelPath": "../DegreeRank",
+                                    "computationAlternatives": [
+                                      {
+                                        "operation": "FieldValueAsNumber(Degree->Rank)",
+                                        "precondition": "FieldFilled(Degree)"
+                                      }
+                                    ],
+                                    "errorMessage": [
+                                      {
+                                        "locale": "en",
+                                        "text": "error text for computation of DegreeRank_Comp"
+                                      },
+                                      {
+                                        "locale": "de",
+                                        "text": "error text for computation of DegreeRank_Comp"
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "Field",
+                                  "id": "field_86efa",
+                                  "name": "DegreeRank",
+                                  "Field": {
+                                    "fieldType": {
+                                      "type": "NumberType"
+                                    }
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_8547b",
+                      "name": "IsPersonSelected",
+                      "Field": {
+                        "fieldType": {
+                          "type": "ConfirmType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "IsPersonSelected"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "IsPersonSelected"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_32dc2",
+                      "name": "Name_Transfer",
+                      "Field": {
+                        "fieldType": {
+                          "type": "StringType"
+                        },
+                        "label": [
+                          {
+                            "locale": "en",
+                            "text": "TransferredName"
+                          },
+                          {
+                            "locale": "de",
+                            "text": "TransferredName"
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "Field",
+                      "id": "field_4080c",
+                      "name": "Degree_Transfer",
+                      "Field": {
+                        "fieldType": {
+                          "type": "EnumerationType",
+                          "EnumerationType": {
+                            "values": [
+                              {
+                                "value": "None",
+                                "label": [
+                                  {
+                                    "locale": "de",
+                                    "text": "Ohne Abschluss"
+                                  },
+                                  {
+                                    "locale": "en",
+                                    "text": "No Degree"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "Secondary",
+                                "label": [
+                                  {
+                                    "locale": "de",
+                                    "text": "Hauptschulabschluss"
+                                  },
+                                  {
+                                    "locale": "en",
+                                    "text": "Secondary school"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "HighSchool",
+                                "label": [
+                                  {
+                                    "locale": "de",
+                                    "text": "Abitur"
+                                  },
+                                  {
+                                    "locale": "en",
+                                    "text": "High school diploma"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "Bachelor",
+                                "label": [
+                                  {
+                                    "locale": "de",
+                                    "text": "Bachelor"
+                                  },
+                                  {
+                                    "locale": "en",
+                                    "text": "Bachelor"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "Master",
+                                "label": [
+                                  {
+                                    "locale": "de",
+                                    "text": "Master"
+                                  },
+                                  {
+                                    "locale": "en",
+                                    "text": "Master"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "PhD",
+                                "label": [
+                                  {
+                                    "locale": "de",
+                                    "text": "PhD"
+                                  },
+                                  {
+                                    "locale": "en",
+                                    "text": "PhD"
+                                  }
+                                ]
+                              },
+                              {
+                                "value": "Meister",
+                                "label": [
+                                  {
+                                    "locale": "de",
+                                    "text": "Meister"
+                                  },
+                                  {
+                                    "locale": "en",
+                                    "text": "Master craftsman"
+                                  }
+                                ]
+                              }
+                            ],
+                            "categories": [
+                              {
+                                "name": "Rank",
+                                "values": [
+                                  "0",
+                                  "1",
+                                  "2",
+                                  "3",
+                                  "4",
+                                  "5",
+                                  "4"
+                                ],
+                                "description": ""
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "Group",
+                      "id": "group_26e71",
+                      "name": "SelectionHelperFields",
+                      "Group": {
+                        "repeatability": 1,
+                        "elements": [
+                          {
+                            "type": "Field",
+                            "id": "field_fd41b",
+                            "name": "HighestDegreeRank",
+                            "Field": {
+                              "fieldType": {
+                                "type": "NumberType"
+                              }
+                            }
+                          },
+                          {
+                            "type": "Computation",
+                            "id": "computation_217cb",
+                            "name": "HighestDegreeRank_Comp",
+                            "Computation": {
+                              "computedFieldRelPath": "../HighestDegreeRank",
+                              "computationAlternatives": [
+                                {
+                                  "operation": "MaxValue(../People/Education*/DegreeRank)"
+                                }
+                              ],
+                              "errorMessage": [
+                                {
+                                  "locale": "en",
+                                  "text": "error text for computation of HighestDegreeRank_Comp"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "error text for computation of HighestDegreeRank_Comp"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_e31c3",
+                            "name": "IsInEducationFirstRank",
+                            "Field": {
+                              "fieldType": {
+                                "type": "ConfirmType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "IsInEducationFirstRank"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "IsInEducationFirstRank"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Computation",
+                            "id": "computation_3163f",
+                            "name": "IsInEducationFirstRank_Comp",
+                            "Computation": {
+                              "computedFieldRelPath": "../IsInEducationFirstRank",
+                              "computationAlternatives": [
+                                {
+                                  "operation": "True",
+                                  "precondition": "[HighestDegreeRank] == [/EmployeeStatisticsHelper/EducationRanking/HighestRank]\r\nAnd \r\nNumberOfFilledFields(../../PersonCompany*/SelectionHelperFields/HighestDegreeRank\r\n     Having\r\n       [HighestDegreeRank] == [/EmployeeStatisticsHelper/EducationRanking/HighestRank]  \r\n        And\r\n       CurrentRepetition(../../PersonCompany) <= CurrentRepetition($../../PersonCompany)\r\n    ) <= 3"
+                                }
+                              ],
+                              "errorMessage": [
+                                {
+                                  "locale": "en",
+                                  "text": "error text for computation of IsInEducationFirstRank_Comp"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "error text for computation of IsInEducationFirstRank_Comp"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_74335",
+                            "name": "IsInEducationSecondRank",
+                            "Field": {
+                              "fieldType": {
+                                "type": "ConfirmType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "IsInEducationSecondRank"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "IsInEducationSecondRank"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Computation",
+                            "id": "computation_50df7",
+                            "name": "IsInEducationSecondRank_Comp",
+                            "Computation": {
+                              "computedFieldRelPath": "../IsInEducationSecondRank",
+                              "computationAlternatives": [
+                                {
+                                  "operation": "True",
+                                  "precondition": "[HighestDegreeRank] == [/EmployeeStatisticsHelper/EducationRanking/SecondRank]\r\nAnd \r\n\r\n{NumberOfFilledFields(../../PersonCompany*/SelectionHelperFields/IsInEducationFirstRank)\r\n +\r\n NumberOfFilledFields(../../PersonCompany*/SelectionHelperFields/HighestDegreeRank\r\n     Having\r\n       [HighestDegreeRank] == [/EmployeeStatisticsHelper/EducationRanking/SecondRank]  \r\n        And\r\n       CurrentRepetition(../../PersonCompany) <= CurrentRepetition($../../PersonCompany)\r\n    ) \r\n} <= 3"
+                                }
+                              ],
+                              "errorMessage": [
+                                {
+                                  "locale": "en",
+                                  "text": "error text for computation of IsInEducationSecondRank_Comp"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "error text for computation of IsInEducationSecondRank_Comp"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Field",
+                            "id": "field_5a8fd",
+                            "name": "IsInEducationThirdRank",
+                            "Field": {
+                              "fieldType": {
+                                "type": "ConfirmType"
+                              },
+                              "label": [
+                                {
+                                  "locale": "en",
+                                  "text": "IsInEducationThirdRank"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "IsInEducationThirdRank"
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "type": "Computation",
+                            "id": "computation_fa43e",
+                            "name": "IsInEducationThirdRank_Comp",
+                            "Computation": {
+                              "computedFieldRelPath": "../IsInEducationThirdRank",
+                              "computationAlternatives": [
+                                {
+                                  "operation": "True",
+                                  "precondition": "[HighestDegreeRank] == [/EmployeeStatisticsHelper/EducationRanking/ThirdRank]\r\nAnd \r\n\r\n{NumberOfFilledFields(../../PersonCompany*/SelectionHelperFields/IsInEducationFirstRank)\r\n +\r\n NumberOfFilledFields(../../PersonCompany*/SelectionHelperFields/IsInEducationSecondRank)\r\n +\r\n NumberOfFilledFields(../../PersonCompany*/SelectionHelperFields/HighestDegreeRank\r\n     Having\r\n       [HighestDegreeRank] == [/EmployeeStatisticsHelper/EducationRanking/ThirdRank]  \r\n        And\r\n       CurrentRepetition(../../PersonCompany) <= CurrentRepetition($../../PersonCompany)\r\n    ) \r\n} <= 3"
+                                }
+                              ],
+                              "errorMessage": [
+                                {
+                                  "locale": "en",
+                                  "text": "error text for computation of IsInEducationThirdRank_Comp"
+                                },
+                                {
+                                  "locale": "de",
+                                  "text": "error text for computation of IsInEducationThirdRank_Comp"
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

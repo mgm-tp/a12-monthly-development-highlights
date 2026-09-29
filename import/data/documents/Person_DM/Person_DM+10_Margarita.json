@@ -1,0 +1,99 @@
+{
+  "document": {
+    "People": {
+      "FirstName": "Margarita",
+      "LastName": "Casper",
+      "PersonalData": {
+        "Gender": "FEMALE",
+        "DateOfBirth": "2000-02-29",
+        "PlaceOfBirth": "South Winstonhaven",
+        "Nationality": "German",
+        "Photo": {
+          "attachment_id": "e2b94ecd-26c4-4fd0-86b1-53d042e4dd72",
+          "original_filename": "stockimages_people_10.jpg",
+          "internal_filename": "stockimages_people_10.jpg",
+          "mime_type": "image/jpeg"
+        }
+      },
+      "Addresses": [
+        {
+          "Street": "62753 Cathie Ports",
+          "City": "Schmittchester",
+          "Country": "Austria",
+          "PostalCode": "86002"
+        },
+        {
+          "Street": "74099 Linda Landing",
+          "City": "Lake Keeley",
+          "Country": "Libya",
+          "PostalCode": "24576"
+        },
+        {
+          "Street": "66163 Meryl Inlet",
+          "City": "Augsburg",
+          "Country": "Fiji",
+          "PostalCode": "10002"
+        }
+      ],
+      "Phones": [
+        {
+          "AreaCode": "DE",
+          "PhoneNumber": "1-495-862-1682",
+          "Type": "WORK"
+        },
+        {
+          "AreaCode": "IE",
+          "PhoneNumber": "1-721-757-7218 x0645",
+          "Type": "MOBILE"
+        },
+        {
+          "AreaCode": "DE",
+          "PhoneNumber": "(867) 734-4917",
+          "Type": "WORK"
+        }
+      ],
+      "Education": [
+        {
+          "SchoolName": "Columbia University",
+          "Degree": "PhD",
+          "Major": "Nursing",
+          "Time": "2000/2001"
+        },
+        {
+          "SchoolName": "Yale University",
+          "Degree": "Meister",
+          "Major": "Drama",
+          "Time": "2000/2000"
+        },
+        {
+          "SchoolName": "University of California, Los Angeles",
+          "Degree": "PhD",
+          "Major": "Law",
+          "Time": "1999/2000"
+        }
+      ],
+      "Memberships": [
+        {
+          "Area": "4",
+          "Name": "Johnston",
+          "StartDate": "2024-01",
+          "EndDate": "2024-01"
+        },
+        {
+          "Area": "2",
+          "Name": "Davis",
+          "StartDate": "2024-01",
+          "EndDate": "2000-01"
+        },
+        {
+          "Area": "5",
+          "Name": "Prosacco",
+          "StartDate": "1980-01",
+          "EndDate": "1980-01"
+        }
+      ]
+    }
+  },
+  "documentModelName": "Person_DM",
+  "locale": "en"
+}

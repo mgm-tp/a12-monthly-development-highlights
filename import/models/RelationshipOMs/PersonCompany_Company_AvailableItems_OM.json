@@ -1,0 +1,67 @@
+{
+  "header": {
+    "id": "PersonCompany_Company_AvailableItems_OM",
+    "modelType": "overview",
+    "modelVersion": "39.0.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "purpose": "document-model-for-overview",
+        "modelType": "document",
+        "alias": "DM",
+        "reference": "Company_DM"
+      }
+    ]
+  },
+  "content": {
+    "columns": [
+      {
+        "id": "column-4536a",
+        "width": 1,
+        "elementRef": "field_67684",
+        "sortable": false
+      }
+    ],
+    "rowActionGroup": {
+      "actions": []
+    },
+    "subHeaderBox": {
+      "leftSlot": [],
+      "rightSlot": [
+        {
+          "type": "search"
+        },
+        {
+          "type": "filter"
+        }
+      ]
+    },
+    "footerBox": {
+      "leftSlot": [],
+      "rightSlot": []
+    },
+    "configuration": {
+      "enableFilter": true,
+      "filterConfiguration": {
+        "showFilterButton": true,
+        "showFilterBar": true,
+        "filterMode": "all"
+      },
+      "pagingSize": 10,
+      "showFullTextSearch": false
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "document": {
+    "Company": {
+      "CompanyDetails": {
+        "CompanyName": "Mitchell, Pfeffer and Orn",
+        "CompanyID": "74489-6426",
+        "VATID": "most",
+        "CompanyLogo": {
+          "attachment_id": "a8e78997-c4e2-4adf-9678-ec4f08f75f5a",
+          "original_filename": "stockimages_crafts_18.gif",
+          "internal_filename": "stockimages_crafts_18.gif",
+          "mime_type": "image/gif"
+        }
+      },
+      "Addresses": [
+        {
+          "AddressType": "Postal",
+          "Street": "8466 Tillman Rapid",
+          "City": "Fulda",
+          "Country": "Bulgaria",
+          "PostalCode": "36002"
+        },
+        {
+          "AddressType": "RegAddress",
+          "Street": "79965 Jordon Ferry",
+          "City": "Schwerin",
+          "Country": "Kiribati",
+          "PostalCode": "15859"
+        },
+        {
+          "AddressType": "Postal",
+          "Street": "141 Schmitt Lodge",
+          "City": "Aachen",
+          "Country": "Oman",
+          "PostalCode": "52001"
+        }
+      ],
+      "Phones": [
+        {
+          "PhoneNumber": "560-462-4931 x857",
+          "Description": "Rule until hundred men first fly who play sentence."
+        },
+        {
+          "PhoneNumber": "+49-170-3419037",
+          "Description": "Boy plane begin fire saw."
+        },
+        {
+          "PhoneNumber": "047-893-1825",
+          "Description": "effort"
+        }
+      ]
+    }
+  },
+  "documentModelName": "Company_DM",
+  "locale": "en"
+}

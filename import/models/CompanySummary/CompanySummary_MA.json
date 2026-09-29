@@ -1,0 +1,70 @@
+{
+  "header": {
+    "id": "CompanySummary_MA",
+    "modelType": "mapping",
+    "modelVersion": "1.0.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "modelType": "document",
+        "reference": "CompanyWithPersons_CDM"
+      },
+      {
+        "modelType": "document",
+        "reference": "AdditionalMappingInput_DM"
+      },
+      {
+        "modelType": "document",
+        "reference": "CompanySummary_DM"
+      },
+      {
+        "modelType": "additive-document",
+        "reference": "CompanySummary_PC"
+      },
+      {
+        "modelType": "structuralmapping",
+        "reference": "CompanySummary_SMM"
+      }
+    ]
+  },
+  "content": {
+    "Target": {
+      "dmId": "CompanySummary_DM"
+    },
+    "Source": [
+      {
+        "maxRepeat": 1,
+        "includeLevel": "MODEL_ROOT",
+        "SortInfo": {},
+        "dmId": "CompanyWithPersons_CDM",
+        "name": "CompanyWithPersons"
+      },
+      {
+        "maxRepeat": 1,
+        "includeLevel": "MODEL_ROOT",
+        "SortInfo": {},
+        "dmId": "AdditionalMappingInput_DM",
+        "name": "additionalParameters"
+      }
+    ],
+    "PreComputationFragment": {
+      "dmId": "CompanySummary_PC"
+    },
+    "StructuralMappingModel": {
+      "id": "CompanySummary_SMM"
+    }
+  }
+}

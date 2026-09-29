@@ -1,0 +1,5 @@
+ {"documentModelName" : "Person_DM",
+"document" : {"People" : {"FirstName" : "Jimmie",
+"LastName" : "Metz",
+"PersonalData" : {"Nationality" : "German"}}},
+"locale" : "en"}

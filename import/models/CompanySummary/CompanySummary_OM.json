@@ -1,0 +1,86 @@
+{
+  "header": {
+    "id": "CompanySummary_OM",
+    "modelType": "overview",
+    "modelVersion": "39.0.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "purpose": "document-model-for-overview",
+        "modelType": "document",
+        "alias": "DM",
+        "reference": "Company_DM"
+      }
+    ]
+  },
+  "content": {
+    "columns": [
+      {
+        "id": "column-c0ffd",
+        "width": 1,
+        "styles": {},
+        "elementRef": "field_67684",
+        "sortable": false
+      },
+      {
+        "id": "column-aba7d",
+        "width": 1,
+        "styles": {},
+        "elementRef": "abc6a6767a60488754aace2accb73824_field_1169c",
+        "sortable": false
+      }
+    ],
+    "rowActionGroup": {},
+    "subHeaderBox": {
+      "leftSlot": [
+        {
+          "type": "multi_selection"
+        }
+      ],
+      "rightSlot": [
+        {
+          "type": "search"
+        },
+        {
+          "type": "filter"
+        }
+      ]
+    },
+    "footerBox": {
+      "leftSlot": [],
+      "rightSlot": []
+    },
+    "configuration": {
+      "enableFilter": true,
+      "filterConfiguration": {
+        "showFilterButton": true,
+        "showFilterBar": true,
+        "filterMode": "all_columns"
+      },
+      "multiSelection": {
+        "collapseOption": "collapsible_collapsed",
+        "counterOption": "simple",
+        "selectionArea": "checkbox_and_row",
+        "clearConfirmation": {
+          "enabled": true
+        }
+      },
+      "showFullTextSearch": true,
+      "pagingSize": 50
+    }
+  }
+}

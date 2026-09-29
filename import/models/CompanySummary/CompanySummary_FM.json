@@ -1,0 +1,236 @@
+{
+  "header": {
+    "id": "CompanySummary_FM",
+    "modelType": "form",
+    "modelVersion": "39.0.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "alias": "CompanySummary_DM",
+        "modelType": "document",
+        "purpose": "data binding",
+        "reference": "CompanySummary_DM"
+      }
+    ]
+  },
+  "content": {
+    "subHeaderBox": {
+      "id": "subHeaderBox"
+    },
+    "footerBox": {
+      "id": "footerBox",
+      "majorButtons": {
+        "button": [
+          {
+            "type": "EVENT",
+            "id": "button_da6fd",
+            "name": "Close",
+            "buttonStyling": {
+              "label": {
+                "type": "Multilingual",
+                "multilingualText": {
+                  "text": [
+                    {
+                      "locale": "en",
+                      "text": "Close"
+                    },
+                    {
+                      "locale": "de",
+                      "text": "Schließen"
+                    }
+                  ]
+                }
+              }
+            },
+            "event": "event_cancel",
+            "scope": "HIDDEN_IN_READONLY_MODE"
+          }
+        ]
+      }
+    },
+    "screens": [
+      {
+        "id": "Screen_for_group_10849",
+        "name": "Company",
+        "title": {
+          "type": "Multilingual",
+          "multilingualText": {
+            "text": [
+              {
+                "locale": "en",
+                "text": "Company"
+              },
+              {
+                "locale": "de",
+                "text": "Company"
+              }
+            ]
+          }
+        },
+        "screenElements": [
+          {
+            "type": "Section",
+            "id": "Section_for_group_1b51c",
+            "name": "CompanyDetails",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Company Details"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Company Details"
+                  }
+                ]
+              }
+            },
+            "screenElements": [
+              {
+                "type": "ControlGrid",
+                "id": "ControlGrid_for_group_1b51c",
+                "name": "CompanyDetails_Controls",
+                "readonly": true,
+                "layout": {
+                  "lg": "6-6"
+                },
+                "row": [
+                  {
+                    "type": "Row",
+                    "id": "Row_for_field_67684",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "Control_for_field_67684",
+                        "elementRef": "field_67684"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "id": "Row_for_field_16af2",
+                    "cell": [
+                      {
+                        "type": "Control",
+                        "id": "Control_for_field_16af2",
+                        "elementRef": "field_16af2"
+                      },
+                      {
+                        "type": "Control",
+                        "id": "Control_for_field_11e24",
+                        "elementRef": "field_11e24"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Row",
+                    "id": "row_7a874",
+                    "cell": [
+                      {
+                        "type": "ExpressionCell",
+                        "id": "expressioncell_6884a",
+                        "span": {
+                          "lg": 2
+                        },
+                        "name": "Contact",
+                        "expression": "kontext(Company){\n    kontext(CompanyDetails){\n        kontext(Contacts){\n\n        \" * \"   [Type] \" \" [Info] \n        }\n    }\n}",
+                        "label": {
+                          "type": "Multilingual",
+                          "multilingualText": {
+                            "text": [
+                              {
+                                "locale": "en",
+                                "text": "Contacts"
+                              },
+                              {
+                                "locale": "de",
+                                "text": "Kontaktmöglichkeiten"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "InlineRepeat",
+            "id": "inlinerepeat_4d9ca",
+            "name": "EmployeesFromGermany_Repeat",
+            "title": {
+              "type": "Multilingual",
+              "multilingualText": {
+                "text": [
+                  {
+                    "locale": "en",
+                    "text": "Selected Employees"
+                  },
+                  {
+                    "locale": "de",
+                    "text": "Ausgewählte Angestellte"
+                  }
+                ]
+              }
+            },
+            "readonly": true,
+            "repeatOverviewColumn": [
+              {
+                "type": "FieldBasedRepeatOverviewColumn",
+                "id": "Column_for_field_bebe5",
+                "elementRef": "field_bebe5"
+              },
+              {
+                "type": "FieldBasedRepeatOverviewColumn",
+                "id": "fieldbasedrepeatoverviewcolumn_e337b",
+                "elementRef": "field_97ba7"
+              }
+            ],
+            "groupRef": "group_b024e",
+            "enableAdd": false,
+            "enableRemove": false
+          },
+          {
+            "type": "ControlGrid",
+            "id": "controlgrid_24bf1",
+            "name": "cgEmployeeStats",
+            "row": [
+              {
+                "type": "Row",
+                "id": "row_bea30",
+                "cell": [
+                  {
+                    "type": "ExpressionCell",
+                    "id": "expressioncell_8b8e9",
+                    "name": "EmpStatistics",
+                    "expression": "kontext(Company){\n    kontext(EmployeeStatistics ){\n        (de:\"Die Firma beschäftigt \", en:\"The company employs \")\n        [NumberOfEmployees]\n        (de:\" Personen, wovon \", en:\" people, of which \")\n        [NumberOfEmployeesWithAtLeastDegreeRank3]\n        (de:\" einen höheren Abschluss haben.\", en:\" have a higher Education Degree.\")\n    }\n}"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "fieldConfiguration": {},
+    "groupConfiguration": {},
+    "defaults": {}
+  }
+}

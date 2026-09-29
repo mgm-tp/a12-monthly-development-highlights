@@ -22,7 +22,7 @@
                     ]
                 }
             },
-            "documentModelName": "Person_Dc",
+            "documentModelName": "Person_DM",
             "locale": "en"
         }
     }

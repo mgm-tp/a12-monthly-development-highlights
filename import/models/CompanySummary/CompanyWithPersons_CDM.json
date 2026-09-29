@@ -1,0 +1,114 @@
+{
+  "header": {
+    "id": "CompanyWithPersons_CDM",
+    "modelType": "document",
+    "modelVersion": "29.4.0",
+    "locales": [
+      {
+        "code": "en"
+      },
+      {
+        "code": "de"
+      }
+    ],
+    "labels": [],
+    "annotations": [
+      {
+        "name": "cdm.queryRoot",
+        "value": "Company_DM"
+      },
+      {
+        "name": "roles",
+        "value": "admin,user"
+      }
+    ],
+    "modelReferences": [
+      {
+        "modelType": "document",
+        "purpose": "composedData",
+        "reference": "Company_DM"
+      },
+      {
+        "modelType": "document",
+        "purpose": "composedData",
+        "reference": "Person_DM"
+      },
+      {
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "Company_DM"
+      },
+      {
+        "modelType": "document",
+        "purpose": "include",
+        "reference": "Person_DM"
+      }
+    ]
+  },
+  "content": {
+    "modelInfo": {
+      "name": "CompanyWithPersons_CDM"
+    },
+    "modelConfig": {
+      "timeZone": "UTC",
+      "decimalSeparator": ".",
+      "conditionLanguage": {
+        "code": "en_US"
+      }
+    },
+    "modelRoot": {
+      "rootGroups": [
+        {
+          "type": "Group",
+          "id": "include_fb8c9",
+          "name": "Company",
+          "Group": {
+            "repeatability": 1,
+            "includeConfig": {
+              "reference": "Company_DM"
+            }
+          }
+        },
+        {
+          "type": "Group",
+          "id": "group_7bc89",
+          "name": "PersonCompany",
+          "annotations": [
+            {
+              "name": "cdm.relationship",
+              "value": "PersonCompany"
+            },
+            {
+              "name": "cdm.sourceRole",
+              "value": "Company"
+            },
+            {
+              "name": "cdm.targetRole",
+              "value": "Person"
+            },
+            {
+              "name": "cdm.targetDocumentModel",
+              "value": "Person_DM"
+            }
+          ],
+          "Group": {
+            "repeatability": 999,
+            "elements": [
+              {
+                "type": "Group",
+                "id": "include_b2277",
+                "name": "People",
+                "Group": {
+                  "repeatability": 1,
+                  "includeConfig": {
+                    "reference": "Person_DM"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

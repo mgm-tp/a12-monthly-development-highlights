@@ -1,0 +1,34 @@
+{
+  "document": {
+    "Company": {
+      "CompanyDetails": {
+        "CompanyName": "Littel Group",
+        "CompanyID": "18832-8775",
+        "VATID": "green",
+        "CompanyLogo": {
+          "attachment_id": "32a983a7-5b79-4849-b194-07f2e05f3f7e",
+          "original_filename": "stockimages_crafts_13.gif",
+          "internal_filename": "stockimages_crafts_13.gif",
+          "mime_type": "image/gif"
+        }
+      },
+      "Addresses": [
+        {
+          "AddressType": "Postal",
+          "Street": "7052 Hartmann Shoals",
+          "City": "Münster",
+          "Country": "Suriname",
+          "PostalCode": "48002"
+        }
+      ],
+      "Phones": [
+        {
+          "PhoneNumber": "164-182-3530 x1955",
+          "Description": "told"
+        }
+      ]
+    }
+  },
+  "documentModelName": "Company_DM",
+  "locale": "en"
+}

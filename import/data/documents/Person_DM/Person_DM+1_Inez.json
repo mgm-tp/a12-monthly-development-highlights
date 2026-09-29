@@ -1,0 +1,53 @@
+{
+  "document": {
+    "People": {
+      "FirstName": "Inez",
+      "LastName": "Wehner",
+      "PersonalData": {
+        "Gender": "MALE",
+        "DateOfBirth": "2024-01-12",
+        "PlaceOfBirth": "Alvinburgh",
+        "Nationality": "China",
+        "Photo": {
+          "attachment_id": "1192848b-0e50-4bd4-afae-517c248f3c92",
+          "original_filename": "stockimages_people_23.jpg",
+          "internal_filename": "stockimages_people_23.jpg",
+          "mime_type": "image/jpeg"
+        }
+      },
+      "Addresses": [
+        {
+          "Street": "481 Dallas Glen",
+          "City": "Berlin",
+          "Country": "El Salvador",
+          "PostalCode": "10002"
+        }
+      ],
+      "Phones": [
+        {
+          "AreaCode": "DE",
+          "PhoneNumber": "1-769-562-3170",
+          "Type": "WORK"
+        }
+      ],
+      "Education": [
+        {
+          "SchoolName": "Johns Hopkins University",
+          "Degree": "HighSchool",
+          "Major": "Chemistry",
+          "Time": "1999/2000"
+        }
+      ],
+      "Memberships": [
+        {
+          "Area": "5",
+          "Name": "Veum",
+          "StartDate": "2024-01",
+          "EndDate": "2024-01"
+        }
+      ]
+    }
+  },
+  "documentModelName": "Person_DM",
+  "locale": "en"
+}
