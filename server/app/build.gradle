@@ -30,6 +30,9 @@
  * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
  */
 
+import java.nio.file.Files
+import java.nio.file.Paths
+
 plugins {
     id 'java'
     alias(gradlePluginLibs.plugins.spring.boot)
@@ -49,9 +52,19 @@ ext {
 
 configurations {
     runTypedAccessorGeneratorConfig
+    runMappingCodeGeneratorConfig
 }
 
+def isWindows = System.properties['os.name'].toLowerCase().contains('windows')
 def generatedTypingsOutputDir = layout.buildDirectory.dir("generatedTypings").get().asFile
+def wcfOutputDir = rootProject.layout.buildDirectory.dir('wcf-output/data/models').get().asFile
+def convertedFiles = { -> fileTree(dir: wcfOutputDir).files }
+// Mapping
+def genMappingOutputDir = layout.buildDirectory.dir('tmp/generated/mapping').get().asFile
+def mappingOutputDir = layout.buildDirectory.dir('generated/mapping').get().asFile
+def mappingBuildDir = layout.buildDirectory.dir('generated/mapping/build').get().asFile
+def mappingClassesOutputDir = Paths.get(mappingBuildDir.toString(), 'classes/java/main').toFile()
+def mappingResourcesOutputDir = Paths.get(mappingBuildDir.toString(), 'resources/main').toFile()
 
 sourceSets {
     generatedTypings {
@@ -63,6 +76,10 @@ sourceSets {
         java {
             compileClasspath += sourceSets.generatedTypings.output
             runtimeClasspath += sourceSets.generatedTypings.output
+        }
+        resources {
+            srcDirs += mappingClassesOutputDir
+            srcDirs += mappingResourcesOutputDir
         }
     }
 }
@@ -93,26 +110,104 @@ dependencies {
     implementation(libs.logstash)
     implementation(libs.logback.classic)
 
-    runTypedAccessorGeneratorConfig group: 'com.mgmtp.a12.kernel', name: 'kernel-md-facade', version: a12Libs.versions.kernel.get(), classifier: 'typed-accessor-gen-cli'
-    generatedTypingsImplementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-document-v2', version: a12Libs.versions.kernel.get()
-    implementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-facade', version: a12Libs.versions.kernel.get()
+    def kernelMdFacade = [group: 'com.mgmtp.a12.kernel', name: 'kernel-md-facade', version: a12Libs.versions.kernel.get()]
+    runTypedAccessorGeneratorConfig kernelMdFacade + [classifier: 'typed-accessor-gen-cli']
+    generatedTypingsImplementation a12Libs.kernel.md.document.v2
+    implementation a12Libs.kernel.md.facade
+
+    runMappingCodeGeneratorConfig kernelMdFacade + [classifier: 'MappingCodeGenerator-CLI']
+    runMappingCodeGeneratorConfig a12Libs.kernel.md.facade
+
+    // Lombok
+    implementation libs.lombok
+    annotationProcessor libs.lombok
 }
 
+tasks.register('setup') {
+    mustRunAfter 'clean'
+
+    doFirst {
+        delete mappingOutputDir
+        Files.createDirectories(mappingOutputDir.toPath())
+        // Ensure the nested Gradle project has its own settings.gradle so that
+        // Gradle does not walk up and pick up the root project's settings.gradle.
+        new File(mappingOutputDir, 'settings.gradle').text = ''
+    }
+}
+
+tasks.register('prepareMappingCodeGeneration') {
+    dependsOn 'setup'
+
+    doFirst {
+        delete genMappingOutputDir
+    }
+}
+
+tasks.register('generateMappingCode') {
+    dependsOn ':convertModels'
+    dependsOn 'prepareMappingCodeGeneration'
+
+    def mappingPackagePrefix = 'com.mgmtp.a12.mapping.'
+
+    inputs.dir(wcfOutputDir)
+    outputs.dir(genMappingOutputDir)
+
+    doLast {
+        def mappingModels = convertedFiles().findAll { isMappingModel(it) }
+
+        if (mappingModels.isEmpty()) {
+            throw new GradleException("No converted mapping models found in ${wcfOutputDir}")
+        }
+
+        mappingModels.each { model ->
+            String modelId = modelId(model)
+            providers.javaexec {
+                    classpath = configurations.runMappingCodeGeneratorConfig
+                    mainClass = 'com.mgmtp.a12.kernel.mapping.cli.MappingModelCodegenCLI'
+                    args '--models-dir', wcfOutputDir,
+                        '--mapping-model-id', modelId,
+                        '--package-prefix', mappingPackagePrefix + modelId,
+                        '--output-dir', genMappingOutputDir
+            }.result.get()
+        }
+    }
+}
+
+tasks.register('extractMappingCode', Copy) {
+    dependsOn 'generateMappingCode'
+
+    from { fileTree(dir: genMappingOutputDir).collect { zipTree(it) } }
+
+    into(mappingOutputDir)
+}
+
+tasks.register('compileMappingCode', Exec) {
+    dependsOn 'extractMappingCode'
+
+    inputs.files(tasks.named('extractMappingCode'))
+    outputs.dir(mappingBuildDir)
+
+    environment System.getenv()
+    workingDir mappingOutputDir
+    if (isWindows) {
+        commandLine 'cmd.exe', '/d', '/c', 'gradle', 'build'
+    } else {
+        commandLine 'gradle', 'build'
+    }
+}
 
 tasks.register('runTypedAccessorGenerator', JavaExec) {
     dependsOn ':convertModels'
     classpath = configurations.runTypedAccessorGeneratorConfig
     mainClass = 'com.mgmtp.a12.kernel.md.document.typed_accessor_gen.TypedAccessorGenerator'
 
-    def modelPath = rootProject.file('build/wcf-output/data/models')
     def packagePrefix = 'com.mgmtp.a12.template.server.typings'
 
     doFirst {
-        def convertedFiles = fileTree(dir: modelPath).files
-        def documentModels = convertedFiles.findAll { isDocumentModel(it) }
+        def documentModels = convertedFiles().findAll { isDocumentModel(it) }
 
         if (documentModels.isEmpty()) {
-            throw new GradleException("No converted document models found in ${modelPath}")
+            throw new GradleException("No converted document models found in ${wcfOutputDir}")
         }
         def argsList = []
         argsList += ['--document-model-file', documentModels.first().absolutePath]
@@ -129,6 +224,7 @@ tasks.named('compileGeneratedTypingsJava').configure { dependsOn(runTypedAccesso
 
 processResources {
     dependsOn ':convertModels'
+    dependsOn 'compileMappingCode'
 }
 
 springBoot {
@@ -150,12 +246,27 @@ boolean isDocumentModel(File modelFile) {
     return modelType(modelFile) == 'document'
 }
 
+boolean isMappingModel(File modelFile) {
+    return modelType(modelFile) == 'mapping'
+}
+
 private String modelType(File modelFile) {
     if (!modelFile.name.endsWith('.json')) {
         return null
     }
     try {
         return new groovy.json.JsonSlurper().parse(modelFile)?.header?.modelType
+    } catch (Exception e) {
+        throw new GradleException("Could not read converted model ${modelFile}", e)
+    }
+}
+
+private String modelId(File modelFile) {
+    if (!modelFile.name.endsWith('.json')) {
+        return null
+    }
+    try {
+        return new groovy.json.JsonSlurper().parse(modelFile)?.header?.id
     } catch (Exception e) {
         throw new GradleException("Could not read converted model ${modelFile}", e)
     }

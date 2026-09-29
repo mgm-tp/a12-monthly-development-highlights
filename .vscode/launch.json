@@ -29,7 +29,8 @@
                 "--spring.profiles.active=local-db-env"
             ],
             "cwd": "${workspaceFolder}/server/app",
-            "projectName": "app"
+            "projectName": "app",
+            "preLaunchTask": "generate mapping code"
         },
         {
             "type": "java",
@@ -40,7 +41,8 @@
                 "--spring.profiles.active=dev-env"
             ],
             "cwd": "${workspaceFolder}/server/app",
-            "projectName": "app"
+            "projectName": "app",
+            "preLaunchTask": "generate mapping code"
         },
         {
             "type": "java",

@@ -28,6 +28,16 @@
 			"label": "stop client",
 			"command": "echo ${input:terminate}",
 			"type": "shell"
+		},
+		{
+			"label": "generate mapping code",
+			"type": "shell",
+			"command": "gradle",
+			"args": [ ":server:app:processResources" ],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": []
 		}
 	],
 	"inputs": [{
