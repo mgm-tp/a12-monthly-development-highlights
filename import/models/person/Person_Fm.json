@@ -1,8 +1,8 @@
 {
   "header": {
-    "id": "Person_FM",
+    "id": "Person_Fm",
     "modelType": "form",
-    "modelVersion": "37.3.0",
+    "modelVersion": "39.0.0",
     "locales": [
       {
         "code": "en"
@@ -33,10 +33,10 @@
     ],
     "modelReferences": [
       {
-        "alias": "Person_DM",
+        "alias": "Person_Dc",
         "modelType": "document",
         "purpose": "data binding",
-        "reference": "Person_DM"
+        "reference": "Person_Dc"
       }
     ]
   },

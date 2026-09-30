@@ -1,7 +1,39 @@
-import path from "path";
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
+import { fileURLToPath } from "node:url";
 
 import { test } from "../../fixtures";
-import { DataType, FieldTestData, FileTestData } from "../../types";
+import { DataType, type FieldTestData, type FileTestData } from "../../types";
 import { TestID } from "../../types/testIds";
 import { OverviewPage } from "../../pages/OverviewPage";
 import { FormPage } from "../../pages/FormPage";
@@ -13,7 +45,11 @@ const companyData: FieldTestData[] = [
 
 const updateData: FieldTestData[] = [
     { label: "Company Name", value: "Quantumsafe", type: DataType.String },
-    { label: "Website", value: "https://quantumsafe.com/", type: DataType.String }
+    {
+        label: "Website",
+        value: "https://quantumsafe.com/",
+        type: DataType.String
+    }
 ];
 
 const phoneNumberData: FieldTestData[][] = [
@@ -42,7 +78,7 @@ const addressData: FieldTestData[][] = [
 
 const profileData: FileTestData = {
     locator: `[data-role=${TestID.FILE_UPLOAD_CONTROL}]`,
-    filePath: path.resolve(__dirname, "../../fixtures/image.png"),
+    filePath: fileURLToPath(new URL("../../fixtures/image.png", import.meta.url)),
     value: "image.png",
     type: DataType.File
 };
@@ -66,7 +102,7 @@ test.describe("Company Module", () => {
         });
 
         test("should add logo for company", async () => {
-            const row = overviewPage.getRow(companyData[0].value);
+            const row = overviewPage.getRow(companyData[0]!.value);
             await row.click();
 
             await formPage.toBeVisible();
@@ -78,20 +114,20 @@ test.describe("Company Module", () => {
         });
 
         test("should update a company", async () => {
-            const row = overviewPage.getRow(companyData[0].value);
+            const row = overviewPage.getRow(companyData[0]!.value);
             await row.click();
 
             await formPage.toBeVisible();
             await formPage.updateDocument(updateData);
             await formPage.toBeHidden();
 
-            await overviewPage.assertDocumentsInTable([updateData[0].value]);
+            await overviewPage.assertDocumentsInTable([updateData[0]!.value]);
         });
 
         test("should add 3 addresses", async () => {
             const sectionHeadlineLabel = "Address";
 
-            const row = overviewPage.getRow(updateData[0].value);
+            const row = overviewPage.getRow(updateData[0]!.value);
             await row.click();
 
             await formPage.toBeVisible();
@@ -106,7 +142,7 @@ test.describe("Company Module", () => {
 
         test("should add 3 phone numbers", async () => {
             const sectionHeadlineLabel = "Phone";
-            const row = overviewPage.getRow(updateData[0].value);
+            const row = overviewPage.getRow(updateData[0]!.value);
             await row.click();
             await formPage.toBeVisible();
             await formPage.inputInlineRepeatFieldValues(sectionHeadlineLabel, phoneNumberData);
@@ -119,7 +155,7 @@ test.describe("Company Module", () => {
         });
 
         test("should delete a company", async () => {
-            await overviewPage.deleteDocument(updateData[0].value);
+            await overviewPage.deleteDocument(updateData[0]!.value);
         });
     });
 });

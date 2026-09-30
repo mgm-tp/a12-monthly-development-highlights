@@ -1,14 +1,12 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="server start (postgres-in-file)" type="SpringBootApplicationConfigurationType"
-                 factoryName="Spring Boot">
-    <option name="ACTIVE_PROFILES" value="dev-env"/>
-    <option name="INCLUDE_PROVIDED_SCOPE" value="false"/>
-    <module name="your-project-name.server.app.main"/>
-    <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE"/>
-    <option name="SPRING_BOOT_MAIN_CLASS" value="com.mgmtp.a12.template.server.ProjectTemplateServerApplication"/>
-    <option name="WORKING_DIRECTORY" value="file://server/app"/>
+  <configuration default="false" name="server start (postgres-in-file)" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.mgmtp.a12.template.server.ProjectTemplateServerApplication" />
+    <option name="PROGRAM_PARAMETERS" value="--spring.profiles.active=dev-env" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/server/app" />
+    <module name="your-project-name.server.app.main" />
+    <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
     <method v="2">
-      <option name="Make" enabled="true"/>
+      <option name="Make" enabled="true" />
     </method>
   </configuration>
 </component>

@@ -1,3 +1,35 @@
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
 plugins {
     id 'java'
     alias(gradlePluginLibs.plugins.spring.boot)
@@ -10,7 +42,7 @@ ext {
     imageLabels = ["name"       : "${calculateShortTag(rootProject.serverName)}".toString(),
                    "vendor"     : "mgm technology partners GmbH",
                    "version"    : project.version,
-                   "release"    : rootProject.a12ReleaseVersion,
+                   "release"    : rootProject.a12ReleaseLine,
                    "summary"    : "A Data Services extensible server application that provides all functionalities to facilitate A12 Application",
                    "description": "A Data Services server with API and implementations to deal with models and documents supporting creation, retrieval, update, deletion and querying"]
 }
@@ -36,16 +68,15 @@ sourceSets {
 }
 
 dependencies {
-    //OpenRewrite analysis
-    rewrite libs.rewrite.static.analysis
-
     // Spring
     annotationProcessor libs.spring.boot.configuration.processor
     developmentOnly(libs.spring.boot.devtools)
 
     // A12 Dataservices
     implementation a12Libs.dataservices.server.app
-    implementation(a12Libs.dataservices.data.seed)
+    // dev/SME only — excluded from the production build
+    developmentOnly(a12Libs.dataservices.sme.workspace.support)
+    implementation a12Libs.rmc.conversion
 
     // A12 UAA
     implementation a12Libs.uaa.authorization.a12.extension
@@ -62,35 +93,43 @@ dependencies {
     implementation(libs.logstash)
     implementation(libs.logback.classic)
 
-    runTypedAccessorGeneratorConfig group: 'com.mgmtp.a12.kernel', name: 'kernel-md-typed-accessor-gen', version: a12Libs.versions.kernel.get(), classifier: 'TypedAccessorGenerator-CLI'
+    runTypedAccessorGeneratorConfig group: 'com.mgmtp.a12.kernel', name: 'kernel-md-facade', version: a12Libs.versions.kernel.get(), classifier: 'typed-accessor-gen-cli'
     generatedTypingsImplementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-document-v2', version: a12Libs.versions.kernel.get()
-    implementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-util', version: a12Libs.versions.kernel.get()
     implementation group: 'com.mgmtp.a12.kernel', name: 'kernel-md-facade', version: a12Libs.versions.kernel.get()
 }
 
 
 tasks.register('runTypedAccessorGenerator', JavaExec) {
+    dependsOn ':convertModels'
     classpath = configurations.runTypedAccessorGeneratorConfig
     mainClass = 'com.mgmtp.a12.kernel.md.document.typed_accessor_gen.TypedAccessorGenerator'
 
-    def modelPath = "${rootProject.projectDir.path}/import/models";
-    def packagePrefix = "com.mgmtp.a12.template.server.typings"
-    def documentModels = fileTree(dir: "${modelPath}", include: ['**/*_DM.json', '**/*_CDM.json'])
+    def modelPath = rootProject.file('build/wcf-output/data/models')
+    def packagePrefix = 'com.mgmtp.a12.template.server.typings'
 
-    if (!documentModels || documentModels.isEmpty()) {
-        throw new GradleException("No model definition files found in ${modelPath}")
+    doFirst {
+        def convertedFiles = fileTree(dir: modelPath).files
+        def documentModels = convertedFiles.findAll { isDocumentModel(it) }
+
+        if (documentModels.isEmpty()) {
+            throw new GradleException("No converted document models found in ${modelPath}")
+        }
+        def argsList = []
+        argsList += ['--document-model-file', documentModels.first().absolutePath]
+        argsList += ['--package-prefix', packagePrefix]
+        argsList += ['--output-dir', generatedTypingsOutputDir]
+        documentModels.each { File jsonFile ->
+            argsList += ['-i', jsonFile.absolutePath]
+        }
+        args argsList
     }
-    def argsList = []
-    argsList += ['--document-model-file', documentModels.first().absolutePath]
-    argsList += ['--package-prefix', packagePrefix]
-    argsList += ['--output-dir', generatedTypingsOutputDir]
-    documentModels.each { File jsonFile ->
-        argsList += ['-i', jsonFile.absolutePath]
-    }
-    args argsList
 }
 
-tasks.compileGeneratedTypingsJava.dependsOn(runTypedAccessorGenerator)
+tasks.named('compileGeneratedTypingsJava').configure { dependsOn(runTypedAccessorGenerator) }
+
+processResources {
+    dependsOn ':convertModels'
+}
 
 springBoot {
     mainClass = 'com.mgmtp.a12.template.server.ProjectTemplateServerApplication'
@@ -106,3 +145,18 @@ artifacts artifactsVar
 publishing publishingVar
 
 rewrite rewriteVar
+
+boolean isDocumentModel(File modelFile) {
+    return modelType(modelFile) == 'document'
+}
+
+private String modelType(File modelFile) {
+    if (!modelFile.name.endsWith('.json')) {
+        return null
+    }
+    try {
+        return new groovy.json.JsonSlurper().parse(modelFile)?.header?.modelType
+    } catch (Exception e) {
+        throw new GradleException("Could not read converted model ${modelFile}", e)
+    }
+}

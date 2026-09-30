@@ -1,9 +1,45 @@
-import * as React from "react";
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
 
-import { type DefaultThemeType } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/index.js";
-import { flatTheme } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/flat/flat-theme.js";
-import { type Container } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/index.js";
-import { createContext, useContextSelector } from "@com.mgmtp.a12.widgets/widgets-core/lib/context/index.js";
+import { type PropsWithChildren, useMemo, useState } from "react";
+
+import {
+    type BaseThemeConfig,
+    createContext,
+    getBaseTheme,
+    useContextSelector
+} from "@com.mgmtp.a12.widgets/widgets-core";
+
+import { customThemes } from "../themes";
 
 interface ThemeContextType {
     theme: string;
@@ -12,49 +48,27 @@ interface ThemeContextType {
 
 export const THEME_KEY = "theme";
 
-function convertFileNameToDisplayName(filePath: string): string {
-    return filePath
-        .replace(/(?:^\.\/|\.json$)/g, "")
-        .replace(/[-_]+/g, " ")
-        .trim()
-        .replace(/\b\w/g, (c) => c.toUpperCase());
-}
-
-const loadThemesFromFolder = (): { [key: string]: DefaultThemeType } => {
-    try {
-        const context = require.context("../themes", false, /\.json$/);
-        const themes: { [key: string]: DefaultThemeType } = {};
-        context.keys().forEach((key: string) => {
-            const themeName = convertFileNameToDisplayName(key);
-            themes[themeName] = context(key) as DefaultThemeType;
-        });
-        return themes;
-    } catch {
-        return {};
-    }
+export const THEMES: { Base: BaseThemeConfig; [key: string]: BaseThemeConfig } = {
+    Base: getBaseTheme(),
+    ...customThemes
 };
 
-export const THEMES: { [key: string]: DefaultThemeType } = {
-    Flat: flatTheme,
-    ...loadThemesFromFolder()
-};
+export const THEME_NAMES = Object.keys(THEMES) as ["Base"] & string[];
 
-export function getThemeNames(): string[] {
-    return Object.keys(THEMES);
+function getThemeNameByString(value: string | null | undefined): string {
+    return typeof value === "string" && THEME_NAMES.includes(value) ? value : THEME_NAMES[0];
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-    theme: "Flat",
+    theme: "Base",
     setTheme: () => {}
 });
 ThemeContext.displayName = "ThemeContext";
 
-export const ThemeContextProvider: React.FC<Container> = ({ children }) => {
-    const themeNames = getThemeNames();
-    const storedTheme = localStorage.getItem(THEME_KEY) ?? themeNames[0];
-    const [theme, setTheme] = React.useState(themeNames.includes(storedTheme) ? storedTheme : themeNames[0]);
+export const ThemeContextProvider = ({ children }: PropsWithChildren) => {
+    const [theme, setTheme] = useState(getThemeNameByString(localStorage.getItem(THEME_KEY)));
 
-    const themeContextValue: ThemeContextType = React.useMemo(() => {
+    const themeContextValue: ThemeContextType = useMemo(() => {
         return {
             theme,
             setTheme

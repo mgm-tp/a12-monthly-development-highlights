@@ -1,9 +1,41 @@
-import { Locator } from "@playwright/test";
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
 
-import { DataType, FieldTestData, FileTestData, TestData } from "../types";
+import type { Locator } from "@playwright/test";
+
+import { DataType, type FieldTestData, type FileTestData, type TestData } from "../types";
 import { TestID } from "../types/testIds";
 import { API_PATH, waitForApiReponse } from "../utils/api";
-import { Page, expect } from "../fixtures";
+import { type Page, expect } from "../fixtures";
 import { getByLabelWithOptionalAsterisk } from "../utils/locators";
 
 import { BasePage } from "./BasePage";
@@ -11,7 +43,7 @@ import { BasePage } from "./BasePage";
 export class FormPage extends BasePage {
     protected readonly form: Locator;
     constructor(
-        protected readonly page: Page,
+        protected override readonly page: Page,
         protected readonly formLocator: Locator = page.getByRole("form")
     ) {
         super(page);
@@ -32,7 +64,7 @@ export class FormPage extends BasePage {
             throw new Error(`Data type File not implemented`);
         }
         const { label, value, type } = testData;
-        const input = getByLabelWithOptionalAsterisk(locator, label);
+        const input = getByLabelWithOptionalAsterisk(locator, label, type);
         switch (type) {
             case DataType.Select:
             case DataType.String:
@@ -62,7 +94,7 @@ export class FormPage extends BasePage {
             return;
         }
         const { label, value, type } = testData;
-        const input = getByLabelWithOptionalAsterisk(locator, label);
+        const input = getByLabelWithOptionalAsterisk(locator, label, type);
         let isChecked: boolean;
 
         switch (type) {
@@ -104,7 +136,7 @@ export class FormPage extends BasePage {
         await expect(rows).toHaveCount(testData.length);
 
         for (let i = 0; i < testData.length; i++) {
-            for (const field of testData[i]) {
+            for (const field of testData[i]!) {
                 await this.assertFieldValue(field, rows.nth(i));
             }
         }
@@ -127,6 +159,11 @@ export class FormPage extends BasePage {
         }
     }
 
+    async cancelForm() {
+        await this.form.getByRole("button", { name: "Cancel" }).click();
+        await this.toBeHidden();
+    }
+
     async saveForm(shouldCloseForm = true) {
         await this.form.getByRole("button", { name: "Save", disabled: false }).click();
         await this.finishedLoading();
@@ -144,7 +181,7 @@ export class FormPage extends BasePage {
         if (field.type === DataType.File) {
             throw new Error(`Data type File not implemented`);
         }
-        await getByLabelWithOptionalAsterisk(this.form, field.label).clear();
+        await getByLabelWithOptionalAsterisk(this.form, field.label, field.type).clear();
     }
 
     async updateDocument(fieldValues: TestData[]) {
@@ -161,9 +198,26 @@ export class FormPage extends BasePage {
         await this.form
             .locator(`${fieldControlLocator} [data-role=${TestID.FILE_UPLOAD_INPUT}]`)
             .setInputFiles(filePath);
-        await waitForApiReponse({ page: this.page, apiPath: API_PATH.ATTACHMENT, expectedStatusCode: 200 });
+        await waitForApiReponse({
+            page: this.page,
+            apiPath: API_PATH.ATTACHMENT,
+            expectedStatusCode: 200
+        });
         await expect(
             this.form.locator(`${fieldControlLocator} [data-role=${TestID.FILE_UPLOAD_CONTENT_INNER}] img`)
         ).toBeVisible();
+    }
+
+    async uploadInvalidFileField(testData: FileTestData, expectedErrorMessage: string | RegExp) {
+        const { locator: fieldControlLocator, filePath } = testData;
+        await this.form
+            .locator(`${fieldControlLocator} [data-role=${TestID.FILE_UPLOAD_INPUT}]`)
+            .setInputFiles(filePath);
+        await waitForApiReponse({
+            page: this.page,
+            apiPath: API_PATH.ATTACHMENT,
+            expectedStatusCode: 400
+        });
+        await expect(this.form.getByTestId(TestID.FILE_UPLOAD_ERROR_MESSAGE)).toHaveText(expectedErrorMessage);
     }
 }

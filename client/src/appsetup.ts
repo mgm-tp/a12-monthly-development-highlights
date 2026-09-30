@@ -1,133 +1,135 @@
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
 import {
-    UaaActions,
-    UaaClientConfiguration,
-    UaaMiddlewares,
-    UaaReducer
-} from "@com.mgmtp.a12.uaa/uaa-authentication-client";
-import { ActivitySelectors } from "@com.mgmtp.a12.client/client-core/lib/core/activity";
-import { ApplicationFactories, ApplicationSetup } from "@com.mgmtp.a12.client/client-core/lib/core/application";
-import { DataHandler } from "@com.mgmtp.a12.client/client-core/lib/core/data";
-import { APPLICATION_MODEL_PLACEHOLDER, ModelActions } from "@com.mgmtp.a12.client/client-core/lib/core/model";
-import { createPlatformServerModelLoader } from "@com.mgmtp.a12.client/client-core/lib/extensions/modelLoader";
-import {
-    createEmptyDocumentDataProvider,
-    formEngineDataReducers,
-    FormModelProcessor,
-    platformAttachmentLoader,
-    platformSingleDocumentDataProvider
-} from "@com.mgmtp.a12.formengine/formengine-core/lib/client-extensions";
-import { CRUDFactories } from "@com.mgmtp.a12.crud/crud-core";
-import { DirtyHandlingFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/dirtyHandling";
-import {
-    cddDataHolderReducerExtension,
-    createCddDataProvider,
-    cddReducers,
-    cdmSagas,
-    createCdmMiddlewares,
-    dgReducerFactory,
-    RelationshipFactories,
-    RelationshipReducers
-} from "@com.mgmtp.a12.relationshipengine/relationshipengine-core";
-import { OverviewEngineFactories } from "@com.mgmtp.a12.overviewengine/overviewengine-core/lib/main/client-extensions";
-import { DeepLinkingFactories } from "@com.mgmtp.a12.client/client-core/lib/extensions/deep-linking";
+    createA12ApplicationSetup,
+    addCustomSagas,
+    addAdditionalMiddlewares,
+    addView,
+    addLayout,
+    withModel,
+    APPLICATION_MODEL_PLACEHOLDER,
+    ModelActions,
+    type A12ApplicationConfig,
+    combineFeatures
+} from "@com.mgmtp.a12.client/client-core";
+import { withPlatformModelLoader } from "@com.mgmtp.a12.client/client-core/modelLoader";
+import { withDirtyHandling } from "@com.mgmtp.a12.client/client-core/dirtyHandling";
+import { withLocalization } from "@com.mgmtp.a12.client/client-core/localization";
+import { withNotifications } from "@com.mgmtp.a12.client/client-core/notification";
+import { platformAttachmentLoader } from "@com.mgmtp.a12.formengine/formengine-core";
+import { withRelationshipFormEngine } from "@com.mgmtp.a12.relationshipengine/relationshipengine-core";
+import { withOverviewEngine } from "@com.mgmtp.a12.overviewengine/overviewengine-core";
+import { withTreeEngine } from "@com.mgmtp.a12.treeengine/treeengine-core";
+import { withCRUD } from "@com.mgmtp.a12.crud/crud-core";
+import { withDeepLinking } from "@com.mgmtp.a12.client/client-core/deepLinking";
+import { withDataServicesConfiguration } from "@com.mgmtp.a12.client/client-core/dataServicesAdapter";
+import { withContentEngine } from "@com.mgmtp.a12.contentengine/contentengine-core";
+import { DefaultElementLibrary } from "@com.mgmtp.a12.contentengine/contentengine-default-element-library";
+import { withUaa } from "@com.mgmtp.a12.uaa/uaa-authentication-a12-client";
 
 import { registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware } from "./modules";
-import { setRolesForUserAfterTokenRefresh } from "./uaa/sagas";
 import { isProduction } from "./config";
-import { uaaIntegration } from "./uaa/integration";
 import { enableReduxDevTools } from "./config/devtools";
-import { setLocaleKeycloakOnLoginMiddleware } from "./middlewares";
 import { LoadModelGraphSaga } from "./sagas/loadModelGraph";
+import { enginesViewMap } from "./app/EnginesViewMap";
+import { CustomApplicationFrameLayout } from "./app/LayoutProvider";
+import { DEFAULT_TRANSLATIONS, supportedLocales, getDateTimeResource } from "./localization";
+import { withKeycloak } from "./uaa/withKeycloak";
 
-let config: ApplicationSetup;
-
-export function setup(): {
-    config: ApplicationSetup;
-    initialStoreActions(): Promise<void>;
-} {
-    const dataHandlers: DataHandler[] = [
-        createCddDataProvider(),
-        createEmptyDocumentDataProvider(),
-        RelationshipFactories.createRelationshipDataProvider(),
-        ...OverviewEngineFactories.createDataProviders(),
-        platformSingleDocumentDataProvider
-    ];
-
-    config = ApplicationFactories.createApplicationSetup({
-        model: APPLICATION_MODEL_PLACEHOLDER,
-        modelLoader: createPlatformServerModelLoader({ modelProcessors: [FormModelProcessor] }),
-        applicationBusyTriggers: {
-            start: [UaaActions.loggingInLocal],
-            end: [UaaActions.loggedIn, UaaActions.loginFailed]
+export function setup() {
+    const initialConfig: A12ApplicationConfig = {
+        config: {
+            preComputeNewDocuments: true,
+            composeEnhancer: isProduction ? undefined : enableReduxDevTools()
         },
-        applicationResetTriggers: {
-            resetRequested: [UaaActions.logoutRequested],
-            resetConfirmed: UaaActions.loggingOut(),
-            reset: [UaaActions.loggedOut]
+        formEngine: {
+            sagas: {
+                attachmentLoader: platformAttachmentLoader
+            }
         },
-        dataHandlers,
-        overridePlatformSagas: [
-            ...DirtyHandlingFactories.createSagas(),
-            ...OverviewEngineFactories.createApplicationSagas()
-        ],
-        customSagas: [
-            ...CRUDFactories.createSagas(),
-            ...RelationshipFactories.createSagas({ dataHandlers }),
-            LoadModelGraphSaga,
-            ...cdmSagas({ attachmentLoader: platformAttachmentLoader }),
-            setRolesForUserAfterTokenRefresh,
-            DeepLinkingFactories.createWelcomePageSaga({ applyTriggers: [ModelActions.addModulesApplicationModels] })
-        ],
-        preComputeNewDocuments: true,
-        composeEnhancer: isProduction ? undefined : enableReduxDevTools(),
-        additionalMiddlewares: [
-            ...createCdmMiddlewares(),
-            ...OverviewEngineFactories.createMiddlewares(),
-            CRUDFactories.createCRUDMiddleware(),
-            registerModulesOnSetModelGraphMiddleware,
-            unregisterModulesOnLogoutMiddleware,
-            setLocaleKeycloakOnLoginMiddleware,
-            ...UaaMiddlewares()
-        ],
-        dataReducers: [
-            ...formEngineDataReducers,
-            ...RelationshipReducers.dataReducers,
-            ...OverviewEngineFactories.createDataReducers(),
-            ...dgReducerFactory(cddDataHolderReducerExtension),
-            ...cddReducers
-        ],
-        reducerMap: {
-            uaa: UaaReducer
-        }
-    });
-    const clientConfiguration: UaaClientConfiguration = {
-        serverURL: "/api",
-        automaticallyLogin: true,
-        store: config.store
-    };
-    /*
-     * Listen to the window.onbeforeunload event to trigger a dialog
-     * if there are dirty or locked activities when the application gets closed.
-     */
-    window.onbeforeunload = () => {
-        // Show the dialog if there are dirty or locked activities.
-        const dirtySubTree = ActivitySelectors.allDirtyOrLockedActivities()(config.store.getState());
-        if (dirtySubTree.length > 0) {
-            /* This string will not be shown in most modern browser versions,
-             * instead a browser specific message will be shown:
-             * https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload#Browser_compatibility
-             *
-             * Current Firefox (version 100.0.x) and Chromium (version 101.0.x) display a browser-specific alert box.
-             */
-            return "Changes you made may not be saved.";
-        } else {
-            return undefined;
+        localization: {
+            supportedLocales,
+            translationSource: DEFAULT_TRANSLATIONS,
+            getDateTimeResource
+        },
+        uaa: {
+            configuration: {
+                serverURL: "/api",
+                automaticallyLogin: true
+            }
+        },
+        deepLinking: {
+            onlyWelcomePage: true,
+            config: {
+                applyTriggers: [ModelActions.addModulesApplicationModels]
+            }
+        },
+        contentEngine: {
+            elementLibraryId: DefaultElementLibrary.get().id
         }
     };
-    return {
-        config,
-        initialStoreActions: async () => {
-            await uaaIntegration(clientConfiguration);
-        }
-    };
+
+    // * Can use intermediate variable after A12C-3314 is done
+    const configured = combineFeatures(
+        combineFeatures(
+            // * Update after A12C-3313 is done
+            withModel(APPLICATION_MODEL_PLACEHOLDER),
+            withDataServicesConfiguration,
+            withOverviewEngine,
+            withRelationshipFormEngine,
+            withCRUD,
+            withTreeEngine,
+            withContentEngine,
+            withPlatformModelLoader
+        ),
+
+        combineFeatures(withLocalization, withNotifications, withUaa, withKeycloak, withDirtyHandling, withDeepLinking),
+
+        combineFeatures(
+            addView("TreeEngine", enginesViewMap.TreeEngine),
+            addView("FormEngine", enginesViewMap.FormEngine),
+            addView("OverviewEngine", enginesViewMap.OverviewEngine),
+            addView("ContentEngine", enginesViewMap.ContentEngine),
+            addLayout("ApplicationFrame", { component: CustomApplicationFrameLayout })
+        ),
+
+        combineFeatures(
+            addAdditionalMiddlewares(registerModulesOnSetModelGraphMiddleware, unregisterModulesOnLogoutMiddleware),
+            addCustomSagas(LoadModelGraphSaga)
+        )
+    )(initialConfig);
+
+    const { store, initialActions, Component } = createA12ApplicationSetup(configured);
+
+    return { store, initialActions, Component };
 }

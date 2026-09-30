@@ -1,8 +1,40 @@
-import { Locator } from "@playwright/test";
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
+import type { Locator } from "@playwright/test";
 
 import { TestID } from "../types/testIds";
-import { TestData } from "../types";
-import { Page, expect } from "../fixtures";
+import type { TestData } from "../types";
+import { type Page, expect } from "../fixtures";
 import { API_PATH, waitForApiReponse } from "../utils/api";
 
 import { BasePage } from "./BasePage";
@@ -12,7 +44,7 @@ import { ComposeFormPage } from "./ComposeFormPage";
 export class OverviewPage extends BasePage {
     private readonly table: Locator;
 
-    constructor(protected readonly page: Page) {
+    constructor(protected override readonly page: Page) {
         super(page);
         this.table = page.getByTestId(TestID.TABLE);
     }
@@ -32,7 +64,7 @@ export class OverviewPage extends BasePage {
         await formPage.finishedLoading();
         await formPage.toBeVisible();
         await formPage.createDocument(document);
-        await this.assertDocumentsInTable([document[0].value]);
+        await this.assertDocumentsInTable([document[0]!.value]);
     }
 
     async addComposeDocument(
@@ -45,7 +77,7 @@ export class OverviewPage extends BasePage {
         const composeFormPage = new ComposeFormPage(this.page, formLocator, relationFormLocator);
         await composeFormPage.toBeVisible();
         await composeFormPage.createDocument(document, relationData);
-        await this.assertDocumentsInTable([document[0].value]);
+        await this.assertDocumentsInTable([document[0]!.value]);
     }
 
     getRow(document: string): Locator {
@@ -60,8 +92,16 @@ export class OverviewPage extends BasePage {
         if (hasConfirmation) {
             await this.page.getByRole("button", { name: "Delete" }).click();
         }
-        await waitForApiReponse({ page: this.page, apiPath: API_PATH.RPC, expectedStatusCode: 200 });
-        await waitForApiReponse({ page: this.page, apiPath: API_PATH.RPC, expectedStatusCode: 200 });
+        await waitForApiReponse({
+            page: this.page,
+            apiPath: API_PATH.RPC,
+            expectedStatusCode: 200
+        });
+        await waitForApiReponse({
+            page: this.page,
+            apiPath: API_PATH.RPC,
+            expectedStatusCode: 200
+        });
     }
 
     async deleteAllRows(hasConfirmation: boolean = true) {
@@ -87,7 +127,11 @@ export class OverviewPage extends BasePage {
         const downloadedFilePromise = this.page.waitForEvent("download");
         await this.page.getByRole("button", { name: "Export" }).click();
         await this.page.getByRole("button", { name: "OK" }).click();
-        await waitForApiReponse({ page: this.page, apiPath: API_PATH.RPC, expectedStatusCode: 200 });
+        await waitForApiReponse({
+            page: this.page,
+            apiPath: API_PATH.RPC,
+            expectedStatusCode: 200
+        });
         const downloadFile = await downloadedFilePromise;
         expect(downloadFile.suggestedFilename()).toBe(expectedFileName);
     }

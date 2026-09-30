@@ -1,9 +1,42 @@
+#
+# SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+#
+# Copyright (c) 2012-2026 mgm technology partners GmbH
+#
+# Dual License
+# ------------
+# This source file is part of the mgm A12 Platform and available under
+# a choice of two different licenses:
+#
+# 1. Open-Source License - EUPL v1.2
+#    You may redistribute and/or modify this file under the terms of the
+#    European Union Public License, version 1.2 - see https://eupl.eu/.
+#
+# 2. Commercial License
+#    Alternatively, you may obtain a commercial license from
+#    mgm technology partners GmbH, that permits use of this software
+#    under different terms (including support and maintenance services).
+#
+#    Please contact a12-license@mgm-tp.com for more information.
+#
+# You must select and comply with exactly one of the above license options.
+#
+# Warranty Disclaimer (applies to either option)
+# ----------------------------------------------
+# THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+# WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+# LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+#
+
 services:
   frontend:
     image: ${FRONTEND_IMAGE}
     container_name: ${PROJECT_NAME}_frontend
     environment:
       NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL: http://server:8080/api
+      NGINX_PROJECT_TEMPLATE_SERVER_ACTUATOR_URL: http://server:8080/actuator
     ports:
       - 8081:8081
     depends_on:
@@ -33,7 +66,7 @@ services:
       MGMTP_A12_DATASERVICES_QUERY_REINDEXING_MODE: rebuild_index
       MGMTP_A12_UAA_AUTHENTICATION_PRINCIPAL_ACCESS-RIGHTS-RESOURCE: file:/var/lib/a12/data/import/auth/roles.yaml
       MGMTP_A12_UAA_AUTHORIZATION_CHILD-AUTHORIZATION-DEFINITIONS: file:/var/lib/a12/data/import/auth/childAuthorizationDefinition.json
-      MGMTP_A12_DATASERVICES_INITIALIZATION_IMPORT_MODELS_PATH: file:/var/lib/a12/data/import/models/
+      MGMTP_A12_DATASERVICES_INITIALIZATION_IMPORT_MODELS_PATH: file:/var/lib/a12/data/models
       MGMTP_A12_DATASERVICES_INITIALIZATION_SCRIPTS_JSONRPC_ENABLED: false
 
     depends_on:
@@ -50,6 +83,7 @@ services:
       - 8082:8080
     volumes:
       - ../import:/var/lib/a12/data/import
+      - ../build/wcf-output/data/models:/var/lib/a12/data/models
 
   postgres:
     image: ${DOCKER_REGISTRY_FOR_READ}/postgres:${POSTGRES_VERSION}
@@ -100,7 +134,7 @@ services:
       SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE: postgresql
       SPRING_DATASOURCES_CONTENTSTORE_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
       MGMTP_A12_DATASERVICES_INITIALIZATION_SCRIPTS_JSONRPC_PATHS: file:/var/lib/a12/data/import/data/request/*.json
-      MGMTP_A12_DATASERVICES_INITIALIZATION_IMPORT_MODELS_PATH: file:/var/lib/a12/data/import/models/
+      MGMTP_A12_DATASERVICES_INITIALIZATION_IMPORT_MODELS_PATH: file:/var/lib/a12/data/models
     depends_on:
       postgres:
         condition: service_healthy
@@ -108,6 +142,7 @@ services:
       - a12_compose
     volumes:
       - ../import:/var/lib/a12/data/import
+      - ../build/wcf-output/data/models:/var/lib/a12/data/models
 
   keycloak:
     image: ${KEYCLOAK_REGISTRY}/keycloak/keycloak:${KEYCLOAK_VERSION}

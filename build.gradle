@@ -1,25 +1,79 @@
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
 import com.mgmtp.a12.Utils
 import groovy.json.JsonSlurper
 
 plugins {
     alias(gradlePluginLibs.plugins.docker.remote.api)
     alias(gradlePluginLibs.plugins.versions.update)
-    alias(gradlePluginLibs.plugins.sonarqube)
+    alias(gradlePluginLibs.plugins.sbom)
+    id 'idea'
 }
+apply from: 'copyright/copyright.gradle'
 
-sonar {
-    properties {
-        property 'sonar.projectKey', 'Project-Template'
-        property 'sonar.projectName', 'Project Template'
-        property 'sonar.projectVersion', "${project.version}"
-        property 'sonar.log.level', 'TRACE'
-        property 'sonar.scm.provider', 'git'
-        property 'sonar.qualitygate.wait', true
+
+idea {
+    module {
+        downloadSources = true
     }
-}
+} 
+
 
 allprojects {
     apply plugin: 'base'
+
+    def packageJson = new JsonSlurper().parse rootProject.file('package.json')
+    // Version is resolved here (not inside the 'initProject' task) so that every Gradle invocation
+    // agrees on it - 'getVersion', 'cleanImages' and 'prerelease' would otherwise diverge, because
+    // the lazily-wired 'initProject' is only realized for 'prerelease'.
+    if (rootProject.hasProperty('releaseVersion')) {
+        version = rootProject.getProperty('releaseVersion')
+    } else {
+        String baseVersion = packageJson.version?.trim() ? packageJson.version.split('-')[0].trim() : rootProject.a12ReleaseLine
+        if (System.env.BUILD_NUMBER) {
+            // TODO: We currently keep it simple here to publish only current build version. You should update this pattern to adapt with your project's strategy.
+            version = baseVersion + "-build.${String.format("%05d", Integer.parseInt(System.env.BUILD_NUMBER))}"
+        } else {
+            version = baseVersion
+        }
+    }
+
+    plugins.withId('org.cyclonedx.bom') {
+        tasks.named('cyclonedxBom').configure {
+            jsonOutput.set(layout.buildDirectory.file("reports/cyclonedx.json"))
+            xmlOutput.unsetConvention()
+        }
+    }
 }
 
 project.ext {
@@ -30,7 +84,7 @@ subprojects {
     apply {
         plugin 'maven-publish'
         plugin 'com.bmuschko.docker-remote-api'
-        plugin 'org.sonarqube'
+        plugin 'org.cyclonedx.bom'
     }
 
     ext.registryCredentialsForPublishVar = {
@@ -67,6 +121,8 @@ subprojects {
     }
 }
 
+check.dependsOn('validateCopyrightHeaders')
+
 tasks.register('getVersion') {
     println project.version
 }
@@ -74,7 +130,7 @@ tasks.register('getVersion') {
 def readmeFile = file("README.md")
 def versionsFile = file("tool-versions.json")
 //should run with every build
-build.dependsOn('updateReadmeToolsVersions')
+tasks.named('build').configure { dependsOn('updateReadmeToolsVersions') }
 tasks.register('updateReadmeToolsVersions') {
     group 'Config'
     description "Checks if './tool-versions.json' file was changed and updates tool versions table in README accordingly."
@@ -103,7 +159,7 @@ tasks.register('updateReadmeToolsVersions') {
 }
 
 //should run with every build
-check.dependsOn('checkToolVersions')
+tasks.named('check').configure { dependsOn('checkToolVersions') }
 tasks.register('checkToolVersions') {
     group 'Config'
     description 'Checks if tool system versions satisfy required versions in \'./tool-versions.json\' file.'
@@ -111,36 +167,6 @@ tasks.register('checkToolVersions') {
 }
 
 tasks.register('initProject') {
-    // TODO: Remove these lines below in your project. This is only used for the adapting in the project template.
-    // BEGIN
-    // Only execute on Jenkins
-    if (System.env.BUILD_NUMBER) {
-        imageGroup = 'com.mgmtp.a12.projecttemplate/full-stack-template-test-only'
-        allprojects.each { project ->
-            project.dockerRegistryForPublish = 'a12.dockerregistry.mgm-tp.com'
-            project.group = 'com.mgmtp.a12.projecttemplate'
-        }
-        ant.propertyfile(file: 'gradle.properties') {
-            entry(key: 'group', value: 'com.mgmtp.a12.projecttemplate')
-            entry(key: 'dockerRegistryForPublish', value: 'a12.dockerregistry.mgm-tp.com')
-        }
-    }
-    if (project.hasProperty("releaseVersion")) {
-        String projectVersion = project.getProperty("releaseVersion")
-        allprojects.each { project -> project.version = projectVersion
-        }
-        return
-    }
-
-    def packageJson = new JsonSlurper().parse file('package.json')
-    String projectVersion = packageJson.version.split('-')[0].trim()
-    if (System.env.BUILD_NUMBER) {
-        // TODO: We currently keep it simple here to publish only current build version. You should update this pattern to adapt with your project's strategy.
-        projectVersion = projectVersion + "-build.${String.format("%05d", Integer.parseInt(System.env.BUILD_NUMBER))}"
-    }
-    allprojects.each { project -> project.version = projectVersion
-    }
-    // END
 }
 
 tasks.register('test') {
@@ -151,9 +177,13 @@ tasks.register('prerelease') {
     dependsOn test, initProject
 }
 
-subprojects.each {
-    test.dependsOn it.getTasksByName('test', true), it.getTasksByName('checkstyleMain', true)
-    prerelease.dependsOn it.getTasksByName('pushImages', true)
+subprojects.each { sub ->
+    tasks.named('test').configure {
+        dependsOn sub.tasks.matching { it.name == 'test' || it.name == 'checkstyleMain' }
+    }
+    tasks.named('prerelease').configure {
+        dependsOn sub.tasks.matching { it.name == 'pushImages' }
+    }
 }
 
 tasks.register("replacePlaceholders") {
@@ -164,6 +194,54 @@ tasks.register("replacePlaceholders") {
         Utils.replacePlaceholders(setupFile, filesContainingDocs, project.projectDir.path)
     }
 }
+
+dependencyLocking {
+    lockAllConfigurations()
+}
+
+configurations {
+    wcfCli {
+        attributes {
+            attribute(org.gradle.api.attributes.Bundling.BUNDLING_ATTRIBUTE,
+                    objects.named(org.gradle.api.attributes.Bundling, org.gradle.api.attributes.Bundling.EXTERNAL))
+        }
+    }
+}
+
+dependencies {
+    wcfCli a12Libs.dataservices.wcf.cli
+    wcfCli a12Libs.rmc.conversion
+}
+
+def importModelsDir = file('import/models')
+def wcfOutputDir = layout.buildDirectory.dir('wcf-output').get().asFile
+
+tasks.register('convertModels', Exec) {
+    description = 'Convert WCF source models in import/models to RMC in build/wcf-output/data/models'
+    group = 'model'
+
+    doFirst {
+        wcfOutputDir.deleteDir()
+        wcfOutputDir.mkdirs()
+        def cp = configurations.wcfCli.files.collect { it.absolutePath }.join(File.pathSeparator)
+        def convertersJar = configurations.wcfCli.files.find { it.name.startsWith('conversion-') }
+        if (convertersJar == null) {
+            throw new GradleException("Could not find RMC conversion jar in wcfCli configuration. " +
+                "Available: ${configurations.wcfCli.files*.name}")
+        }
+        commandLine 'java', '-cp', cp, 'com.mgmtp.a12.dataservices.wcf.WcfCli',
+                importModelsDir.absolutePath, wcfOutputDir.absolutePath,
+                '-c', convertersJar.absolutePath
+    }
+
+    inputs.dir importModelsDir
+    outputs.dir file("${wcfOutputDir}/data/models")
+}
+
+tasks.register('cleanConvertedModels', Delete) {
+    delete wcfOutputDir
+}
+tasks.named('clean').configure { dependsOn('cleanConvertedModels') }
 
 tasks.register("buildImagesComposeUp") {
     group 'Docker'

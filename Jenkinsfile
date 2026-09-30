@@ -8,17 +8,17 @@ String downstreamBuildResult = 'Not triggerred'
 // BEGIN environment specific variables
 // TODO: Adapt the following variables according to your Jenkins build environment
 String BUILD_AGENT_LABEL = 'linux-node'
-String GRADLE_VERSION = 'Gradle8'
+String GRADLE_VERSION = 'Gradle9'
 @Field
-String JDK_VERSION = 'OpenJDK21'
+String JDK_VERSION = 'OpenJDK25'
 @Field
-String NODE_JS_VERSION = 'Node22'
+String NODE_JS_VERSION = 'Node24'
 @Field
-String GRADLE_SETTINGS_FILE_REF = 'gradle-settings'
+String GRADLE_SETTINGS_FILE_REF = '<YOUR_GRADLE_SETTINGS_FILE_REF>'
 @Field
-String NODE_JS_CONFIG_REF = 'npmrc'
+String NODE_JS_CONFIG_REF = '<YOUR_NPM_CONFIG_REF>'
 @Field
-String CI_USER_REF = 'ci-user-artifactory-token'
+String CI_USER_REF = '<YOUR_CI_CREDENTIAL_ID>'
 // END environment specific variables
 
 // BEGIN deployment specific variables
@@ -26,7 +26,7 @@ String CI_USER_REF = 'ci-user-artifactory-token'
 // DOWNSTREAM_DEPLOYMENT_JOB_PATH: is the path to the job used to deploy your application to `int` environment obtained from implementing the Project Deployment Template.
 // CI_DEPLOYMENT_TRIGGER_BRANCH: for any updates on this branch, this pipeline job will trigger the down stream deployment job above to deploy your application to the `int` environment.
 
-String DOWNSTREAM_DEPLOYMENT_JOB_PATH = 'BD/deployment-pipelines/deployment-all-v2/'
+String DOWNSTREAM_DEPLOYMENT_JOB_PATH = '<YOUR_DEPLOYMENT_JOB_PATH>'
 String CI_DEPLOYMENT_TRIGGER_BRANCH = 'main'
 // END deployment specific variables
 
@@ -47,27 +47,27 @@ pipeline {
 
     stages {
 
-                stage('Review') {
-                    when {
-                        allOf {
-                            anyOf {
-                                triggeredBy 'BranchIndexingCause'
-                                triggeredBy 'BranchEventCause'
-                                triggeredBy "UserIdCause"
-                            }
-                            changeRequest()
-                        }
+        stage('Review') {
+            when {
+                allOf {
+                    anyOf {
+                        triggeredBy 'BranchIndexingCause'
+                        triggeredBy 'BranchEventCause'
+                        triggeredBy "UserIdCause"
                     }
-                    steps {
-                        script {
-                            withBuildConfiguration {
-                                sh 'gradle build'
-                                String projectVersion = sh script: 'gradle getVersion -q', returnStdout: true
-                                currentBuild.displayName += ': ' + projectVersion
-                            }
-                        }
+                    changeRequest()
+                }
+            }
+            steps {
+                script {
+                    withBuildConfiguration {
+                        sh 'gradle build'
+                        String projectVersion = sh script: 'gradle getVersion -q', returnStdout: true
+                        currentBuild.displayName += ': ' + projectVersion
                     }
                 }
+            }
+        }
 
         stage('Pre-release') {
             when {
@@ -75,8 +75,10 @@ pipeline {
             }
             steps {
                 script {
+                    String gradlePrereleaseCmd = 'gradle prerelease'
+
                     withBuildConfiguration {
-                        sh 'gradle prerelease'
+                        sh gradlePrereleaseCmd
                         String projectVersion = sh script: 'gradle getVersion -q', returnStdout: true
                         currentBuild.displayName += ': ' + projectVersion
                         buildVersion = projectVersion
@@ -125,8 +127,8 @@ pipeline {
 
     post {
         always {
-            withBuildConfiguration {
-                script {
+            script {
+                withBuildConfiguration {
                     sh "gradle cleanImages || true"
                 }
             }

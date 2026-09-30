@@ -1,7 +1,39 @@
-import path from "path";
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
 
-import { expect, Page, test } from "../../fixtures";
-import { DataType, FieldTestData, FileTestData, TestData, TestUsername } from "../../types";
+import { fileURLToPath } from "node:url";
+
+import { expect, type Page, test } from "../../fixtures";
+import { DataType, type FieldTestData, type FileTestData, type TestData, type TestUsername } from "../../types";
 import { TestID } from "../../types/testIds";
 import { OverviewPage } from "../../pages/OverviewPage";
 import { FormPage } from "../../pages/FormPage";
@@ -76,10 +108,19 @@ const updateData: TestData[] = [
 
 const profileData: FileTestData = {
     locator: `[data-role=${TestID.FILE_UPLOAD_CONTROL}]`,
-    filePath: path.resolve(__dirname, "../../fixtures/image.png"),
+    filePath: fileURLToPath(new URL("../../fixtures/image.png", import.meta.url)),
     value: "image.png",
     type: DataType.File
 };
+
+const invalidAttachmentData: FileTestData = {
+    locator: `[data-role=${TestID.FILE_UPLOAD_CONTROL}]`,
+    filePath: fileURLToPath(new URL("../../fixtures/index.ts", import.meta.url)),
+    value: "index.ts",
+    type: DataType.File
+};
+
+const INVALID_ATTACHMENT_ERROR = /Invalid MIME type\.$/;
 
 const phoneNumberData: FieldTestData[][] = [
     [{ label: "Phone Number", value: "123456789", type: DataType.String }],
@@ -114,7 +155,7 @@ const addressData: FieldTestData[][] = [
     ]
 ];
 
-const newDateOfBirth = updateData[1].value;
+const newDateOfBirth = updateData[1]!.value;
 
 test.describe.serial("Person Module", () => {
     test.describe("Person Module - CRUD", () => {
@@ -135,8 +176,17 @@ test.describe.serial("Person Module", () => {
             await overviewPage.addDocument(personData);
         });
 
+        test("should validate invalid attachment", async () => {
+            const row = overviewPage.getRow(personData[0]!.value);
+            await row.click();
+
+            await formPage.toBeVisible();
+            await formPage.uploadInvalidFileField(invalidAttachmentData, INVALID_ATTACHMENT_ERROR);
+            await formPage.cancelForm();
+        });
+
         test("should add profile picture for person", async () => {
-            const row = overviewPage.getRow(personData[0].value);
+            const row = overviewPage.getRow(personData[0]!.value);
             await row.click();
 
             await formPage.toBeVisible();
@@ -215,8 +265,8 @@ test.describe.serial("Person Module", () => {
             test(`should show documents by ${user} ownership accordingly`, async ({ getPageAs }) => {
                 const { page, overviewPage } = await setupTest(user as TestUsername, getPageAs);
 
-                await overviewPage.assertDocumentsInTable([testData[0].value]);
-                await page.getByTestId(TestID.TABLE_BODY_ROW).filter({ hasText: testData[0].value }).click();
+                await overviewPage.assertDocumentsInTable([testData[0]!.value]);
+                await page.getByTestId(TestID.TABLE_BODY_ROW).filter({ hasText: testData[0]!.value }).click();
 
                 const formPage = new FormPage(page);
                 await formPage.toBeVisible();
@@ -227,7 +277,7 @@ test.describe.serial("Person Module", () => {
         Object.entries(ownershipTestData).forEach(([user, testData]) => {
             test(`Owner ${user} can delete its document`, async ({ getPageAs }) => {
                 const { overviewPage } = await setupTest(user as TestUsername, getPageAs);
-                await overviewPage.deleteDocument(testData[0].value);
+                await overviewPage.deleteDocument(testData[0]!.value);
             });
         });
     });

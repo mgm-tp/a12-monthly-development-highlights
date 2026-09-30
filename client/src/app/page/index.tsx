@@ -1,125 +1,94 @@
-import React from "react";
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
+
+import type { PropsWithChildren, ReactElement } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { DndProvider } from "react-dnd";
 
-import { ApplicationSelectors } from "@com.mgmtp.a12.client/client-core/lib/core/application";
-import { LocaleSelectors } from "@com.mgmtp.a12.client/client-core/lib/core/locale";
-import { NotificationViews } from "@com.mgmtp.a12.client/client-core/lib/core/notification";
-import { ViewViews } from "@com.mgmtp.a12.client/client-core/lib/core/view";
-import { DirtyHandlingViews } from "@com.mgmtp.a12.client/client-core/lib/extensions/dirtyHandling";
-import { AuthenticationState, UaaSelectors } from "@com.mgmtp.a12.uaa/uaa-authentication-client";
-import { LocalizerContext } from "@com.mgmtp.a12.utils/utils-localization-react/lib/main";
+import { ApplicationSelectors, ViewViews } from "@com.mgmtp.a12.client/client-core";
 import {
-    defaultDataFormats,
-    defaultLocalizerFactory,
-    defaultValueConversion
-} from "@com.mgmtp.a12.utils/utils-localization/lib/main";
-import {
-    A11YLanguageContext,
-    getA11yResource
-} from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/a11y-localization";
-import { GlobalStyles } from "@com.mgmtp.a12.widgets/widgets-core/lib/theme/base";
-import { DragAndDropUtils } from "@com.mgmtp.a12.widgets/widgets-core/lib/common";
-import { SizeContext, useWindowSize } from "@com.mgmtp.a12.widgets/widgets-core/lib/layout/size-detector";
-import { GlobalMessageBox } from "@com.mgmtp.a12.widgets/widgets-core/lib/global-message-box";
-import { shouldForwardProp } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/should-forward-prop";
-import { DateTimeContext } from "@com.mgmtp.a12.widgets/widgets-core/lib/common/main/date-time/date-time-context";
+    GlobalStyles,
+    DragAndDropUtils,
+    SizeContext,
+    useWindowSize,
+    shouldForwardProp
+} from "@com.mgmtp.a12.widgets/widgets-core";
 
-import { DEFAULT_TRANSLATIONS, LocaleWithName } from "../../localization";
-
-import { ThemeContextProvider, THEMES, useThemeContext } from "../themeContext";
-
-import { AuthenticatedPage } from "./AuthenticatedPage";
+import { ThemeContextProvider, THEMES, useThemeContext } from "../ThemeContext";
 
 /**
- * Base application page.
- *
- * Based on the authentication state Login or Authenticated page is displayed.
+ * Base application page providing UI infrastructure: size context, drag-and-drop, and progress indicator.
  */
-export const BasePage = (): React.ReactNode => {
+const BasePage = ({ children }: PropsWithChildren): ReactElement => {
     const { breakPoint } = useWindowSize();
-    const authenticatedState = useSelector(UaaSelectors.state);
-    const isAuthenticated = authenticatedState === AuthenticationState.AUTHENTICATED;
-    const uaaError = !!useSelector(UaaSelectors.error);
-
     const busyState = useSelector(ApplicationSelectors.busy());
-
-    // Initialize localizations
-    const locale = useSelector(LocaleSelectors.locale());
-    const dateTimeLocale = (locale as LocaleWithName).dateTimeLocale;
-    const dataFormats = defaultDataFormats(locale);
-    const conversion = defaultValueConversion(dataFormats);
-    const localizer = defaultLocalizerFactory({
-        locale,
-        conversion,
-        dataFormats,
-        translationSource: DEFAULT_TRANSLATIONS
-    });
-
-    const A11yResource = getA11yResource(locale.language);
-
-    if (!isAuthenticated) {
-        return (
-            <GlobalMessageBox
-                variant={uaaError ? "error" : "info"}
-                content={
-                    uaaError
-                        ? localizer({
-                              key: "keycloak.error.message"
-                          })
-                        : localizer({
-                              key: "keycloak.processing.message"
-                          })
-                }
-            />
-        );
-    }
+    const sizeContextValue = useMemo(() => ({ currentSize: breakPoint.size }), [breakPoint.size]);
 
     return (
-        <SizeContext.Provider value={{ currentSize: breakPoint.size }}>
+        <SizeContext.Provider value={sizeContextValue}>
             <DndProvider
                 backend={DragAndDropUtils.DefaultDndBackend}
                 options={DragAndDropUtils.DefaultDndBackendOptions}>
-                <LocalizerContext.Provider value={{ locale, conversion, dataFormats, localizer }}>
-                    <DateTimeContext.Provider value={{ locale: dateTimeLocale }}>
-                        <A11YLanguageContext.Provider value={A11yResource}>
-                            <NotificationViews.Frame>
-                                <DirtyHandlingViews.VetoDialog>
-                                    <ViewViews.ProgressIndicator progress={busyState ? "loading" : "none"} global>
-                                        <AuthenticatedPage />
-                                    </ViewViews.ProgressIndicator>
-                                </DirtyHandlingViews.VetoDialog>
-                            </NotificationViews.Frame>
-                        </A11YLanguageContext.Provider>
-                    </DateTimeContext.Provider>
-                </LocalizerContext.Provider>
+                <ViewViews.ProgressIndicator progress={busyState ? "loading" : "none"} global>
+                    {children}
+                </ViewViews.ProgressIndicator>
             </DndProvider>
         </SizeContext.Provider>
     );
 };
 
-const ThemedPageWrapper: React.FC = () => {
+const ThemedPageWrapper = ({ children }: PropsWithChildren) => {
     const theme = useThemeContext((context) => context.theme);
     return (
         <StyleSheetManager shouldForwardProp={shouldForwardProp}>
-            <ThemeProvider theme={THEMES[theme]}>
+            <ThemeProvider theme={THEMES[theme] ?? THEMES.Base}>
                 <GlobalStyles />
-                <BasePage />
+                <BasePage>{children}</BasePage>
             </ThemeProvider>
         </StyleSheetManager>
     );
 };
 
 /**
- * Page with global styles and flat theme applied.
+ * Page with global styles and base theme applied.
  *
  * Other available themes can be found in the Widgets documentation.
  */
-export const StyledPage = (): React.ReactNode => {
+export const StyledPage = ({ children }: PropsWithChildren): ReactElement => {
     return (
         <ThemeContextProvider>
-            <ThemedPageWrapper />
+            <ThemedPageWrapper>{children}</ThemedPageWrapper>
         </ThemeContextProvider>
     );
 };

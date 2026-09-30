@@ -19,10 +19,7 @@
       ],
       "disableableCredentialTypes": [],
       "requiredActions": [],
-      "realmRoles": [
-        "admin",
-        "default-roles-a12realm"
-      ],
+      "realmRoles" : [ "admin" ],
       "notBefore": 0,
       "groups": []
     },
@@ -44,10 +41,7 @@
       ],
       "disableableCredentialTypes": [],
       "requiredActions": [],
-      "realmRoles": [
-        "default-roles-a12realm",
-        "user"
-      ],
+      "realmRoles" : [ "user" ],
       "notBefore": 0,
       "groups": []
     },
@@ -69,10 +63,7 @@
       ],
       "disableableCredentialTypes": [],
       "requiredActions": [],
-      "realmRoles": [
-        "default-roles-a12realm",
-        "user"
-      ],
+      "realmRoles" : [ "user" ],
       "notBefore": 0,
       "groups": []
     }

@@ -1,19 +1,55 @@
-const Path = require("path");
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
 
-const Webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require("copy-webpack-plugin");
+import Path from "node:path";
+import Url from "node:url";
 
-const collectA12ModelVersions = require("./scripts/collect-model-version");
+import Webpack from "webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import CopyWebpackPlugin from "copy-webpack-plugin";
 
-module.exports = {
+import collectA12ModelVersions from "./scripts/collect-model-version.js";
+
+const __filename = Url.fileURLToPath(import.meta.url);
+const __dirname = Path.dirname(__filename);
+
+export default {
     context: Path.join(__dirname),
     entry: {
         main: [
             // Includes widgets styles in the build
-            "@com.mgmtp.a12.widgets/widgets-core/lib/theme/basic.css",
+            "@com.mgmtp.a12.widgets/widgets-core/styles/basic.css",
             // Guarantees that config is evaluated first
             Path.join(__dirname, "src/config/index.ts"),
             Path.join(__dirname, "src/index.tsx")
@@ -22,19 +58,6 @@ module.exports = {
     },
     module: {
         rules: [
-            {
-                test: /\.tsx?$/,
-                use: [
-                    {
-                        loader: "ts-loader",
-                        options: {
-                            transpileOnly: true,
-                            onlyCompileBundledFiles: true
-                        }
-                    }
-                ],
-                exclude: /[\\/](node_modules|test)[\\/]/
-            },
             {
                 test: /\.js$/,
                 enforce: "pre",
@@ -86,9 +109,8 @@ module.exports = {
             chunks: ["silent_renew"]
         }),
         new Webpack.DefinePlugin({
-            // Check if we can enable it in the official release
-            // __A12_MODEL_VERSIONS__: JSON.stringify(collectA12ModelVersions()),
-            minify: true
+            // Used by @com.mgmtp.a12.client/client-core for model versions validation
+            __A12_MODEL_VERSIONS__: JSON.stringify(collectA12ModelVersions())
         }),
         new CopyWebpackPlugin({
             patterns: [

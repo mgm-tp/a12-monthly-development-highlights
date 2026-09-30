@@ -1,8 +1,8 @@
 {
   "header": {
-    "id": "Person_OM",
+    "id": "Person_Ov",
     "modelType": "overview",
-    "modelVersion": "38.1.0",
+    "modelVersion": "39.0.0",
     "locales": [
       {
         "code": "en"
@@ -32,57 +32,11 @@
         "purpose": "document-model-for-overview",
         "modelType": "document",
         "alias": "DM",
-        "reference": "Person_DM"
+        "reference": "Person_Dc"
       }
     ]
   },
   "content": {
-    "configuration": {
-      "enableFilter": true,
-      "showFullTextSearch": true,
-      "pagingSize": 10,
-      "filterConfiguration": {
-        "showFilterButton": true,
-        "showFilterBar": true,
-        "filterMode": "all"
-      },
-      "rowHeight": 49
-    },
-    "subHeaderBox": {
-      "majorElements": [
-        {
-          "type": "search"
-        },
-        {
-          "type": "filter"
-        }
-      ],
-      "minorElements": [
-        {
-          "type": "button",
-          "label": [
-            {
-              "locale": "en",
-              "text": "Add"
-            },
-            {
-              "locale": "de",
-              "text": "hinzufügen"
-            }
-          ],
-          "event": "add",
-          "icon": {
-            "name": "add"
-          },
-          "destructive": false,
-          "primary": false
-        }
-      ]
-    },
-    "footerBox": {
-      "majorElements": [],
-      "minorElements": []
-    },
     "columns": [
       {
         "id": "column-c3b30",
@@ -161,6 +115,52 @@
           "primary": false
         }
       ]
+    },
+    "subHeaderBox": {
+      "leftSlot": [
+        {
+          "type": "button",
+          "label": [
+            {
+              "locale": "en",
+              "text": "Add"
+            },
+            {
+              "locale": "de",
+              "text": "hinzufügen"
+            }
+          ],
+          "event": "add",
+          "icon": {
+            "name": "add"
+          },
+          "destructive": false,
+          "primary": false
+        }
+      ],
+      "rightSlot": [
+        {
+          "type": "search"
+        },
+        {
+          "type": "filter"
+        }
+      ]
+    },
+    "footerBox": {
+      "leftSlot": [],
+      "rightSlot": []
+    },
+    "configuration": {
+      "enableFilter": true,
+      "showFullTextSearch": true,
+      "pagingSize": 10,
+      "filterConfiguration": {
+        "showFilterButton": true,
+        "showFilterBar": true,
+        "filterMode": "all"
+      },
+      "rowHeight": 49
     }
   }
 }

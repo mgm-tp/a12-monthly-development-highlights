@@ -33,10 +33,17 @@ http {
            index  index.html index.htm;
        }
 
+       location /api/actuator {
+            proxy_pass ${NGINX_PROJECT_TEMPLATE_SERVER_ACTUATOR_URL};
+            proxy_redirect off;
+            proxy_pass_request_headers on;
+       }
+
        location /api {
             proxy_pass ${NGINX_PROJECT_TEMPLATE_SERVER_BASE_URL};
             proxy_redirect off;
             proxy_pass_request_headers on;
        }
+
     }
 }

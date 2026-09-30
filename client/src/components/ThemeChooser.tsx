@@ -1,12 +1,40 @@
-import React, { useContext } from "react";
+/*
+ * SPDX-License-Identifier: EUPL-1.2 OR LicenseRef-commercial
+ *
+ * Copyright (c) 2012-2026 mgm technology partners GmbH
+ *
+ * Dual License
+ * ------------
+ * This source file is part of the mgm A12 Platform and available under
+ * a choice of two different licenses:
+ *
+ * 1. Open-Source License - EUPL v1.2
+ *    You may redistribute and/or modify this file under the terms of the
+ *    European Union Public License, version 1.2 - see https://eupl.eu/.
+ *
+ * 2. Commercial License
+ *    Alternatively, you may obtain a commercial license from
+ *    mgm technology partners GmbH, that permits use of this software
+ *    under different terms (including support and maintenance services).
+ *
+ *    Please contact a12-license@mgm-tp.com for more information.
+ *
+ * You must select and comply with exactly one of the above license options.
+ *
+ * Warranty Disclaimer (applies to either option)
+ * ----------------------------------------------
+ * THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+ * WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NON-INFRINGEMENT, EXCEPT WHERE SUCH DISCLAIMERS ARE HELD TO BE
+ * LEGALLY INVALID. SEE THE RESPECTIVE LICENSE TEXT FOR DETAILS.
+ */
 
-import { HeaderTrigger } from "@com.mgmtp.a12.widgets/widgets-core/lib/button";
-import { Icon } from "@com.mgmtp.a12.widgets/widgets-core/lib/icon";
-import { SizeContext } from "@com.mgmtp.a12.widgets/widgets-core/lib/layout/size-detector";
-import { List } from "@com.mgmtp.a12.widgets/widgets-core/lib/list";
-import { PopUpMenu } from "@com.mgmtp.a12.widgets/widgets-core/lib/pop-up-menu";
+import { memo, type ReactElement, useCallback, useContext } from "react";
 
-import { getThemeNames, THEME_KEY, THEMES, useThemeContext } from "../app/themeContext";
+import { HeaderTrigger, Icon, SizeContext, List, PopUpMenu } from "@com.mgmtp.a12.widgets/widgets-core";
+
+import { THEME_KEY, THEMES, useThemeContext } from "../app/ThemeContext";
 
 interface ThemeItemProps {
     theme: string;
@@ -14,8 +42,8 @@ interface ThemeItemProps {
     onSelect: (theme: string) => void;
 }
 
-const ThemeItem = React.memo(function ThemeItem({ theme, isActive, onSelect }: ThemeItemProps) {
-    const handleClick = React.useCallback(() => onSelect(theme), [onSelect, theme]);
+const ThemeItem = memo(function ThemeItem({ theme, isActive, onSelect }: ThemeItemProps) {
+    const handleClick = useCallback(() => onSelect(theme), [onSelect, theme]);
 
     return (
         <List.Item
@@ -28,12 +56,12 @@ const ThemeItem = React.memo(function ThemeItem({ theme, isActive, onSelect }: T
     );
 });
 
-export default function ThemeChooser(): React.ReactNode | null {
+export default function ThemeChooser(): ReactElement | null {
     const size = useContext(SizeContext);
     const mobileMode = size.currentSize === "xs" || size.currentSize === "sm";
 
     const { theme: currentTheme, setTheme } = useThemeContext((context) => context);
-    const handleSelect = React.useCallback(
+    const handleSelect = useCallback(
         (theme: string) => {
             setTheme(theme);
             localStorage.setItem(THEME_KEY, theme);
@@ -41,7 +69,7 @@ export default function ThemeChooser(): React.ReactNode | null {
         [setTheme]
     );
 
-    if (getThemeNames().length <= 1) {
+    if (Object.keys(THEMES).length <= 1) {
         return null;
     }
 
