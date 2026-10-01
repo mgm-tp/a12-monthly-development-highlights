@@ -241,6 +241,18 @@ The Repetitions of repeatable Sources are filled in the order of that list.
 
 ![MappingExample_CodeConnection](./resources/images/MappingExample_CodeConnection.png)
 
+Alternatively, `server/app/src/main/java/com/mgmtp/a12/template/server/mapping/CompanySummaryDynamicService.java` shows how to call the Mapping Model without the generated static code, by resolving and loading the Mapping Model at runtime via `MappingServiceFactory.createMappingServiceFromDynamicCode`. The resolved `IMappingService` is cached per Mapping Model id to avoid resolving it on every call. This class is currently not wired up to any RPC endpoint; it is kept as a reference for the dynamic approach. The Mapping Model it resolves (`CompanySummary_MA`) is already imported as seed data (see `import/models/CompanySummary/CompanySummary_MA.json`), so `ModelService` can load it as-is — no extra setup is needed on that side.
+
+To switch the example over to the dynamic approach:
+- In `CompanySummary.java`, inject `CompanySummaryDynamicService` instead of `CompanySummaryStaticService` and update the call accordingly.
+- Remove the static Mapping Code generation setup from `server/app/build.gradle`, since it is no longer needed:
+  - the `runMappingCodeGeneratorConfig` configuration and its dependency entries
+  - the `genMappingOutputDir`/`mappingOutputDir`/`mappingBuildDir`/`mappingClassesOutputDir`/`mappingResourcesOutputDir` variables
+  - the extra `resources.srcDirs` entries added to the `main` source set for the generated mapping classes/resources
+  - the `setup`, `prepareMappingCodeGeneration`, `generateMappingCode`, `extractMappingCode` and `compileMappingCode` tasks
+  - `processResources.dependsOn 'compileMappingCode'`
+- Delete `CompanySummaryStaticService.java` once nothing references it anymore.
+
 **6. Further Custom Code**
 
 All other custom code,

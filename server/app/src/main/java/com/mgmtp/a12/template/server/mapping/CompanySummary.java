@@ -50,7 +50,7 @@ public class CompanySummary {
 
     public static final String GET_COMPANY_SUMMARY = "GET_COMPANY_SUMMARY";
 
-    private final CompanySummaryStaticService companySummaryService;
+    private final CompanySummaryDynamicService companySummaryService;
 
     public DocumentV2 rpc(@NonNull @JsonRpcParam("documentId") String documentId) {
         log.debug("{} called with parameters [documentId={}]",
